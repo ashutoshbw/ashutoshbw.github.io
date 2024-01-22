@@ -1,6 +1,10 @@
 # The URL the site will be built for
 base_url = "https://ashutoshbw.github.io"
 
+# The site title and description; used in feeds by default.
+title = "Ashutosh Biswas"
+description = "Writings on coding, design and life."
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = false
 
