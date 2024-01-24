@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Headless Calendar",
+    "description": "A tiny modern tool to help you make calendar UI easily.",
+    "stack": ["TypeScript", "Vitest", "Changesets"],
+    "links": {
+      "github": "https://github.com/ashutoshbw/headless-calendar",
+      "npm": "https://www.npmjs.com/package/headless-calendar"
+    }
+  },
+  {
+    "name": "Any Number to Words",
+    "description": "A string based number to words converter. It can convert from very small to large decimal numbers(just for fun 🌈).",
+    "stack": ["JavaScript"],
+    "links": {
+      "github": "https://github.com/ashutoshbw/any-number-to-words",
+      "npm": "https://www.npmjs.com/package/any-number-to-words"
+    }
+  }
+]
