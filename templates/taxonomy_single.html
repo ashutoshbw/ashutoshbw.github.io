@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block main %}
+  {{ macros::render_all_tags(url=term.permalink) }}
+  {{ macros::render_posts(posts=term.pages) }}
+{% endblock main %}

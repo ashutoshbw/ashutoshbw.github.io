@@ -1,3 +1,4 @@
+{% import "macros.html" as macros %}
 <!doctype html>
 <html lang="en-US">
 <meta charset="utf-8">
@@ -8,6 +9,7 @@
   <nav>
       <a href="{{ get_url(path='/') }}">Home</a>
       <a href="{{ get_url(path='@/blog/_index.md') }}">Blog</a>
+      <a href="{{ get_url(path='@/projects/_index.md') }}">Projects</a>
   </nav>
 </header>
 

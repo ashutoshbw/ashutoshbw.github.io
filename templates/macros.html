@@ -1,0 +1,36 @@
+{% macro render_tag_links_of_post(post) %}
+  {% set tags = post.taxonomies.tags %}
+  {% if tags %}
+    <span>
+      {% for tag in tags %}
+        <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">
+          {{ tag }}
+        </a>
+      {% endfor %}
+    </span>
+  {% endif %}
+{% endmacro render_tag_links_of_post %}
+
+{% macro render_all_tags() %}
+  {% set tagsObject = get_taxonomy(kind="tags", required=false) %}
+  {% set tags = tagsObject.items %}
+  {% for tag in tags | sort(attribute="pages") | reverse %}
+    <a href="{{ tag.permalink | safe }}">{{ tag.name }} <sup>{{tag.pages | length}}</sup></a>
+  {% endfor %}
+{% endmacro render_all_tags %}
+
+{% macro render_date(date) %}
+  <time datetime="{{ date }}">{{ date | date(format='%e %B %Y') }}</time>
+{% endmacro render_date %}
+
+{% macro render_posts(posts) %}
+  <ol reversed>
+    {% for post in posts %}
+    <li>
+      <a href="{{ post.permalink | safe }}">{{ post.title | markdown(inline=true) | safe }}</a>
+      {{ self::render_date(date=post.date) }}
+      {{ self::render_tag_links_of_post(post=post) }}
+    </li>
+    {% endfor %}
+  </ol>
+{% endmacro render_posts %}
