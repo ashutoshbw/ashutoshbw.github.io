@@ -1,9 +1,12 @@
 {% import "macros.html" as macros %}
 <!doctype html>
 <html lang="en-US">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% block title %}{{ config.title }}{% endblock %}</title>
+<head>
+  {% block redirect %}{% endblock redirect %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+</head>
 
 <header>
   <nav>
@@ -14,7 +17,7 @@
 </header>
 
 <main>
-{%- block main %} {% endblock -%}
+{%- block main %} {% endblock main -%}
 </main>
 
 <footer>

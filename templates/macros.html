@@ -26,11 +26,18 @@
 {% macro render_posts(posts) %}
   <ol reversed>
     {% for post in posts %}
-    <li>
-      <a href="{{ post.permalink | safe }}">{{ post.title | markdown(inline=true) | safe }}</a>
-      {{ self::render_date(date=post.date) }}
-      {{ self::render_tag_links_of_post(post=post) }}
-    </li>
+      {% set target = '' %}
+      {% if post.extra.canonical_url %}
+        {% set href = post.extra.canonical_url %}
+        {% set target = ' target="_blank"' %}
+      {% else %}
+        {% set href = post.permalink %}
+      {% endif %}
+      <li>
+      <a href="{{ href | safe }}"{{ target | safe }}>{{ post.title | markdown(inline=true) | safe }}</a>
+        {{ self::render_date(date=post.date) }}
+        {{ self::render_tag_links_of_post(post=post) }}
+      </li>
     {% endfor %}
   </ol>
 {% endmacro render_posts %}
