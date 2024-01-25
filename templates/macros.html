@@ -34,7 +34,7 @@
         {% set href = post.permalink %}
       {% endif %}
       <li>
-      <a href="{{ href | safe }}"{{ target | safe }}>{{ post.title | markdown(inline=true) | safe }}</a>
+        <a href="{{ href | safe }}"{{ target | safe }}>{{ post.title | markdown(inline=true) | safe }}</a>
         {{ self::render_date(date=post.date) }}
         {{ self::render_tag_links_of_post(post=post) }}
       </li>
