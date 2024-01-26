@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block redirect %}
-  {% if page.extra.redirect and page.extra.canonical_url %}
-    <meta http-equiv="refresh" content="0; url={{ page.extra.canonical_url | safe}}">
-  {% elif page.extra.canonical_url %}
-    <link rel="canonical" href="{{ page.extra.canonical_url | safe }}"/>
+  {% if page.extra.canonical.redirect and page.extra.canonical.url %}
+    <meta http-equiv="refresh" content="0; url={{ page.extra.canonical.url | safe}}">
+  {% elif page.extra.canonical.url %}
+    <link rel="canonical" href="{{ page.extra.canonical.url | safe }}"/>
   {% endif %}
 {% endblock redirect %}
 

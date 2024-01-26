@@ -27,8 +27,8 @@
   <ol reversed>
     {% for post in posts %}
       {% set target = '' %}
-      {% if post.extra.canonical_url %}
-        {% set href = post.extra.canonical_url %}
+      {% if post.extra.canonical.url and post.extra.canonical.use_as_post_link %}
+        {% set href = post.extra.canonical.url %}
         {% set target = ' target="_blank"' %}
       {% else %}
         {% set href = post.permalink %}
