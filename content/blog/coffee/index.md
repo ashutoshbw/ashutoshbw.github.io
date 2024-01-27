@@ -6,17 +6,13 @@ tags = ["coffee", "projects"]
 [extra]
 canonical.url = "https://www.getzola.org/documentation/content/page/"
 canonical.redirect = false
-canonical.use_as_post_link = true
+canonical.use_as_post_link = false
 +++
 
 I drink coffee.
 
-## headnig 1
+Original image:<br>
+![cosy](cos.jpeg)
 
-{{ mm() }}
-
-## headnig 2
-
-### headnig 3
-
-## headnig 2
+Resized image:<br>
+{{ image(path="cos.jpeg", width=400, height=100, op="fit") }}
