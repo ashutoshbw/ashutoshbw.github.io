@@ -6,10 +6,17 @@ tags = ["coffee", "projects"]
 [extra]
 canonical.url = "https://www.getzola.org/documentation/content/page/"
 canonical.redirect = false
-canonical.use_as_post_link = false
+canonical.use_as_post_link = true
 +++
 
 I drink coffee.
 
-{{ test(line="THis is a line") }}
+## headnig 1
+
 {{ mm() }}
+
+## headnig 2
+
+### headnig 3
+
+## headnig 2
