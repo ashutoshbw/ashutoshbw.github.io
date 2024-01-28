@@ -5,27 +5,25 @@
 {% block main %}
   <h1>My Projects</h1>
   <p>Below are some of my favorite projects:</p>
-  <section>
-    {% set data = load_data(path="@/projects/data.json") %}
-    {% for project in data %}
-      <section>
-        <header>{{ project.name }}</header>
-        <p>{{ project.description }}</p>
-        <p>
-          <b>Stack</b>:
-          {% for item in project.stack %}
-            <span>{{ item }}</span>
-            {%- if loop.last == false %}, {% endif %}
-          {% endfor %}
-        </p>
-        <p>
-          <b>Links</b>:
-          {% for name, link in project.links %}
-            <span><a href="{{ link | safe }}">{{ name }}</a></span>
-            {%- if loop.last == false %}, {% endif %}
-          {% endfor %}
-        </p>
-      </section>
-    {% endfor %}
-  </section>
+  {% set data = load_data(path="@/projects/data.json") %}
+  {% for project in data %}
+    <section>
+      <header>{{ project.name }}</header>
+      <p>{{ project.description }}</p>
+      <p>
+        <b>Stack</b>:
+        {% for item in project.stack %}
+          <span>{{ item }}</span>
+          {%- if loop.last == false %}, {% endif %}
+        {% endfor %}
+      </p>
+      <p>
+        <b>Links</b>:
+        {% for name, link in project.links %}
+          <span><a href="{{ link | safe }}">{{ name }}</a></span>
+          {%- if loop.last == false %}, {% endif %}
+        {% endfor %}
+      </p>
+    </section>
+  {% endfor %}
 {% endblock main %}

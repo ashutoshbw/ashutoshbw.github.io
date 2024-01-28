@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} · {{ super() }}{% endblock %}
+
+{% block main %}
+  <h1>Gallery</h1>
+  <h2>Paintings</h2>
+  {{ macros::render_gallery_photos(file="paintings.yml") }}
+{% endblock main %}
