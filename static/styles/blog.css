@@ -1,0 +1,12 @@
+.post-meta {
+  display: none;
+}
+
+.posts li:hover {
+  & .post-link {
+    background: orange;
+  }
+  & .post-meta {
+    display: inline;
+  }
+}

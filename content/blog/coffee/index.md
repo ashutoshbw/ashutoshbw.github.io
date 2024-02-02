@@ -5,8 +5,8 @@ date = 2022-04-01
 tags = ["coffee", "projects"]
 [extra]
 canonical.url = "https://www.getzola.org/documentation/content/page/"
-canonical.redirect = false
-canonical.use_as_post_link = false
+canonical.redirect = true
+canonical.use_as_post_link = true
 +++
 
 I drink coffee.

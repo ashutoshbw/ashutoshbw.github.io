@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
+{% block stylesheet %}
+  <link rel="stylesheet" href="{{ get_url(path='styles/blog.css', cachebust=true) }}">
+{% endblock stylesheet %}
+
 {% block main %}
-  {{ macros::render_all_tags(url=term.permalink) }}
+  <h1>Blog posts tagged "{{term.name}}"</h1>
   {{ macros::render_posts(posts=term.pages) }}
+  <p>
+    <b>All Tags</b>: {{ macros::render_all_tags() }}
+  </p>
 {% endblock main %}
