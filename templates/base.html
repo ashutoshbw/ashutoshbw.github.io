@@ -6,8 +6,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
-  <link rel="stylesheet" href="/styles/normalize.css">
-  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="{{ get_url(path='styles/normalize.css', cachebust=true) }}">
+  <link rel="stylesheet" href="{{ get_url(path='styles/base.css', cachebust=true) }}">
 </head>
 
 <header>

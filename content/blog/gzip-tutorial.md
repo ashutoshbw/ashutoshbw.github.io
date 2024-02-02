@@ -97,3 +97,5 @@ zless file1.gz
 ```
 
 That's for this article. Hope you have learned something useful. For digging deeper see the man page `man gzip`. Happy gzipping!
+
+[coffee](@/blog/coffee/index.md)

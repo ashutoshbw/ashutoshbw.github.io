@@ -46,7 +46,7 @@
   {% set data = load_data(path="@/gallery/" ~ file) %}
   {% for img_data in data %}
     {% set processed_img = resize_image(path="/content/gallery/" ~ img_data.file, width=161, height=100, op="fit") %}
-    <a href="{{ get_url(path='gallery/' ~ img_data.file) }}">
+    <a href="{{ img_data.file }}">
       <img src="{{ processed_img.url | safe }}" alt="{{ img_data.alt }}" />
     </a>
   {% endfor %}
