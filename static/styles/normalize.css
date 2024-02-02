@@ -1,0 +1,8 @@
+/*
+* Personal common starting styles to make further styling easier.
+* I'm deleveloping it from scratch just for personal learning.
+*/
+
+* {
+  box-sizing: border-box;
+}
