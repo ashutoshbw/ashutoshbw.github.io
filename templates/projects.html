@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
 {% block title %}{{ section.title }} · {{ super() }}{% endblock %}
+{% block stylesheet %}
+  <link rel="stylesheet" href="{{ get_url(path='styles/projects.css', cachebust=true) }}">
+{% endblock stylesheet %}
 
 {% block main %}
   <h1>My Projects</h1>
   <p>Below are some of my favorite projects:</p>
   {% set data = load_data(path="@/projects/data.json") %}
   {% for project in data %}
-    <section>
+    <section class="project">
       <header>{{ project.name }}</header>
       <p>{{ project.description }}</p>
       <p>

@@ -1,3 +1,17 @@
-body {
-  background-color: teal;
+.site-wrapper {
+  --site-margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--site-margin) * 2);
+  margin: var(--site-margin);
+}
+
+.site-header,
+.site-footer {
+  padding: var(--site-margin);
+  background-color: lightblue;
+}
+
+.site-footer {
+  margin-top: auto;
 }
