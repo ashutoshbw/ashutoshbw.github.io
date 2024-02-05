@@ -1,12 +1,15 @@
-.post-meta {
-  display: none;
-}
-
-.posts li:hover {
-  & .post-link {
-    background: orange;
+@media (hover: hover) {
+  .post-meta {
+    display: none;
   }
-  & .post-meta {
-    display: inline;
+
+  .posts li:hover {
+    & .post-link {
+      background: orange;
+    }
+
+    & .post-meta {
+      display: inline;
+    }
   }
 }
