@@ -29,6 +29,6 @@
   <footer class="site-footer">
     <p>© Ashutosh Biswas, 2024</p>
     <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View Source</a></p>
-    <p>Last Built on {{ now() | date(format='%e %B %Y at %l:%M %p') }}</p>
+    <p>Last built on {{ now(utc=true) | date(format='%e %B %Y at %l:%M %p UTC') }}</p>
   </footer>
 </div>
