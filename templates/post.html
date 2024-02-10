@@ -8,6 +8,12 @@
   {% endif %}
 {% endblock redirect %}
 
+{% block katex %}
+  {% if page.extra.katex %}
+    {% include "katex.html" %}
+  {% endif %}
+{% endblock katex %}
+
 {% block main %}
   <header>
     <h1>{{ page.title | markdown(inline=true) | safe }}</h1>

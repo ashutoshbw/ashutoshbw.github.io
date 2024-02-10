@@ -9,21 +9,22 @@
   <link rel="stylesheet" href="{{ get_url(path='styles/normalize.css', cachebust=true) }}">
   <link rel="stylesheet" href="{{ get_url(path='styles/base.css', cachebust=true) }}">
   {% block stylesheet %}{% endblock stylesheet %}
+  {% block katex %}{% endblock katex %}
 </head>
 
 <div class="site-wrapper">
   <header class="site-header">
     <h2>Ashutosh Biswas</h2>
     <nav>
-        <a href="{{ get_url(path='/') }}">Home</a>
-        <a href="{{ get_url(path='@/blog/_index.md') }}">Blog</a>
-        <a href="{{ get_url(path='@/projects/_index.md') }}">Projects</a>
-        <a href="{{ get_url(path='@/gallery/_index.md') }}">Gallery</a>
+      <a href="{{ get_url(path='/') }}">Home</a>
+      <a href="{{ get_url(path='@/blog/_index.md') }}">Blog</a>
+      <a href="{{ get_url(path='@/projects/_index.md') }}">Projects</a>
+      <a href="{{ get_url(path='@/gallery/_index.md') }}">Gallery</a>
     </nav>
   </header>
 
   <main>
-  {%- block main %} {% endblock main -%}
+    {%- block main %} {% endblock main -%}
   </main>
 
   <footer class="site-footer">
