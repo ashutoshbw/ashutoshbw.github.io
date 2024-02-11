@@ -4,9 +4,13 @@
   {% if page.extra.canonical.redirect and page.extra.canonical.url %}
     <meta http-equiv="refresh" content="0; url={{ page.extra.canonical.url | safe}}">
   {% elif page.extra.canonical.url %}
-    <link rel="canonical" href="{{ page.extra.canonical.url | safe }}"/>
+    <link rel="canonical" href="{{ page.extra.canonical.url | safe }}">
   {% endif %}
 {% endblock redirect %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{{ get_url(path='styles/post.css', cachebust=true) }}">
+{% endblock stylesheet %}
 
 {% block katex %}
   {% if page.extra.katex %}
