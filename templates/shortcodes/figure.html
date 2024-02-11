@@ -1,0 +1,8 @@
+{% set processed_img = resize_image(path=page.colocated_path ~ img_name, width=width, height=height, op="fit") %}
+
+<figure>
+  <a href="{{ img_name }}">
+    <img src="{{ processed_img.url | safe }}" alt="{{ alt }}" />
+  </a>
+  <figcaption><b>Figure {{ nth }}</b>: {{ caption | markdown(inline=true) | safe }}</figcaption>
+</figure>

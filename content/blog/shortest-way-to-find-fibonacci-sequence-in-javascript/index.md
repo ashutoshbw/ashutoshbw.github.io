@@ -34,7 +34,7 @@ The output is:
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 ```
 
-Looking at that cryptic line, some of you might be thinking of me as some sort of genius, but I'm not. It took me hours to craft this line. And even after solving it, I needed some more time actually understand how it works.
+Looking at that cryptic line, some of you might be thinking of me as some sort of genius, but I'm not. It took me hours to craft this line. And even after solving it, I needed some more time to actually understand how it works.
 
 I'm not here to preach about clever coding. Applying code-fu in real-world projects may not be appreciated by others, including your future self. Save it for the fun moments. Enough with the advice—let's dive into the breakdown of how it actually works!
 
@@ -83,6 +83,6 @@ After you figured out the _recursive pattern_, the next step is to find the case
 
 Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. Below is a diagram showing the control flow of the call to `fibSeq(3)`:
 
-![Fibonacci sequence control flow diagram](fibonacci-flow.png)
+{{ figure(img_name="fibonacci-flow.png", width=400, height=400, caption="Recursive control flow of `fibSeq(3)`" alt="The alt") }}
 
 I hope you found this article interesting. Thanks for reading!
