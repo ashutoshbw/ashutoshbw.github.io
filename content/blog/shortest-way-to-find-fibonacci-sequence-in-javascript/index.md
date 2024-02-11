@@ -17,7 +17,7 @@ $$
 
 The first two terms are $0$ and $1$. Any other term is the sum of previous two terms. Very simple right!
 
-There are many different ways to calculate this sequence. Today I will share with you the one that I figured out myself. My goal was to find shortest possible way to do it. I'm not sure if it is the one!
+There are many different ways to generate this sequence. Today I will share with you the one that I figured out myself. My goal was to find shortest possible way to do it. I'm not sure if it is the one!
 
 Here it goes:
 
@@ -34,7 +34,7 @@ The output is:
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 ```
 
-Some of you might be thinking of me as some sort of genius, but I'm not. It took me hours to craft this line. And even after solving it, I needed more time actually understand how it works.
+Looking at that cryptic line, some of you might be thinking of me as some sort of genius, but I'm not. It took me hours to craft this line. And even after solving it, I needed some more time actually understand how it works.
 
 I'm not here to preach about clever coding. Applying code-fu in real-world projects may not be appreciated by others, including your future self. Save it for the fun moments. Enough with the advice—let's dive into the breakdown of how it actually works!
 
@@ -48,7 +48,7 @@ const fibSeq = (n) => (n < 2 ? [[0], [0, 1]][n] : addNextTerm(fibSeq(n - 1)));
 console.log(fibSeq(10));
 ```
 
-Let's make more clear by using `if`/`else` instead of ternary operator and not making clever use of `pop()` method of arrays.
+Let's make it more clear by using `if`/`else` instead of the ternary operator and not making clever use of `pop()` method of arrays.
 
 ```javascript
 const addNextTerm = (seq) => [
@@ -69,16 +69,20 @@ const fibSeq = (n) => {
 console.log(fibSeq(10));
 ```
 
-In `fibSeq`, this version `addNextTerm` gives us the same result except the fact that it doesn't mutates its input which `pop()` does. Also note that mutating the input worked fine, since what we needed was the return value.
+In this version of `fibSeq`, the `addNextTerm` gives us the same result except the fact that it doesn't mutates its input which `pop()` did in the previous version of our code. Also note that mutating the input worked fine, since what we needed was the return value.
 
-Now there is no magic except recursion. If you struggle with writing recursive code, here is the thinking model that I've figured out:
+Now there is no magic except recursion. If you struggle with writing recursive code, here is the thinking model that I find useful:
 
-> Figure out the recursive pattern and apply it in code. Handle the cases that this pattern can't handle. Thinking this way never disapponited me.
+> Figure out the recursive pattern and apply it in code. Then handle the cases that this pattern can't handle.
 
-Firstly, you have to figure out the _recursive pattern_. Here, for getting the Fibonacci sequence of first $n$ terms where $n \gt 1$, is the same as getting the Fibonnaci sequence of first $n - 1$ terms and then add an extra term in it. Notice how the idea "getting Fibonacci sequence of first $n$ terms where $n \gt 1$" involves itself. So this a _recursive pattern_. In the above code this pattern is in the `else` block.
+Thinking this way never disappointed me.
 
-After you figured out the _recursive pattern_, the next step is to find the cases when it doesn't works and address each of such cases. In the above code the `if` and `else if` blocks handle these cases.
+Firstly, you have to figure out the _recursive pattern_. Here, for getting the Fibonacci sequence of first $n$ terms where $n \gt 1$, is the same as getting the Fibonnaci sequence of first $n - 1$ terms and then add an extra term in it. Notice how the idea &ldquo;getting Fibonacci sequence of first $n$ terms where $n \gt 1$&rdquo; involves itself. So this a _recursive pattern_. In the above code this pattern is in the `else` block.
 
-Flowing with the control flow that happens inside a recursive algorithm is like going into the rabbit hole and getting outside again with the result. Sometimes doing this practice gives you a better understanding how computer actually interprets your recursive code. For the sake of this practice here is your travel guide into this rabbit hole for first `fibSeq(3)`:
+After you figured out the _recursive pattern_, the next step is to find the cases that it can't handle and address each of such cases. In the above code the `if` and `else if` blocks handle these cases.
+
+Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. Below is a diagram showing the control flow of the call to `fibSeq(3)`:
 
 ![Fibonacci sequence control flow diagram](fibonacci-flow.png)
+
+I hope you found this article interesting. Thanks for reading!
