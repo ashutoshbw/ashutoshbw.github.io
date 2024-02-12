@@ -4,6 +4,20 @@ pre {
   overflow: auto;
 }
 
+figure {
+  --unitless-inline-margin: 3; /* this is intended to be a multipler of rem unit */
+  --unitless-max-viewport-width: 600;
+  /* the line below basically says:
+  * Incrementally reduce inline margin when viewport width is less than
+  * --unitless-max-viewport-width px.
+  */
+  margin-inline: min(
+    (100 / var(--unitless-max-viewport-width)) * var(--unitless-font-size) *
+      var(--unitless-inline-margin) * 1vw,
+    calc(var(--unitless-inline-margin) * 1rem)
+  );
+}
+
 figure img {
   max-width: 100%;
 }

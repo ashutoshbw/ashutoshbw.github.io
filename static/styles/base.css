@@ -1,3 +1,9 @@
+:root {
+  --unitless-font-size: 16;
+  font-size: calc(var(--unitless-font-size) * 1px);
+}
+
+
 .site-wrapper {
   --site-margin: 0.5rem;
   display: flex;
