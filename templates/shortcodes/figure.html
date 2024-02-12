@@ -5,8 +5,9 @@
       <img src="{{ processed_img.url | safe }}" alt="{{ alt }}" />
     </a>
   {% else %}
-    <a href="{{ img_name }}">
-      <img src="{{ img_name }}" alt="{{ alt }}" />
+    {% set href = get_url(path=page.colocated_path ~ img_name) %}
+    <a href="{{ href | safe }}">
+      <img src="{{ href | safe }}" alt="{{ alt }}" />
     </a>
   {% endif %}
   <figcaption><b>Figure {{ nth }}</b>: {{ caption | markdown(inline=true) | safe }}</figcaption>
