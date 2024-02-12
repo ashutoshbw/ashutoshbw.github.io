@@ -19,7 +19,7 @@ figure {
 }
 
 figure img {
-  max-width: 100%;
+  max-width: 100%; /* prevents the image to break out of the container */
 }
 
 article {
