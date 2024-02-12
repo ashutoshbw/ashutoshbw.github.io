@@ -19,8 +19,8 @@
   {% endfor %}
 {% endmacro render_all_tags %}
 
-{% macro render_date(date) %}
-  <time datetime="{{ date }}">{{ date | date(format='%e %B %Y') }}</time>
+{% macro render_date(date, itemprop=false) %}
+  <time {% if itemprop %}itemprop="{{ itemprop }}"{% endif %} datetime="{{ date }}">{{ date | date(format='%e %B %Y') }}</time>
 {% endmacro render_date %}
 
 {% macro render_posts(posts) %}

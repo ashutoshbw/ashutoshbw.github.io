@@ -19,9 +19,11 @@
 {% endblock katex %}
 
 {% block main %}
-  <header>
-    <h1>{{ page.title | markdown(inline=true) | safe }}</h1>
-    <p>Published on {{ macros::render_date(date=page.date) }} · Tagged with {{ macros::render_tag_links_of_post(post=page) }}</p>
-  </header>
-  {{ page.content | safe }}
+  <article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">{{ page.title | markdown(inline=true) | safe }}</h1>
+      <p>Published on {{ macros::render_date(date=page.date, itemprop="datePublished") }} · Tagged with {{ macros::render_tag_links_of_post(post=page) }}</p>
+    </header>
+    {{ page.content | safe }}
+  </article>
 {% endblock main %}

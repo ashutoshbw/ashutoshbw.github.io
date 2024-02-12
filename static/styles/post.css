@@ -21,3 +21,10 @@ figure {
 figure img {
   max-width: 100%;
 }
+
+article {
+  max-width: 80ch;
+  width: 100%;
+  padding-inline: 2.5ch;
+  margin-inline: auto;
+}
