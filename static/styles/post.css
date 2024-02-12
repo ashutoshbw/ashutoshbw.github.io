@@ -28,3 +28,15 @@ article {
   padding-inline: min(1.5vw, 2.5ch);
   margin-inline: auto;
 }
+
+article header {
+  margin-bottom: 2rem;
+}
+
+article header h1 {
+  margin-block: 1rem;
+}
+
+article header p {
+  margin-block: 0.2rem;
+}
