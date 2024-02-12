@@ -1,6 +1,7 @@
 +++
 title = "Shortest way to find Fibonacci sequence in JavaScript?"
 date = 2022-02-16
+updated = 2024-02-13
 [taxonomies]
 tags = ["javascript", "problem-solving"]
 [extra]
@@ -34,7 +35,7 @@ The output is:
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 ```
 
-Looking at that cryptic line, some of you might be thinking of me as some sort of genius, but I'm not. It took me hours to craft this line. And even after solving it, I needed some more time to actually understand how it works.
+Looking at that cryptic line, some of you might be thinking of me as some sort of genius, but I'm not. It took me an embarrassingly long time to craft this line. And even after solving it, I needed some more time to actually understand how it works.
 
 I'm not here to preach about clever coding. Applying code-fu in real-world projects may not be appreciated by others, including your future self. Save it for the fun moments. Enough with the advice—let's dive into the breakdown of how it actually works!
 
@@ -73,16 +74,29 @@ In this version of `fibSeq`, the `addNextTerm` gives us the same result except t
 
 Now there is no magic except recursion. If you struggle with writing recursive code, here is the thinking model that I find useful:
 
-> Figure out the recursive pattern and apply it in code. Then handle the cases that this pattern can't handle.
+> Figure out the recursive pattern. Then handle the cases that this pattern can't handle.
 
 Thinking this way never disappointed me.
 
-Firstly, you have to figure out the _recursive pattern_. Here, for getting the Fibonacci sequence of first $n$ terms where $n \gt 1$, is the same as getting the Fibonnaci sequence of first $n - 1$ terms and then add an extra term in it. Notice how the idea &ldquo;getting Fibonacci sequence of first $n$ terms where $n \gt 1$&rdquo; involves itself. So this a _recursive pattern_. In the above code this pattern is in the `else` block.
+Here, for getting the Fibonacci sequence of first $n$ terms where $n \gt 1$, is the same as getting the Fibonnaci sequence of first $n - 1$ terms and then add an extra term in it. Notice how the idea &ldquo;getting Fibonacci sequence of first $n$ terms where $n \gt 1$&rdquo; involves itself. So this a _recursive pattern_. In the above code this pattern is in the `else` block.
 
-After you figured out the _recursive pattern_, the next step is to find the cases that it can't handle and address each of such cases. In the above code the `if` and `else if` blocks handle these cases.
+In the above code the `if` and `else if` blocks handle cases where the recursive pattern doesn't make sense.
 
 Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. Below is a diagram showing the control flow of the call to `fibSeq(3)`:
 
 {{ figure(img_name="fibonacci-flow.svg", caption="Recursive control flow of `fibSeq(3)`" alt="The alt") }}
 
 I hope you found this article interesting. Thanks for reading!
+
+## Bonus: Generating LARGE numbers
+
+The _Number_ type can't accurately calculate very large integers. Why not leverage _BigInt_ for some more fun?
+
+```javascript
+const fibSeq = (n) =>
+  n < 2n
+    ? [[0n], [0n, 1n]][n]
+    : ((s) => [...s, s.pop() + s.pop()])(fibSeq(n - 1n));
+
+console.log(fibSeq(1000n).map((t, i) => `${i} 👉 ${t}`).join`\n`);
+```
