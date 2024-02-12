@@ -8,8 +8,6 @@ tags = ["javascript", "problem-solving"]
 katex = true
 +++
 
-When you dive into programming, figuring out the Fibonacci sequence is a popular task, especially when you're getting the hang of recursion.
-
 Let's first take a look at how the Fibonacci sequence looks, in case you haven't seen it before.
 
 $$
@@ -84,7 +82,7 @@ In the above code the `if` and `else if` blocks handle cases where the recursive
 
 Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. Below is a diagram showing the control flow of the call to `fibSeq(3)`:
 
-{{ figure(img_name="fibonacci-flow.svg", caption="Recursive control flow of `fibSeq(3)`" alt="The alt") }}
+{{ figure(img_name="fibonacci-flow.png", width=400, height=400, caption="Recursive control flow of `fibSeq(3)`" alt="The alt") }}
 
 I hope you found this article interesting. Thanks for reading!
 
