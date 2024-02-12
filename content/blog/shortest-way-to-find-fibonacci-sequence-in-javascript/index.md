@@ -83,6 +83,6 @@ After you figured out the _recursive pattern_, the next step is to find the case
 
 Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. Below is a diagram showing the control flow of the call to `fibSeq(3)`:
 
-{{ figure(img_name="fibonacci-flow.png", width=400, height=400, caption="Recursive control flow of `fibSeq(3)`" alt="The alt") }}
+{{ figure(img_name="fibonacci-flow.svg", caption="Recursive control flow of `fibSeq(3)`" alt="The alt") }}
 
 I hope you found this article interesting. Thanks for reading!
