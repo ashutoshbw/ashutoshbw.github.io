@@ -5,7 +5,7 @@ pre {
 }
 
 figure {
-  --unitless-inline-margin: 3; /* this is intended to be a multipler of rem unit */
+  --unitless-inline-margin: 3; /* this is intended to be in rem unit */
   --unitless-max-viewport-width: 600;
   /* the line below basically says:
   * Incrementally reduce inline margin when viewport width is less than
@@ -25,6 +25,6 @@ figure img {
 article {
   max-width: 80ch;
   width: 100%;
-  padding-inline: 2.5ch;
+  padding-inline: min(1.5vw, 2.5ch);
   margin-inline: auto;
 }
