@@ -8,7 +8,7 @@ tags = ["javascript", "problem-solving"]
 katex = true
 +++
 
-Let's first take a look at how the Fibonacci sequence looks, in case you haven't seen it before.
+Let's first take a look at how the Fibonacci sequence looks like, in case you haven't seen it before:
 
 $$
 0, 1, 1, 2, 3, 5, 8, 13, \ldots
