@@ -50,7 +50,7 @@
     background: lightgrey;
     border-left: 0.3rem solid grey;
     & > p:first-child,
-    & > .admonition-title {
+    & > header:first-child {
       margin-top: 0.5rem;
     }
   }

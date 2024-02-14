@@ -62,3 +62,12 @@ function highlightInsertedParts(templateStrings, ...substitutions) {
   return result;
 }
 ```
+
+<aside class="admonition">
+<header>
+<b>Info</b>: What does the <code>...</code> mean?
+</header>
+
+It says pack the rest of the arguments given to the function `highlightInsertedParts` into an array called `substitution`. Such parameters are known as _rest parameters_. For more info see [Rest parameters of JavaScript](@/blog/rest-parameter/index.md).
+
+</aside>

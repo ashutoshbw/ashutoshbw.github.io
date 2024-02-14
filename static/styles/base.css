@@ -44,12 +44,20 @@ li {
   }
 }
 
-ol {
+ol,
+ul {
   margin-left: 1.8rem;
-  list-style-type: decimal;
   margin-top: 1rem;
   & ol,
   ul {
     margin-top: 0;
   }
+}
+
+ol li {
+  list-style-type: decimal;
+}
+
+ul li {
+  list-style-type: disc;
 }

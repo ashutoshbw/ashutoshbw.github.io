@@ -1,13 +1,5 @@
 {% extends "base.html" %}
 
-{% block redirect %}
-  {% if page.extra.canonical.redirect and page.extra.canonical.url %}
-    <meta http-equiv="refresh" content="0; url={{ page.extra.canonical.url | safe}}">
-  {% elif page.extra.canonical.url %}
-    <link rel="canonical" href="{{ page.extra.canonical.url | safe }}">
-  {% endif %}
-{% endblock redirect %}
-
 {% block stylesheet %}
   <link rel="stylesheet" href="{{ get_url(path='styles/post.css', cachebust=true) }}">
 {% endblock stylesheet %}
@@ -28,5 +20,18 @@
       <p>Published on {{ macros::render_date(date=page.date, itemprop="datePublished") }} · Tagged with {{ macros::render_tag_links_of_post(post=page) }}</p>
     </header>
     {{ page.content | safe }}
+
+    {% set len = page.backlinks | length %}
+    {% if len != 0 %}
+      <footer>
+        <h2>Backlinks</h2>
+        <ul class="posts">
+          {% for link in page.backlinks %}
+            {% set path = link.permalink | split(pat="/") | slice(start=3, end=5) | concat(with="index.md") | join(sep="/")  %}
+            <li>{{ macros::render_post(post=get_page(path=path)) }}</li>
+          {% endfor %}
+        </ul>
+      </footer>
+    {% endif %}
   </article>
 {% endblock main %}

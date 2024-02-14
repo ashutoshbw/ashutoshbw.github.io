@@ -23,22 +23,19 @@
   <time {% if itemprop %}itemprop="{{ itemprop }}"{% endif %} datetime="{{ date }}">{{ date | date(format='%e %B %Y') }}</time>
 {% endmacro render_date %}
 
+{% macro render_post(post) %}
+  <a href="{{ post.permalink | safe }}" class="post-link">{{ post.title | markdown(inline=true) | safe }}</a>
+  <span class="post-meta">
+    {{ self::render_date(date=post.date) }}
+    {{ self::render_tag_links_of_post(post=post) }}
+  </span>
+{% endmacro render_post %}
+
 {% macro render_posts(posts) %}
   <ol class="posts" reversed>
     {% for post in posts %}
-      {% set target = '' %}
-      {% if post.extra.canonical.url and post.extra.canonical.use_as_post_link %}
-        {% set href = post.extra.canonical.url %}
-        {% set target = ' target="_blank"' %}
-      {% else %}
-        {% set href = post.permalink %}
-      {% endif %}
       <li>
-        <a href="{{ href | safe }}"{{ target | safe }} class="post-link">{{ post.title | markdown(inline=true) | safe }}</a>
-        <span class="post-meta">
-          {{ self::render_date(date=post.date) }}
-          {{ self::render_tag_links_of_post(post=post) }}
-        </span>
+        {{ self::render_post(post=post) }}
       </li>
     {% endfor %}
   </ol>
