@@ -19,7 +19,7 @@
 {% endblock katex %}
 
 {% block main %}
-  <article itemscope itemtype="http://schema.org/BlogPosting">
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1 itemprop="headline">{{ page.title | markdown(inline=true) | safe }}</h1>
       {% if page.updated %}

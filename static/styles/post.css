@@ -1,42 +1,62 @@
-pre {
-  padding: 1rem;
-  font-size: 1rem;
-  overflow: auto;
-}
-
-figure {
-  --unitless-inline-margin: 3; /* this is intended to be in rem unit */
-  --unitless-max-viewport-width: 600;
-  /* the line below basically says:
-  * Incrementally reduce inline margin when viewport width is less than
-  * --unitless-max-viewport-width px.
-  */
-  margin-inline: min(
-    (100 / var(--unitless-max-viewport-width)) * var(--unitless-font-size) *
-      var(--unitless-inline-margin) * 1vw,
-    calc(var(--unitless-inline-margin) * 1rem)
-  );
-}
-
-figure img {
-  max-width: 100%; /* prevents the image to break out of the container */
-}
-
-article {
+.post {
   max-width: 80ch;
   width: 100%;
   padding-inline: min(1.5vw, 2.5ch);
+  padding-block: 6rem;
   margin-inline: auto;
-}
 
-article header {
-  margin-bottom: 2rem;
-}
+  & > header {
+    margin-bottom: 2rem;
+    & h1 {
+      margin-block: 1rem;
+      font-size: 2em;
+    }
 
-article header h1 {
-  margin-block: 1rem;
-}
+    & p {
+      margin-block: 0.2rem;
+    }
+  }
 
-article header p {
-  margin-block: 0.2rem;
+  & pre {
+    padding: 1rem;
+    font-size: 1rem;
+    overflow: auto;
+  }
+
+  & figure {
+    --unitless-inline-margin: 3; /* this is intended to be in rem unit */
+    --unitless-max-viewport-width: 600;
+
+    /* the line below basically says:
+    * Incrementally reduce inline margin when viewport width is less than
+    * --unitless-max-viewport-width px.
+    */
+    margin-inline: min(
+      (100 / var(--unitless-max-viewport-width)) * var(--unitless-font-size) *
+        var(--unitless-inline-margin) * 1vw,
+      calc(var(--unitless-inline-margin) * 1rem)
+    );
+
+    & img {
+      max-width: 100%; /* prevents the image to break out of the container */
+    }
+  }
+
+  & .admonition {
+    padding-inline: 1ch;
+    padding-block: 1px; /* to prevent margin collase */
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+    background: lightgrey;
+    border-left: 0.3rem solid grey;
+    & > p:first-child,
+    & > .admonition-title {
+      margin-top: 0.5rem;
+    }
+  }
+
+  & details {
+    border: 1px solid grey;
+    padding: 1ch;
+  }
 }

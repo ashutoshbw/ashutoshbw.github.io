@@ -1,0 +1,8 @@
+<aside class="admonition{% if type %} {{ type | lower }}{% endif %}">
+  {% if type %}
+    <header class="admonition-title">
+      <b>{{ type | capitalize }}</b>{% if title %}: <span>{{ title | markdown(inline=true) | safe }}</span>{% endif %}
+    </header>
+  {% endif %}
+  {{ body | markdown | safe }} 
+</aside>
