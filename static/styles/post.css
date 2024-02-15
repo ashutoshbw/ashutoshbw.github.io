@@ -39,6 +39,7 @@
 
     & img {
       max-width: 100%; /* prevents the image to break out of the container */
+      height: auto; /* helps to maintain the aspect ratio */
     }
   }
 
