@@ -1,7 +1,7 @@
 +++
 title = "Shortest way to find Fibonacci sequence in JavaScript?"
 date = 2022-02-16
-updated = 2024-02-13
+updated = 2024-02-16
 [taxonomies]
 tags = ["javascript", "problem-solving"]
 [extra]
@@ -80,9 +80,12 @@ Here, for getting the Fibonacci sequence of first $n$ terms where $n \gt 1$, is 
 
 In the above code the `if` and `else if` blocks handle cases where the recursive pattern doesn't make sense.
 
-Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. Below is a diagram showing the control flow of the call to `fibSeq(3)`:
+Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. [Figure 1](#fig-1) illustrates this control flow for a `fibSeq(3)` call.
 
-{{ figure(img_name="fibonacci-flow.png", width=400, height=400, caption="Recursive control flow of `fibSeq(3)`" alt="The alt") }}
+<figure id="fig-1">
+{{ img(name="fibonacci-flow.png", scale=0.8, alt="A diagram show the recursive control flow of fibSeq(3)") }}
+<figcaption><b>Figure 1</b>: Recursive control flow of <code>fibSeq(3)</code></figcaption>
+</figure>
 
 I hope you found this article interesting. Thanks for reading!
 
