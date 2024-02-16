@@ -2,19 +2,26 @@
 {% set img_src = anchor_href %}
 
 {% if not scale %} {% set scale = 1 %} {% endif %}
+{% if not anchor %} {% set anchor = "present" %} {% endif %}
+{% if not target %} {% set target = "_blank" %} {% endif %}
+
 {% set meta = get_image_metadata(path=page.colocated_path ~ name) %}
 {% set scaled_width = meta.width * scale | int  %}
 {% set scaled_height = meta.height * scale | int %}
 
-{% if name is not ending_with(".gif") and name is not ending_with(".svg") %}
+{% if name is not ending_with(".gif") and name is not ending_with(".svg") and scale != 1 %}
   {% set processed_img = resize_image(path=page.colocated_path ~ name, width=scaled_width, height=scaled_height, op="scale") %}
   {% set img_src = processed_img.url %}
 {% endif %}
 
-<a href="{{ anchor_href | safe }}" target="_blank">
+{% if anchor == "present" %}
+  <a href="{{ anchor_href | safe }}"{% if target == "_blank" %} target="_blank"{% endif %}>
+{% endif %}
   <img src="{{ img_src | safe }}" 
     {% if alt %}alt="{{ alt }}"{% endif %}
     width="{{ scaled_width }}"
     height="{{ scaled_height }}"
   />
-</a>
+{% if anchor == "present" %}
+  </a>
+{% endif %}
