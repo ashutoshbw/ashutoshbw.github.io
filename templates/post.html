@@ -23,15 +23,21 @@
 
     {% set len = page.backlinks | length %}
     {% if len != 0 %}
-      <footer>
-        <h2>Backlinks</h2>
-        <ul class="posts">
-          {% for link in page.backlinks %}
-            {% set path = link.permalink | split(pat="/") | slice(start=3, end=5) | concat(with="index.md") | join(sep="/")  %}
-            <li>{{ macros::render_post(post=get_page(path=path)) }}</li>
-          {% endfor %}
-        </ul>
-      </footer>
+      {% if len == 1 and page.backlinks.0.permalink == page.permalink %}
+        {# do nothing #}
+        {% else %}
+        <footer>
+          <h2>Backlinks</h2>
+          <ul class="posts">
+            {% for link in page.backlinks %}
+              {% if link.permalink != page.permalink %}
+                {% set path = link.permalink | split(pat="/") | slice(start=3, end=5) | concat(with="index.md") | join(sep="/")  %}
+                <li>{{ macros::render_post(post=get_page(path=path)) }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </footer>
+      {% endif %}
     {% endif %}
   </article>
 {% endblock main %}
