@@ -28,6 +28,10 @@ details {
   margin-top: 1rem;
 }
 
+figcaption {
+  margin-top: 0.3rem;
+}
+
 h1,
 h2,
 h3,
