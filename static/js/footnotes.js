@@ -1,7 +1,10 @@
-const footnoteHeading = document.querySelector("#footnotes");
+function elt(name) {
+  const e = document.createElement(name);
+  return e;
+}
 
-function getFnDefsMap() {
-  const originalFnDefList = footnoteHeading.nextElementSibling;
+function getFnDefsMap(fnHeadingElt) {
+  const originalFnDefList = fnHeadingElt.nextElementSibling;
   originalFnDefList.remove();
 
   const originalFnDefListItems = [...originalFnDefList.children];
@@ -16,23 +19,25 @@ function getFnDefsMap() {
         const token = match[1];
         firstNode.textContent = firstNode.textContent.replace(tokenRegex, "");
         item.id = "fn-" + token;
-        result[token] = item;
+        if (!result[token]) {
+          result[token] = item;
+        } else {
+          console.warn(
+            `Footnote definition ignored for duplicate token("${token}"): ${item.textContent}`,
+          );
+        }
       } else {
-        console.warn("Unreferenced footnote exist:", item.textContent);
+        console.warn(`Footnote definition lacks a token: ${item.textContent}`);
       }
     }
     return result;
   }, {});
 }
 
-function elt(name) {
-  const e = document.createElement(name);
-  return e;
-}
-
 function transformFnRef() {
+  const footnoteHeading = document.querySelector("#footnotes");
   const footnoteRefs = [...document.querySelectorAll("[data-fn]")];
-  const defMap = getFnDefsMap();
+  const defMap = getFnDefsMap(footnoteHeading);
   const ol = elt("ol");
 
   const secElt = elt("section");
@@ -51,11 +56,21 @@ function transformFnRef() {
     anchor.href = `#fn-${token}`;
     refElt.replaceWith(anchor);
 
-    console.log(defMap);
     if (defMap[token]) {
       ol.append(defMap[token]);
+      delete defMap[token];
+    } else {
+      console.warn(
+        `Footnote definition not found for a reference of the token "${token}"`,
+      );
     }
   });
+
+  for (const [token] of Object.entries(defMap)) {
+    console.warn(
+      `Footnote definition of token "${token}" lacks a matching reference`,
+    );
+  }
 
   footnoteHeading.replaceWith(secElt);
   secElt.insertAdjacentElement("afterbegin", footnoteHeading);
