@@ -106,3 +106,30 @@ function initFootnotes() {
 }
 
 initFootnotes();
+
+function charPattern(chars) {
+  return (seq) => {
+    let setToLowestFlag = false;
+    for (let i = seq.length - 1; i >= 0; i--) {
+      const charFromLast = seq[i];
+      const posInChars = chars.indexOf(charFromLast);
+
+      if (posInChars == chars.length - 1) {
+        if (i == 0) {
+          return chars[0].repeat(seq.length + 1);
+        } else {
+          setToLowestFlag = true;
+          continue;
+        }
+      } else {
+        let lastPart;
+        if (setToLowestFlag) {
+          lastPart = chars[0].repeat(seq.length - i - 1);
+        } else {
+          lastPart = seq.slice(i + 1);
+        }
+        return seq.slice(0, i) + chars[posInChars + 1] + lastPart;
+      }
+    }
+  };
+}
