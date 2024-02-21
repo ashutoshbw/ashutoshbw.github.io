@@ -1,0 +1,10 @@
+{% if tokens %}
+  {% set len = tokens | length %}
+  {% if len > 0 %}
+    {% for token in tokens %}<sup data-fnref>[{{token}}]</sup>{% endfor %}
+  {% else %}
+    <sup>[<i>footnote needed</i>]</sup>
+  {% endif %}
+{% else %}
+  <sup>[<i>footnote needed</i>]</sup>
+{% endif %}

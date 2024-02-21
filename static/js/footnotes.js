@@ -3,14 +3,27 @@ function elt(name) {
   return e;
 }
 
-function getFnDefsMap(fnHeadingElt) {
-  const originalFnDefList = fnHeadingElt.nextElementSibling;
-  originalFnDefList.remove();
+function getUniqueId(startString) {
+  let id = startString;
+  let count = 0;
+  while (document.getElementById(id)) {
+    id = `${startString}-${count++}`;
+  }
+  return id;
+}
 
-  const originalFnDefListItems = [...originalFnDefList.children];
+function initFootnotes() {
+  // First the footnote parts
+  const fnHeadingElt = document.querySelector("#footnotes");
 
-  return originalFnDefListItems.reduce((result, item, i) => {
-    const firstNode = item.firstChild;
+  // TODO: throw error if not <ul>
+  const ul = fnHeadingElt.nextElementSibling;
+  ul.remove();
+
+  const tokenToFootnote = {};
+  for (let i = 0; i < ul.children.length; i++) {
+    const li = ul.children[i];
+    const firstNode = li.firstChild;
 
     if (firstNode.nodeType == 3) {
       const tokenRegex = /^\[(\w+)\]\s?/;
@@ -18,62 +31,78 @@ function getFnDefsMap(fnHeadingElt) {
       if (match) {
         const token = match[1];
         firstNode.textContent = firstNode.textContent.replace(tokenRegex, "");
-        item.id = "fn-" + token;
-        if (!result[token]) {
-          result[token] = item;
+
+        li.id = getUniqueId(`fn-${token}`);
+
+        if (!tokenToFootnote[token]) {
+          const backlinkWrapper = elt("span");
+          li.append(backlinkWrapper);
+          tokenToFootnote[token] = li;
         } else {
           console.warn(
-            `Footnote definition ignored for duplicate token("${token}"): ${item.textContent}`,
+            `Footnote ignored for duplicate token("${token}"): ${li.textContent}`,
           );
         }
       } else {
-        console.warn(`Footnote definition lacks a token: ${item.textContent}`);
+        console.warn(`Footnote lacks a token: ${li.textContent}`);
       }
     }
-    return result;
-  }, {});
-}
-
-function transformFnRef() {
-  const footnoteHeading = document.querySelector("#footnotes");
-  const footnoteRefs = [...document.querySelectorAll("[data-fn]")];
-  const defMap = getFnDefsMap(footnoteHeading);
-  const ol = elt("ol");
-
-  const secElt = elt("section");
-  secElt.setAttribute("role", "doc-endnotes");
-  secElt.setAttribute("aria-labelledby", "footnotes");
-  secElt.append(ol);
-
-  footnoteRefs.forEach((refElt, i) => {
-    const token = refElt.getAttribute("data-fn");
-
-    const anchor = elt("a");
-    const sup = elt("sup");
-    sup.textContent = `[${i + 1}]`;
-    anchor.innerHTML = refElt.innerHTML;
-    anchor.append(sup);
-    anchor.href = `#fn-${token}`;
-    refElt.replaceWith(anchor);
-
-    if (defMap[token]) {
-      ol.append(defMap[token]);
-      delete defMap[token];
-    } else {
-      console.warn(
-        `Footnote definition not found for a reference of the token "${token}"`,
-      );
-    }
-  });
-
-  for (const [token] of Object.entries(defMap)) {
-    console.warn(
-      `Footnote definition of token "${token}" lacks a matching reference`,
-    );
   }
 
-  footnoteHeading.replaceWith(secElt);
-  secElt.insertAdjacentElement("afterbegin", footnoteHeading);
+  // Now let's handle the references and also built the new footnote section at the same time
+  // Gathering all <sup> footnote reference elements
+  const sups = [...document.querySelectorAll("[data-fnref]")];
+  const ol = elt("ol");
+  const secElt = elt("section");
+  const tokenToRefs = {}; // it will be need to build backlinks
+
+  secElt.append(ol);
+
+  let uniqueTokenCount = 0;
+
+  for (let i = 0; i < sups.length; i++) {
+    const sup = sups[i];
+    const token = sup.textContent.slice(1, -1);
+
+    // this is for a single token, that is for a single footnote
+    let refs = tokenToRefs[token];
+
+    if (!refs) {
+      refs = [];
+      uniqueTokenCount++;
+      tokenToRefs[token] = refs;
+    }
+
+    const matchingFootnote = tokenToFootnote[token];
+
+    const anchor = elt("a");
+    anchor.textContent = `[${uniqueTokenCount}]`;
+
+    if (matchingFootnote) {
+      refs.push(anchor);
+      anchor.href = `#${matchingFootnote.id}`;
+      anchor.id = getUniqueId(`${matchingFootnote.id}-ref-${refs.length}`);
+
+      const backlinkAnchor = elt("a");
+      backlinkAnchor.href = `#${anchor.id}`;
+      backlinkAnchor.textContent = "a";
+      matchingFootnote.lastChild.append(backlinkAnchor);
+
+      ol.append(matchingFootnote);
+    } else {
+      anchor.style.color = "red";
+      console.warn(`Footnote missing for token "${token}"`);
+    }
+
+    sup.replaceChildren(anchor);
+    sup.removeAttribute("data-fnref");
+  }
+
+  // TODO: console warn for footnotes having no reference
+  // TODO: Handle backlink
+
+  fnHeadingElt.replaceWith(secElt);
+  secElt.insertAdjacentElement("afterbegin", fnHeadingElt);
 }
 
-transformFnRef();
+initFootnotes();
