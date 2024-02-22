@@ -107,28 +107,29 @@ function initFootnotes() {
 
 initFootnotes();
 
-function charPattern(chars) {
-  return (seq) => {
-    let setToLowestFlag = false;
-    for (let i = seq.length - 1; i >= 0; i--) {
-      const charFromLast = seq[i];
-      const posInChars = chars.indexOf(charFromLast);
+function charPattern(charsSeq) {
+  return (pattern) => {
+    let makeLastPartMadeOfFirstChar = false;
+    for (let i = pattern.length - 1; i >= 0; i--) {
+      const posInCharsSeq = charsSeq.indexOf(pattern[i]);
 
-      if (posInChars == chars.length - 1) {
+      if (posInCharsSeq == charsSeq.length - 1) {
+        // Is it the last char in sequence?
+
         if (i == 0) {
-          return chars[0].repeat(seq.length + 1);
+          return charsSeq[0].repeat(pattern.length + 1);
         } else {
-          setToLowestFlag = true;
+          makeLastPartMadeOfFirstChar = true;
           continue;
         }
       } else {
         let lastPart;
-        if (setToLowestFlag) {
-          lastPart = chars[0].repeat(seq.length - i - 1);
+        if (makeLastPartMadeOfFirstChar) {
+          lastPart = charsSeq[0].repeat(pattern.length - i - 1);
         } else {
-          lastPart = seq.slice(i + 1);
+          lastPart = pattern.slice(i + 1);
         }
-        return seq.slice(0, i) + chars[posInChars + 1] + lastPart;
+        return pattern.slice(0, i) + charsSeq[posInCharsSeq + 1] + lastPart;
       }
     }
   };
