@@ -12,102 +12,7 @@ function getUniqueId(startString) {
   return id;
 }
 
-function initFootnotes() {
-  // First the footnote parts
-  const fnHeadingElt = document.querySelector("#footnotes");
-
-  // TODO: throw error if not <ul>
-  const ul = fnHeadingElt.nextElementSibling;
-  ul.remove();
-
-  const tokenToFootnote = {};
-  for (let i = 0; i < ul.children.length; i++) {
-    const li = ul.children[i];
-    const firstNode = li.firstChild;
-
-    if (firstNode.nodeType == 3) {
-      const tokenRegex = /^\[(\w+)\]\s?/;
-      const match = firstNode.textContent.match(tokenRegex);
-      if (match) {
-        const token = match[1];
-        firstNode.textContent = firstNode.textContent.replace(tokenRegex, "");
-
-        li.id = getUniqueId(`fn-${token}`);
-
-        if (!tokenToFootnote[token]) {
-          const backlinkWrapper = elt("span");
-          li.append(backlinkWrapper);
-          tokenToFootnote[token] = li;
-        } else {
-          console.warn(
-            `Footnote ignored for duplicate token("${token}"): ${li.textContent}`,
-          );
-        }
-      } else {
-        console.warn(`Footnote lacks a token: ${li.textContent}`);
-      }
-    }
-  }
-
-  // Now let's handle the references and also built the new footnote section at the same time
-  // Gathering all <sup> footnote reference elements
-  const sups = [...document.querySelectorAll("[data-fnref]")];
-  const ol = elt("ol");
-  const secElt = elt("section");
-  const tokenToRefs = {}; // it will be need to build backlinks
-
-  secElt.append(ol);
-
-  let uniqueTokenCount = 0;
-
-  for (let i = 0; i < sups.length; i++) {
-    const sup = sups[i];
-    const token = sup.textContent.slice(1, -1);
-
-    // this is for a single token, that is for a single footnote
-    let refs = tokenToRefs[token];
-
-    if (!refs) {
-      refs = [];
-      uniqueTokenCount++;
-      tokenToRefs[token] = refs;
-    }
-
-    const matchingFootnote = tokenToFootnote[token];
-
-    const anchor = elt("a");
-    anchor.textContent = `[${uniqueTokenCount}]`;
-
-    if (matchingFootnote) {
-      refs.push(anchor);
-      anchor.href = `#${matchingFootnote.id}`;
-      anchor.id = getUniqueId(`${matchingFootnote.id}-ref-${refs.length}`);
-
-      const backlinkAnchor = elt("a");
-      backlinkAnchor.href = `#${anchor.id}`;
-      backlinkAnchor.textContent = "a";
-      matchingFootnote.lastChild.append(backlinkAnchor);
-
-      ol.append(matchingFootnote);
-    } else {
-      anchor.style.color = "red";
-      console.warn(`Footnote missing for token "${token}"`);
-    }
-
-    sup.replaceChildren(anchor);
-    sup.removeAttribute("data-fnref");
-  }
-
-  // TODO: console warn for footnotes having no reference
-  // TODO: Handle backlink
-
-  fnHeadingElt.replaceWith(secElt);
-  secElt.insertAdjacentElement("afterbegin", fnHeadingElt);
-}
-
-initFootnotes();
-
-function charPattern(charsSeq) {
+function charPatternGenerator(charsSeq) {
   return (pattern) => {
     let makeLastPartMadeOfFirstChar = false;
     for (let i = pattern.length - 1; i >= 0; i--) {
@@ -134,3 +39,113 @@ function charPattern(charsSeq) {
     }
   };
 }
+
+const BACKLINK_CHARS = "abcdefghijklmnopqrstuvwxyz";
+const getNextPattern = charPatternGenerator(BACKLINK_CHARS);
+const BACKLINKS_POS = "end"; // other possible value is 'start'. It controls where backlinks will appear in a footnote
+const BACKLINK_SYMBOL = "↑";
+
+function initFootnotes() {
+  // First the footnote parts
+  const fnHeadingElt = document.querySelector("#footnotes");
+
+  // TODO: throw error if not <ul>
+  const ul = fnHeadingElt.nextElementSibling;
+  ul.remove();
+
+  const tokenToFootnote = {};
+  for (let i = 0; i < ul.children.length; i++) {
+    const li = ul.children[i];
+    const firstNode = li.firstChild;
+
+    if (firstNode.nodeType == 3) {
+      const tokenRegex = /^\[(\w+)\]\s?/;
+      const match = firstNode.textContent.match(tokenRegex);
+      if (match) {
+        const token = match[1];
+        firstNode.textContent = firstNode.textContent.replace(tokenRegex, "");
+
+        li.id = getUniqueId(`fn-${token}`);
+
+        if (!tokenToFootnote[token]) {
+          const backlinksWrapper = elt("span");
+          if (BACKLINKS_POS == "end") {
+            li.append(backlinksWrapper);
+          } else if (BACKLINKS_POS == "start") {
+            li.prepend(backlinksWrapper);
+          }
+          tokenToFootnote[token] = li;
+        } else {
+          console.warn(
+            `Footnote ignored for duplicate token("${token}"): ${li.textContent}`,
+          );
+        }
+      } else {
+        console.warn(`Footnote lacks a token: ${li.textContent}`);
+      }
+    }
+  }
+
+  // Now let's handle the references and also built the new footnote section at the same time
+  // Gathering all <sup> footnote reference elements
+  const sups = [...document.querySelectorAll("[data-fnref]")];
+  const ol = elt("ol");
+  const secElt = elt("section");
+
+  // It will be need to generate the ids of ref anchors.
+  // It will only count refs for a token which has footnote.
+  // Reason: Note that when there is no footnote for a token, there is no need to refer
+  //         back to it using backlink, and thus its id is not required. And for this
+  //         reason it will only count refs for a token which has footnote.
+  const tokenToRefsCount = {};
+
+  secElt.append(ol);
+
+  let uniqueTokenCount = 0;
+
+  for (let i = 0; i < sups.length; i++) {
+    const sup = sups[i];
+    const token = sup.textContent.slice(1, -1);
+
+    if (tokenToRefsCount[token] === undefined) {
+      uniqueTokenCount++;
+      tokenToRefsCount[token] = 0; // so that it's incrementable
+    }
+
+    const matchingFootnote = tokenToFootnote[token];
+
+    const anchor = elt("a");
+    anchor.textContent = `[${uniqueTokenCount}]`;
+
+    if (matchingFootnote) {
+      anchor.href = `#${matchingFootnote.id}`;
+      anchor.id = getUniqueId(
+        `${matchingFootnote.id}-ref-${++tokenToRefsCount[token]}`,
+      );
+
+      const backlinkAnchor = elt("a");
+      backlinkAnchor.href = `#${anchor.id}`;
+
+      const backlinksWrapper = matchingFootnote.lastChild;
+
+      backlinkAnchor.textContent = "a";
+      backlinksWrapper.append(backlinkAnchor);
+
+      ol.append(matchingFootnote);
+    } else {
+      anchor.style.color = "red";
+      console.warn(`Footnote missing for token "${token}"`);
+    }
+
+    sup.replaceChildren(anchor);
+    sup.removeAttribute("data-fnref");
+  }
+
+  // TODO: console warn for footnotes having no reference
+  // TODO: Handle backlink
+
+  fnHeadingElt.replaceWith(secElt);
+  secElt.insertAdjacentElement("afterbegin", fnHeadingElt);
+}
+
+initFootnotes();
