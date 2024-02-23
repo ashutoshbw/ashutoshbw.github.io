@@ -97,7 +97,7 @@ function initFootnotes() {
   // Reason: Note that when there is no footnote for a token, there is no need to refer
   //         back to it using backlink, and thus its id is not required. And for this
   //         reason it will only count refs for a token which has footnote.
-  const tokenToRefsCount = {};
+  const tokenToRefs = {};
 
   secElt.append(ol);
 
@@ -107,12 +107,15 @@ function initFootnotes() {
     const sup = sups[i];
     const token = sup.textContent.slice(1, -1);
 
-    if (tokenToRefsCount[token] === undefined) {
-      uniqueTokenCount++;
-      tokenToRefsCount[token] = 0; // so that it's incrementable
-    }
-
     const matchingFootnote = tokenToFootnote[token];
+
+    if (!tokenToRefs[token]) {
+      uniqueTokenCount++;
+      tokenToRefs[token] = [];
+      if (matchingFootnote) {
+        ol.append(matchingFootnote);
+      }
+    }
 
     const anchor = elt("a");
     anchor.textContent = `[${uniqueTokenCount}]`;
@@ -120,18 +123,9 @@ function initFootnotes() {
     if (matchingFootnote) {
       anchor.href = `#${matchingFootnote.id}`;
       anchor.id = getUniqueId(
-        `${matchingFootnote.id}-ref-${++tokenToRefsCount[token]}`,
+        `${matchingFootnote.id}-ref-${tokenToRefs[token].length}`,
       );
-
-      const backlinkAnchor = elt("a");
-      backlinkAnchor.href = `#${anchor.id}`;
-
-      const backlinksWrapper = matchingFootnote.lastChild;
-
-      backlinkAnchor.textContent = "a";
-      backlinksWrapper.append(backlinkAnchor);
-
-      ol.append(matchingFootnote);
+      tokenToRefs[token].push(anchor);
     } else {
       anchor.style.color = "red";
       console.warn(`Footnote missing for token "${token}"`);
@@ -141,7 +135,12 @@ function initFootnotes() {
     sup.removeAttribute("data-fnref");
   }
 
-  // TODO: console warn for footnotes having no reference
+  Object.keys(tokenToFootnote).forEach((token) => {
+    if (!tokenToRefs[token]) {
+      console.warn(`Footnote of token "${token}" have no references.`);
+    }
+  });
+
   // TODO: Handle backlink
 
   fnHeadingElt.replaceWith(secElt);
