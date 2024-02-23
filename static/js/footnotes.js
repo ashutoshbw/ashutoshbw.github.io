@@ -111,8 +111,8 @@ function initFootnotes() {
 
     if (!tokenToRefs[token]) {
       uniqueTokenCount++;
-      tokenToRefs[token] = [];
       if (matchingFootnote) {
+        tokenToRefs[token] = [];
         ol.append(matchingFootnote);
       }
       anchor.textContent = `[${uniqueTokenCount}]`;
@@ -153,7 +153,6 @@ function initFootnotes() {
   });
 
   // TODO: Handle backlink
-
   Object.keys(tokenToRefs).forEach((token, i) => {
     //    console.log(tokenToRefs[token], i);
   });
