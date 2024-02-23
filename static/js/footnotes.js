@@ -40,8 +40,8 @@ function charPatternGenerator(charsSeq) {
   };
 }
 
-const BACKLINK_CHARS = "abcdefghijklmnopqrstuvwxyz";
-const getNextPattern = charPatternGenerator(BACKLINK_CHARS);
+const BACKLINK_CHARS_ARRAY = "abcdefghijklmnopqrstuvwxyz".split("");
+const getNextPattern = charPatternGenerator(BACKLINK_CHARS_ARRAY);
 const BACKLINKS_POS = "end"; // other possible value is 'start'. It controls where backlinks will appear in a footnote
 const BACKLINK_SYMBOL = "↑";
 
@@ -71,7 +71,7 @@ function initFootnotes() {
           const backlinksWrapper = elt("span");
           if (BACKLINKS_POS == "end") {
             li.append(backlinksWrapper);
-          } else if (BACKLINKS_POS == "start") {
+          } else {
             li.prepend(backlinksWrapper);
           }
           tokenToFootnote[token] = li;
@@ -102,6 +102,7 @@ function initFootnotes() {
   secElt.append(ol);
 
   let uniqueTokenCount = 0;
+  let cleanupFunc = () => {};
 
   for (let i = 0; i < sups.length; i++) {
     const sup = sups[i];
@@ -130,6 +131,37 @@ function initFootnotes() {
         `${matchingFootnote.id}-ref-${tokenToRefs[token].length}`,
       );
       tokenToRefs[token].push(anchor);
+      anchor.addEventListener("click", () => {
+        cleanupFunc();
+
+        const backlinksWrapper =
+          BACKLINKS_POS == "end"
+            ? matchingFootnote.lastChild
+            : matchingFootnote.firstChild;
+
+        const targetedBacklink = backlinksWrapper.querySelector(
+          `[href="#${anchor.id}"]`,
+        );
+
+        cleanupFunc = () => {
+          if (refs.length > 1) {
+            targetedBacklink.classList.remove("fn-targeted-backlink");
+            backlinksWrapper.firstChild.replaceWith(BACKLINK_SYMBOL);
+          }
+        };
+
+        const refs = tokenToRefs[token];
+
+        if (refs.length > 1) {
+          const arrowTextNode = backlinksWrapper.firstChild;
+          targetedBacklink.classList.add("fn-targeted-backlink");
+          const arrowBacklink = elt("a");
+          arrowBacklink.textContent = BACKLINK_SYMBOL;
+          arrowBacklink.href = targetedBacklink.href;
+          arrowBacklink.addEventListener("click", () => cleanupFunc());
+          arrowTextNode.replaceWith(arrowBacklink);
+        }
+      });
     } else {
       anchor.style.color = "red";
       console.warn(`Footnote missing for token "${token}"`);
@@ -140,21 +172,43 @@ function initFootnotes() {
   }
 
   Object.keys(tokenToFootnote).forEach((token) => {
-    // Note that for this token, there is either one or multiple refs or
-    // there is no entry for it in the tokenToRefs obj.
-    // It is not possible to have this token as an entry in the tokenToRefs
-    // containing an empty array(that is having no footnote) because here we
-    // are iterating over only the tokens for which there is a footnote but may
-    // not have references. So we can safely just check for existence of an array
-    // with tokey as key in `tokenToRefs`:
+    // Note that for this token, there is either an array of refs(with at least one ref) or
+    // there is no entry for it in the tokenToRefs obj. This is because
+    // here we are iterating over only the tokens for which there is a footnote
+    // which may or may not have references. So we can safely just check for existence
+    // of an array with token as key in `tokenToRefs`:
     if (!tokenToRefs[token]) {
       console.warn(`Footnote of token "${token}" have no references.`);
     }
   });
 
   // TODO: Handle backlink
-  Object.keys(tokenToRefs).forEach((token, i) => {
-    //    console.log(tokenToRefs[token], i);
+  Object.entries(tokenToRefs).forEach(([token, refs]) => {
+    const li = tokenToFootnote[token];
+    const backlinksWrapper =
+      BACKLINKS_POS == "end" ? li.lastChild : li.firstChild;
+
+    if (refs.length == 1) {
+      const backlink = elt("a");
+      backlink.textContent = BACKLINK_SYMBOL;
+      backlink.href = `#${refs[0].id}`;
+      backlink.addEventListener("click", () => cleanupFunc());
+      backlinksWrapper.append(backlink);
+    } else {
+      backlinksWrapper.append(BACKLINK_SYMBOL);
+
+      let lastPattern = BACKLINK_CHARS_ARRAY[0];
+      refs.forEach((ref) => {
+        const backlink = elt("a");
+        const sup = elt("sup");
+        sup.append(backlink);
+        backlink.textContent = lastPattern;
+        backlink.href = `#${ref.id}`;
+        backlink.addEventListener("click", () => cleanupFunc());
+        lastPattern = getNextPattern(lastPattern);
+        backlinksWrapper.append(sup);
+      });
+    }
   });
 
   fnHeadingElt.replaceWith(secElt);
