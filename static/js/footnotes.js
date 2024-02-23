@@ -106,8 +106,8 @@ function initFootnotes() {
   for (let i = 0; i < sups.length; i++) {
     const sup = sups[i];
     const token = sup.textContent.slice(1, -1);
-
     const matchingFootnote = tokenToFootnote[token];
+    const anchor = elt("a");
 
     if (!tokenToRefs[token]) {
       uniqueTokenCount++;
@@ -115,10 +115,14 @@ function initFootnotes() {
       if (matchingFootnote) {
         ol.append(matchingFootnote);
       }
+      anchor.textContent = `[${uniqueTokenCount}]`;
+    } else {
+      if (matchingFootnote) {
+        anchor.textContent = tokenToRefs[token][0].textContent;
+      } else {
+        anchor.textContent = `[${uniqueTokenCount}]`;
+      }
     }
-
-    const anchor = elt("a");
-    anchor.textContent = `[${uniqueTokenCount}]`;
 
     if (matchingFootnote) {
       anchor.href = `#${matchingFootnote.id}`;
@@ -136,12 +140,23 @@ function initFootnotes() {
   }
 
   Object.keys(tokenToFootnote).forEach((token) => {
+    // Note that for this token, there is either one or multiple refs or
+    // there is no entry for it in the tokenToRefs obj.
+    // It is not possible to have this token as an entry in the tokenToRefs
+    // containing an empty array(that is having no footnote) because here we
+    // are iterating over only the tokens for which there is a footnote but may
+    // not have references. So we can safely just check for existence of an array
+    // with tokey as key in `tokenToRefs`:
     if (!tokenToRefs[token]) {
       console.warn(`Footnote of token "${token}" have no references.`);
     }
   });
 
   // TODO: Handle backlink
+
+  Object.keys(tokenToRefs).forEach((token, i) => {
+    //    console.log(tokenToRefs[token], i);
+  });
 
   fnHeadingElt.replaceWith(secElt);
   secElt.insertAdjacentElement("afterbegin", fnHeadingElt);
