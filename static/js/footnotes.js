@@ -159,7 +159,7 @@ function initFootnotes() {
           const arrowBacklink = elt("a");
           arrowBacklink.textContent = BACKLINK_SYMBOL;
           arrowBacklink.href = targetedBacklink.href;
-          arrowBacklink.addEventListener("click", () => cleanupFunc());
+          arrowBacklink.addEventListener("click", cleanupFunc);
           arrowTextNode.replaceWith(arrowBacklink);
           cleanupNeeded = true;
         }
