@@ -103,6 +103,7 @@ function initFootnotes() {
 
   let uniqueTokenCount = 0;
   let cleanupFunc = () => {};
+  let cleanupNeeded = false;
 
   for (let i = 0; i < sups.length; i++) {
     const sup = sups[i];
@@ -133,26 +134,26 @@ function initFootnotes() {
       tokenToRefs[token].push(anchor);
       anchor.addEventListener("click", () => {
         cleanupFunc();
-
-        const backlinksWrapper =
-          BACKLINKS_POS == "end"
-            ? matchingFootnote.lastChild
-            : matchingFootnote.firstChild;
-
-        const targetedBacklink = backlinksWrapper.querySelector(
-          `[href="#${anchor.id}"]`,
-        );
-
-        cleanupFunc = () => {
-          if (refs.length > 1) {
-            targetedBacklink.classList.remove("fn-targeted-backlink");
-            backlinksWrapper.firstChild.replaceWith(BACKLINK_SYMBOL);
-          }
-        };
-
         const refs = tokenToRefs[token];
 
         if (refs.length > 1) {
+          const backlinksWrapper =
+            BACKLINKS_POS == "end"
+              ? matchingFootnote.lastChild
+              : matchingFootnote.firstChild;
+
+          const targetedBacklink = backlinksWrapper.querySelector(
+            `[href="#${anchor.id}"]`,
+          );
+
+          cleanupFunc = () => {
+            if (cleanupNeeded) {
+              targetedBacklink.classList.remove("fn-targeted-backlink");
+              backlinksWrapper.firstChild.replaceWith(BACKLINK_SYMBOL);
+              cleanupNeeded = false;
+            }
+          };
+
           const arrowTextNode = backlinksWrapper.firstChild;
           targetedBacklink.classList.add("fn-targeted-backlink");
           const arrowBacklink = elt("a");
@@ -160,6 +161,7 @@ function initFootnotes() {
           arrowBacklink.href = targetedBacklink.href;
           arrowBacklink.addEventListener("click", () => cleanupFunc());
           arrowTextNode.replaceWith(arrowBacklink);
+          cleanupNeeded = true;
         }
       });
     } else {
