@@ -4,11 +4,12 @@
   <link rel="stylesheet" href="{{ get_url(path='styles/post.css', cachebust=true) }}">
 {% endblock stylesheet %}
 
-{% block katex %}
+{% block script %}
+  <script defer src="{{ get_url(path='js/footnotes.js', cachebust=true) }}"></script>
   {% if page.extra.katex %}
     {% include "katex.html" %}
   {% endif %}
-{% endblock katex %}
+{% endblock script %}
 
 {% block main %}
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">

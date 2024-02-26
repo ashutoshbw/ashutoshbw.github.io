@@ -60,4 +60,20 @@
     border: 1px solid grey;
     padding: 1ch;
   }
+
+  & blockquote {
+    margin-left: 0.5rem;
+    border-left: 3px solid #999;
+    padding-left: 0.3rem;
+    font-style: italic;
+  }
+
+  /* Temp css for testing for footnotes */
+  & * :target {
+    background: yellow;
+  }
+
+  & .fn-targeted-backlink {
+    background: yellow;
+  }
 }
