@@ -46,42 +46,46 @@ const BACKLINKS_POS = "end"; // other possible value is 'start'. It controls whe
 const BACKLINK_SYMBOL = "↑";
 
 function initFootnotes() {
-  // First the footnote parts
   const fnHeadingElt = document.querySelector("#footnotes");
 
-  // TODO: throw error if not <ul>
-  const ul = fnHeadingElt.nextElementSibling;
-  ul.remove();
+  const ul =
+    fnHeadingElt?.nextElementSibling.tagName == "UL" &&
+    fnHeadingElt.nextElementSibling;
 
   const tokenToFootnote = {};
-  for (let i = 0; i < ul.children.length; i++) {
-    const li = ul.children[i];
-    const firstNode = li.firstChild;
 
-    if (firstNode.nodeType == 3) {
-      const tokenRegex = /^\[(\w+)\]\s?/;
-      const match = firstNode.textContent.match(tokenRegex);
-      if (match) {
-        const token = match[1];
-        firstNode.textContent = firstNode.textContent.replace(tokenRegex, "");
+  if (ul) {
+    ul.remove();
 
-        li.id = getUniqueId(`fn-${token}`);
+    for (let i = 0; i < ul.children.length; i++) {
+      const li = ul.children[i];
+      const firstNode = li.firstChild;
 
-        if (!tokenToFootnote[token]) {
-          const backlinksWrapper = elt("span");
-          if (BACKLINKS_POS == "end") {
-            li.append(backlinksWrapper);
+      if (firstNode.nodeType == 3) {
+        const tokenRegex = /^\[(\w+)\]\s?/;
+        const match = firstNode.textContent.match(tokenRegex);
+        if (match) {
+          const token = match[1];
+          firstNode.textContent = firstNode.textContent.replace(tokenRegex, "");
+
+          li.id = getUniqueId(`fn-${token}`);
+
+          if (!tokenToFootnote[token]) {
+            const backlinksWrapper = elt("span");
+            if (BACKLINKS_POS == "end") {
+              li.append(backlinksWrapper);
+            } else {
+              li.prepend(backlinksWrapper);
+            }
+            tokenToFootnote[token] = li;
           } else {
-            li.prepend(backlinksWrapper);
+            console.warn(
+              `Footnote ignored for duplicate token("${token}"): ${li.textContent}`,
+            );
           }
-          tokenToFootnote[token] = li;
         } else {
-          console.warn(
-            `Footnote ignored for duplicate token("${token}"): ${li.textContent}`,
-          );
+          console.warn(`Footnote lacks a token: ${li.textContent}`);
         }
-      } else {
-        console.warn(`Footnote lacks a token: ${li.textContent}`);
       }
     }
   }
@@ -89,8 +93,9 @@ function initFootnotes() {
   // Now let's handle the references and also built the new footnote section at the same time
   // Gathering all <sup> footnote reference elements
   const sups = [...document.querySelectorAll("[data-fnref]")];
+  if (sups.length == 0) return;
+
   const ol = elt("ol");
-  const secElt = elt("section");
 
   // It will be need to generate the ids of ref anchors.
   // It will only count refs for a token which has footnote.
@@ -98,8 +103,6 @@ function initFootnotes() {
   //         back to it using backlink, and thus its id is not required. And for this
   //         reason it will only count refs for a token which has footnote.
   const tokenToRefs = {};
-
-  secElt.append(ol);
 
   let uniqueTokenCount = 0;
   let cleanupFunc = () => {};
@@ -184,8 +187,10 @@ function initFootnotes() {
     }
   });
 
-  // TODO: Handle backlink
   Object.entries(tokenToRefs).forEach(([token, refs]) => {
+    // Note that tokenToRefs only map tokens for which there is a
+    // matching footnote.
+
     const li = tokenToFootnote[token];
     const backlinksWrapper =
       BACKLINKS_POS == "end" ? li.lastChild : li.firstChild;
@@ -213,6 +218,10 @@ function initFootnotes() {
     }
   });
 
+  if (!fnHeadingElt) return;
+
+  const secElt = elt("section");
+  secElt.append(ol);
   fnHeadingElt.replaceWith(secElt);
   secElt.insertAdjacentElement("afterbegin", fnHeadingElt);
 }
