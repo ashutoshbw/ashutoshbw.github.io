@@ -1,7 +1,7 @@
 +++
 title = "Shortest way to find Fibonacci sequence in JavaScript?"
 date = 2022-02-16
-updated = 2024-02-16
+updated = 2024-02-26
 [taxonomies]
 tags = ["javascript", "problem-solving"]
 [extra]
@@ -70,11 +70,13 @@ console.log(fibSeq(10));
 
 In this version of `fibSeq`, the `addNextTerm` gives us the same result except the fact that it doesn't mutates its input which `pop()` did in the previous version of our code. Also note that mutating the input worked fine, since what we needed was the return value.
 
-Now there is no magic except recursion. If you struggle with writing recursive code, here is the thinking model that I find useful:
+Now there is no magic except recursion. If I struggle with writing recursive code, I remind myself this thinking model:
 
 > Figure out the recursive pattern. Then handle the cases that this pattern can't handle.
 
-Thinking this way never disappointed me.
+This way never disappointed me.
+
+The hardest part is figuring out the recursive pattern.
 
 Here, for getting the Fibonacci sequence of first $n$ terms where $n \gt 1$, is the same as getting the Fibonnaci sequence of first $n - 1$ terms and then add an extra term in it. Notice how the idea &ldquo;getting Fibonacci sequence of first $n$ terms where $n \gt 1$&rdquo; involves itself. So this a _recursive pattern_. In the above code this pattern is in the `else` block.
 
