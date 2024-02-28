@@ -7,49 +7,36 @@ tags = ["javascript"]
 katex = true
 +++
 
-*Template literal*s are a handy way to include any values inside a string. With template literals, you always get a string value.
+In JavaScript, *literal*s represent values that you provided literally in code, not through variables.
 
-*Tagged template literal*s give you complete freedom over the return value of a template literal and provide access to its parts through a function called the _tag function_.
+The word "_template_" in English means "_a thing that is used as a model for producing other similar examples_".<sup data-fnref>[templateDict]</sup>
 
-Here, we will take an in-depth look at both of them. However, I will not include the practical usages and examples of tagged template literals so that you can focus on understanding how it works without becoming overwhelmed. After going through this article, you will have all the required knowledge to study any of their practical examples.
+Template literal allows you to easily express a model for producing strings that look similar. This is possible because template literals can be made up of static texts with dynmaic parts in between.
 
-Let's start exploring.
+Tagged template literal allows you to _tag_ a template literal to the end of a function name. What happens then is that the function gets called with the template literal's static and dynamic parts giving you enormous power to produce any values you need by returning it from the function.
+
+In this post I will go over all the theoretical stuffs about them that you need to know. Let's start exploring.
 
 ## Template literal
 
-The _template literal_ (also known as an _untagged template literal_) is somewhat like a string literal. It is written within backticks (`` ` ``). Its value is **always** a string. It provides the following unique advantages that string literals do not offer:
+The _template literal_ (also known as an _untagged template literal_) is somewhat like a string literal. It is written within backticks (`` ` ``). Its value is **always** a string. It has two features:
 
-- Multiline strings
 - String interpolation
+- Multiline strings
 
-### Multiline strings
-
-Now you can write a multiline string just by creating real newlines in code like below:
-
-```javascript
-let poem = `
-from my bed
-I watch
-3 birds
-on a telephone
-wire.
-  -- Charles Bukowski 
-`;
-console.log(poem);
-// output
-/*
-from my bed
-I watch
-3 birds
-on a telephone
-wire.
-  -- Charles Bukowski 
-*/
-```
+Let's see them in detail.
 
 ### String interpolation
 
-We can place any expression within `${}`, which is called a **placeholder**. The given expression within it is called a **substitution**. A placeholder must contain a substitution. Text pieces separated by placeholders are called **template strings**. JavaScript evaluates the substitutions and, in this process, converts them to strings if they are not and joins all of its individual parts in respective order to return a string value. This idea is called _string interpolation_. Below is an example:
+This is what makes template literals _template_.
+
+You can place any expression within `${}`. This is called a _placeholder_.
+
+The given expression within it is called a _substitution_. A placeholder must contain a substitution.
+
+Text pieces separated by placeholders are called _template strings_.
+
+JavaScript evaluates the substitutions and, in this process, converts them to strings if they are not and joins all of its individual parts in respective order to return a string value. This idea is called _string interpolation_. Below is an example:
 
 ```js
 console.log(`JavaScript is ${new Date().getFullYear() - 1995} years old.`);
@@ -87,35 +74,52 @@ console.log(escapedStr);
 
 </aside>
 
-## Tagged template literal
+### Multiline strings
 
-Tagged template literal is also called _tagged template_ for short.<sup data-fnref>[exploringjs]</sup> It is made up of a template literal tagged onto a expression like below:
+Now you can write a multiline string just by creating real newlines in code like below:
 
-```js
-expression`template literal`;
+```javascript
+let poem = `
+from my bed
+I watch
+3 birds
+on a telephone
+wire.
+  -- Charles Bukowski 
+`;
+console.log(poem);
+// output
+/*
+from my bed
+I watch
+3 birds
+on a telephone
+wire.
+  -- Charles Bukowski 
+*/
 ```
 
-Here,
+## Tagged template literal
 
-- The `expression` which must evaluate to a function. This function is called **tag function**.
-- `template literal` stands for just any template literal or more specifically any _untagged template literal_. There is no hidden semantics here.
+Tagged template literal is also called _tagged template_ for short.<sup data-fnref>[exploringjs]</sup> It is made up of a template literal tagged onto a function name or more precisely a function expression like below:
 
-JavaScript calls the tag function by passing it parts of the template literal next to it in a specific way. The return value of this function is the value of the tagged template.
+```js
+funcitonExpression`template literal`;
+```
 
-To understand the tag function works properly we need to understand two concepts: the **cooked** and **raw** interpretation of _template strings_, because tag function gives us access to both forms:
+Here the function expression is called the _tag function_.
 
-- **Cooked interpretation** means the backslashes have special meaning. For example `\n` will produce a single character which is a newline character.
-- **Raw interpretation** means backslashes don't have special meaning. So `\n` will produce two characters: `\` and `n`.
+JavaScript calls the tag function by passing it parts of the template literal next to it. The return value of this function is the value of the tagged template. This value can be anything.
 
-Finally, we are ready to understand the _tag function_ really well. JavaScript gives us access to the parts of its template literal through its arguments, as described below:
+JavaScript provides arguments to the tag function like below:
 
-- **1st argument**: This is an array holding the cooked interpretation of _template strings_. However if a template string holds incorrect syntax of the following kind of escape sequences then the corresponding array element of that template string will hold `undefined`.
+- **1st argument**: This is an array holding the cooked interpretation<sup data-fnref>[cooked]</sup> of _template strings_. However if a template string holds incorrect syntax of the following kind of escape sequences then the corresponding array element of that template string will hold `undefined`.
 
   - Unicode codepoint escapes (eg. `\u{1F642}`)
   - Unicode unit escapes (eg. `\u03A3`)
   - Hexadecimal escapes (eg. `\x41`)
 
-  This array has a `raw` named property which holds all the raw interpretation of the template strings.
+  This array has a `raw` named property which holds raw interpretation<sup data-fnref>[raw]</sup> of the template strings.
 
   <aside class="admonition">
   <header>
@@ -129,9 +133,7 @@ Finally, we are ready to understand the _tag function_ really well. JavaScript g
 
 - **Remaining arguments**: These are the evaluated values of the _substitutions_. Note that these are not converted to strings from other types of values.
 
-The return value of tag function is the value of the tagged template. This value can be anything.
-
-That's it. Now you know how it works. Do the exercises below to make sure you understand it really well.
+That's all the theoretical stuff you need to know to be confident in using it. Do the exercises below to make sure you understand it really well.
 
 ## Exercises
 
@@ -213,7 +215,7 @@ In this case the array will be `['', ' and two and ', '']`. If we didn't get tha
 
 <details>
 <summary>
-Write the <i>tag function</i> <code>highlight</code> that outputs like like below:
+Implement <code>highlight</code> that works like below:
 
 ```js
 highlight`${1}`;
@@ -245,15 +247,20 @@ If you are new to the `...` dots syntax above or the `reduce` method, I've writt
 
 </details>
 
-## Further study
+## Conclusion
 
-For digging more or to study practical usages, here are some good resources:
+Congratulations! This article was dense with information. Now you know what template literal and tagged template literals are and how they works. Tagged template literals are not used as often as template literals but they have some interesting practical use cases worth knowing.
+
+For digging more or to study practical usages of tagged template literals, here are some good resources:
 
 - [JavaScript for impatient programmers (ES2022 edition)](https://exploringjs.com/impatient-js/ch_template-literals.html)
 - [CSS Tricks](https://css-tricks.com/template-literals/)
 - [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 
-## Footnotes
+## References and notes {#footnotes}
 
+- [templateDict] [Meaning of "template" from Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/definition/english/template)
 - [exploringjs] [Exploring ES6](https://exploringjs.com/es6/ch_template-literals.html#sec_introduction-template-literals) by [Dr. Axel Rauschmayer](https://dr-axel.de/)
 - [codegolf] [Code golf](https://en.wikipedia.org/wiki/Code_golf)
+- [cooked] _Cooked interpretation_ means the backslashes have special meaning. For example `\n` will produce a single character which is a newline character.
+- [raw] _Raw interpretation_ means backslashes don't have special meaning. So `\n` will produce two characters: `\` and `n`.
