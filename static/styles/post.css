@@ -57,8 +57,21 @@
   }
 
   & details {
-    border: 1px solid grey;
+    border: 1px solid #aaa;
+    padding: 1ch 1ch 0;
+
+    & summary {
+      margin: -1ch -1ch 0;
+      padding: 1ch;
+    }
+  }
+
+  & details[open] {
     padding: 1ch;
+    & summary {
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 1ch;
+    }
   }
 
   & blockquote {
@@ -74,6 +87,6 @@
   }
 
   & .fn-targeted-backlink {
-    background: yellow;
+    background: orange;
   }
 }
