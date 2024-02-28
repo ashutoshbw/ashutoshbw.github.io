@@ -1,6 +1,7 @@
 +++
 title = "Template literals and tagged template literals"
 date = 2022-03-13
+updated = 2024-02-28
 [taxonomies]
 tags = ["javascript"]
 [extra]
