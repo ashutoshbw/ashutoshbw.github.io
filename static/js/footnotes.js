@@ -59,14 +59,27 @@ function initFootnotes() {
 
     for (let i = 0; i < ul.children.length; i++) {
       const li = ul.children[i];
-      const firstNode = li.firstChild;
+      let tokenNode = li.firstChild;
 
-      if (firstNode.nodeType == 3) {
+      while (tokenNode) {
+        if (tokenNode.nodeType == 3) {
+          if (tokenNode.textContent.trim() == "") {
+            tokenNode = tokenNode.nextSibling;
+          } else {
+            break;
+          }
+        } else {
+          // TODO: Consider other node types if required
+          tokenNode = tokenNode.firstChild;
+        }
+      }
+
+      if (tokenNode.nodeType == 3) {
         const tokenRegex = /^\[(\w+)\]\s?/;
-        const match = firstNode.textContent.match(tokenRegex);
+        const match = tokenNode.textContent.trim().match(tokenRegex);
         if (match) {
           const token = match[1];
-          firstNode.textContent = firstNode.textContent.replace(tokenRegex, "");
+          tokenNode.textContent = tokenNode.textContent.replace(tokenRegex, "");
 
           li.id = getUniqueId(`fn-${token}`);
 
