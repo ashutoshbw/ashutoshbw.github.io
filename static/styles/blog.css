@@ -1,0 +1,23 @@
+.posts {
+  font-size: 1.3rem;
+  margin-left: 3rem;
+  margin-block: 2.5rem;
+}
+
+.posts a {
+  text-decoration: none;
+}
+
+.posts a:hover {
+  text-decoration: underline;
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  display: block;
+  opacity: 0.3;
+}
+
+.posts li:hover .post-meta {
+  opacity: 1;
+}

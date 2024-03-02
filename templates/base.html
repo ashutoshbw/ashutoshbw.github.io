@@ -13,7 +13,6 @@
 
 <div class="site-wrapper">
   <header class="site-header">
-    <h2>Ashutosh Biswas</h2>
     <nav>
       <a href="{{ get_url(path='/') }}">Home</a>
       <a href="{{ get_url(path='@/blog/_index.md') }}">Blog</a>
@@ -23,12 +22,14 @@
   </header>
 
   <main>
-    {%- block main %} {% endblock main -%}
+    <div class="content-wrapper">
+      {%- block main %} {% endblock main -%}
+    </div>
   </main>
 
   <footer class="site-footer">
     <p>© Ashutosh Biswas, 2024</p>
-    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source</a></p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
     <p>Last built on {{ now(utc=true) | date(format='%e %B %Y at %l:%M %p UTC') }}</p>
   </footer>
 </div>

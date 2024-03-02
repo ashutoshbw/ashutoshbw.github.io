@@ -14,7 +14,7 @@
 .site-header,
 .site-footer {
   padding: var(--site-margin);
-  background-color: lightblue;
+  text-align: center;
 }
 
 .site-footer {
@@ -42,9 +42,9 @@ h6 {
 }
 
 li {
-  margin-top: 0.2rem;
+  margin-top: 0.5rem;
   & pre {
-    margin-top: 0.2rem;
+    margin-top: 0.5rem;
   }
 }
 
@@ -67,4 +67,12 @@ ol li {
 
 ul li {
   list-style-type: disc;
+}
+
+.content-wrapper {
+  max-width: 80ch;
+  width: 100%;
+  padding-inline: min(1.5vw, 2.5ch);
+  padding-block: 6rem;
+  margin-inline: auto;
 }

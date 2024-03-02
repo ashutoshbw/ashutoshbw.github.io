@@ -6,16 +6,16 @@
 {% endblock stylesheet %}
 
 {% block main %}
-  <h1>My Projects</h1>
+  <h1>My projects</h1>
   <p>Below are some of my favorite projects:</p>
   {% set data = load_data(path="@/projects/data.json") %}
   {% for project in data %}
     <section class="project">
-      <header>{{ project.name }}</header>
+      <h2>{{ project.name }}</h2>
       <p>{{ project.description }}</p>
       <p>
-        <b>Stack</b>:
-        {% for item in project.stack %}
+        <b>Tools used</b>:
+        {% for item in project.toolsUsed  %}
           <span>{{ item }}</span>
           {%- if loop.last == false %}, {% endif %}
         {% endfor %}

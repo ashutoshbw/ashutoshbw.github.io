@@ -1,10 +1,4 @@
 .post {
-  max-width: 80ch;
-  width: 100%;
-  padding-inline: min(1.5vw, 2.5ch);
-  padding-block: 6rem;
-  margin-inline: auto;
-
   & > header {
     margin-bottom: 2rem;
     & h1 {
