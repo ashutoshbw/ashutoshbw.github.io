@@ -41,7 +41,7 @@ From ancient times JavaScript gives all regular functions(non-arrow functions) a
 - Since it's not an array, array methods don't work on it.
 - We need extra boilerplate code to convert `arguments` object to an actual array.
 
-In ES6, **rest parameter** is introduced to overcome these limitations.
+In ES6, _rest parameter_ is introduced to overcome these limitations.
 
 ## Notes {#footnotes}
 
