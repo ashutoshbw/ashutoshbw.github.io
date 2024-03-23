@@ -5,7 +5,11 @@
 {% endblock stylesheet %}
 
 {% block script %}
-  <script defer src="{{ get_url(path='js/footnotes.js', cachebust=true) }}"></script>
+  <script type="module">
+    import initPadatika from "https://esm.sh/padatika";
+
+    initPadatika({footnotes: ""});
+  </script>
   {% if page.extra.katex %}
     {% include "katex.html" %}
   {% endif %}
