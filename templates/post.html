@@ -24,7 +24,8 @@
       {% endif %}
       <p>Published on {{ macros::render_date(date=page.date, itemprop="datePublished") }} · Tagged with {{ macros::render_tag_links_of_post(post=page) }}</p>
     </header>
-    {{ page.content | safe }}
+
+    {{ page.content | replace(from="[<em>", to="<sup data-padatika>") | replace(from="</em>]", to="</sup>") | safe }}
 
     {% set len = page.backlinks | length %}
     {% if len != 0 %}
