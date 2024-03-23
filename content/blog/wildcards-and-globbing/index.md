@@ -8,17 +8,17 @@ tags = ["linux"]
 
 The two features of Linux shells — wildcards and globbing — can sometimes save us a lot of time by matching filenames quickly so that you can perfrom some kind of operation on them like displaying, copying, moving, removing etc.
 
-A _wildcard_<sup data-fnref>[wildcard]</sup> is a character or a set of characters that acts as a placeholder for other characters. A _wildcard character_(aka _metacharacter_) is a wildcard containing a single character. Wildcards looks like this: `*`, `?`, `[a-z0-4]`. We will learn the meaning of these symbols in a minute.
+A _wildcard_[_wildcard_] is a character or a set of characters that acts as a placeholder for other characters. A _wildcard character_(aka _metacharacter_) is a wildcard containing a single character. Wildcards looks like this: `*`, `?`, `[a-z0-4]`. We will learn the meaning of these symbols in a minute.
 
 _Wildcard pattern_(aka _glob pattern_, _glob_ or just _pattern_) is a string that contains wildcard in it. Shell can use them to match filenames. They looks somewhat like this: `*ing.pdf`, `photo-??.jpg`, `photo-[0-9][0-9].jpg` etc.
 
-_Globbing_<sup data-fnref>[glob]</sup> is the operation of macthing items from a list of strings using wildcard pattern and returning the list of matched items.
+_Globbing_[_glob_] is the operation of macthing items from a list of strings using wildcard pattern and returning the list of matched items.
 
 Globbing is frequently used for matching filenames in Linux. In this context it is also sometimes referred to as _filename expansion_, _filename substitution_, _filename generation_(in zsh specially) or _pathname expansion_.
 
 ## Common wildcards
 
-Below are the explanation of some wildcards<sup data-fnref>[commonwildcards]</sup> which are present in all good shells out there like bash and zsh:
+Below are the explanation of some wildcards[_refs:commonwildcards_] which are present in all good shells out there like bash and zsh:
 
 - `*`: Matches zero or more character.
 - `?`: Matches any one character.
@@ -97,8 +97,11 @@ For a more in depth study of the wildcards and globbing(including extended ones)
 - [GNU bash manual](https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html)
 - [zsh doc](https://zsh.sourceforge.io/Doc/Release/Expansion.html#Filename-Generation)
 
-## Footnotes
+## Notes {#notes}
 
 - [glob] Originally `glob` was the program to do what today we mean by globbing in a smaller scale. The name glob came from global.
 - [wildcard] In card games wildcard is used describe a card which can have any value as it's holder desires. This is where the term came from.
+
+## References {#refs}
+
 - [commonwildcards] [GNU Findutils](https://www.gnu.org/software/findutils/manual/html_node/find_html/Shell-Pattern-Matching.html)

@@ -10,9 +10,9 @@ Have you ever dreamed of creating your own JavaScript function that can accept _
 
 ## Rest parameter
 
-If we put 3 dots(`...`)<sup data-fnref>[dots]</sup> before the last parameter of a function, that last parameter is called _rest parameter_.
+If we put 3 dots(`...`)[_dots_] before the last parameter of a function, that last parameter is called _rest parameter_.
 
-If we do so, we can access any number of arguments given to that function from the position of the rest paramter to the right, wrapped in an array<sup data-fnref>[arr]</sup>. For example:
+If we do so, we can access any number of arguments given to that function from the position of the rest paramter to the right, wrapped in an array[_arr_]. For example:
 
 ```js
 function foo(a, b, ...c) {
@@ -43,7 +43,7 @@ From ancient times JavaScript gives all regular functions(non-arrow functions) a
 
 In ES6, rest parameter is introduced to overcome these limitations.
 
-## Notes {#footnotes}
+## Notes {#notes}
 
 - [arr] The array that rest parameter gives us is a standard JavaScript array, which means we can use any available array method on it.
 - [dots] The `...` in JavaScript can have different meanings based on where it is used. Other JavaScript syntaxes that uses `...` are [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) and [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).

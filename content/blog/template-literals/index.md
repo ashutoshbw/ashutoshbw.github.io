@@ -10,7 +10,7 @@ katex = true
 
 In JavaScript, *literal*s represent values that you provided literally in code, not through variables.
 
-The word "_template_" in English means "_a thing that is used as a model for producing other similar examples_".<sup data-fnref>[templateDict]</sup>
+The word "_template_" in English means "_a thing that is used as a model for producing other similar examples_".[_refs:templateDict_]
 
 Template literal allows you to easily express a model for producing strings that look similar. This is possible because template literals can be made up of static texts with dynmaic parts in between.
 
@@ -102,7 +102,7 @@ wire.
 
 ## Tagged template literal
 
-Tagged template literal is also called _tagged template_ for short.<sup data-fnref>[exploringjs]</sup> It is made up of a template literal tagged onto a function name or more precisely a function expression like below:
+Tagged template literal is also called _tagged template_ for short.[_refs:exploringjs_] It is made up of a template literal tagged onto a function name or more precisely a function expression like below:
 
 ```js
 funcitonExpression`template literal`;
@@ -114,13 +114,13 @@ JavaScript calls the tag function by passing it parts of the template literal ne
 
 JavaScript provides arguments to the tag function like below:
 
-- **1st argument**: This is an array holding the cooked interpretation<sup data-fnref>[cooked]</sup> of _template strings_. However if a template string holds incorrect syntax of the following kind of escape sequences then the corresponding array element of that template string will hold `undefined`.
+- **1st argument**: This is an array holding the cooked interpretation[_cooked_] of _template strings_. However if a template string holds incorrect syntax of the following kind of escape sequences then the corresponding array element of that template string will hold `undefined`.
 
   - Unicode codepoint escapes (eg. `\u{1F642}`)
   - Unicode unit escapes (eg. `\u03A3`)
   - Hexadecimal escapes (eg. `\x41`)
 
-  This array has a `raw` named property which holds raw interpretation<sup data-fnref>[raw]</sup> of the template strings.
+  This array has a `raw` named property which holds raw interpretation[_raw_] of the template strings.
 
   <aside class="admonition">
   <header>
@@ -191,7 +191,7 @@ Note that if you use placeholders in the template literal, the result will proba
 // 'Hello Jimmy, , and ,! WelcomePeterJohn'
 ```
 
-Except doing code golf<sup data-fnref>[codegolf]</sup> I don't recommened using `join` and `concat` like this.
+Except doing code golf[_refs:codegolf_] I don't recommened using `join` and `concat` like this.
 
 </details>
 
@@ -258,10 +258,13 @@ For digging more or to study practical usages of tagged template literals, here 
 - [CSS Tricks](https://css-tricks.com/template-literals/)
 - [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 
-## References and notes {#footnotes}
+## Notes {#notes}
 
-- [templateDict] [Meaning of "template" from Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/definition/english/template)
-- [exploringjs] [Exploring ES6](https://exploringjs.com/es6/ch_template-literals.html#sec_introduction-template-literals) by [Dr. Axel Rauschmayer](https://dr-axel.de/)
-- [codegolf] [Code golf](https://en.wikipedia.org/wiki/Code_golf)
 - [cooked] _Cooked interpretation_ means the backslashes have special meaning. For example `\n` will produce a single character which is a newline character.
 - [raw] _Raw interpretation_ means backslashes don't have special meaning. So `\n` will produce two characters: `\` and `n`.
+
+## References {#refs}
+
+- [templateDict] [Meaning of "template" from Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/definition/english/template)
+- [codegolf] [Code golf](https://en.wikipedia.org/wiki/Code_golf)
+- [exploringjs] [Exploring ES6](https://exploringjs.com/es6/ch_template-literals.html#sec_introduction-template-literals) by [Dr. Axel Rauschmayer](https://dr-axel.de/)

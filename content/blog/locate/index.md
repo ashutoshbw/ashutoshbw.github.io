@@ -102,7 +102,7 @@ This time the output will be significantly less somewhat like below:
 /usr/bin/zipinfo
 ```
 
-We can also use glob patterns(aka wildcard patterns).<sup data-fnref>[glob]</sup> In this case it's important to quote the pattern to prevent the shell from expanding them. For example:
+We can also use glob patterns(aka wildcard patterns).[_refs:glob_] In this case it's important to quote the pattern to prevent the shell from expanding them. For example:
 
 ```zsh
 locate '*.md'
@@ -226,6 +226,6 @@ locate --regex '\.(js|json)$'
 
 For further info see `locate`'s man page by entering `man plocate`.
 
-## References {#footnotes}
+## References {#refs}
 
 - [glob] [What are wildcards and globbing?](@/blog/wildcards-and-globbing/index.md)

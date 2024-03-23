@@ -15,9 +15,9 @@ tags = ["javascript"]
 
 You have propbably used these operators countless times to compare numbers in your programming journey with JavaScript without any problems.
 
-But did you know that JavaScript can compare not only numbers but also all kinds of values? While this may seem strange, it has some useful use cases, especially when comparing ASCII<sup data-fnref>[asciiunicode]</sup> strings of same case. While exploring these comparisons, I found the process of comparing numbers, strings and how the operators `>`, `<=`, `>=` derived from <, to be quite interesting. In this article, I will share with you everything that If found useful or interesting while exploring these operators. Let's start.
+But did you know that JavaScript can compare not only numbers but also all kinds of values? While this may seem strange, it has some useful use cases, especially when comparing ASCII[_refs:asciiunicode_] strings of same case. While exploring these comparisons, I found the process of comparing numbers, strings and how the operators `>`, `<=`, `>=` derived from <, to be quite interesting. In this article, I will share with you everything that If found useful or interesting while exploring these operators. Let's start.
 
-They are part of a set of operators known as _comparison operators_.<sup data-fnref>[compops]</sup><sup data-fnref>[othercompops]</sup> These operators are also part of a set of operators officially known as _relational operators_.<sup data-fnref>[relops]</sup><sup data-fnref>[otherrelops]</sup>
+They are part of a set of operators known as _comparison operators_.[_refs:compops_][_othercompops_] These operators are also part of a set of operators officially known as _relational operators_.[_refs:relops_][_otherrelops_]
 
 To make life simple and easy, here I will ignore all the less useful comparisons and only go into the depth of the most useful ones:
 
@@ -37,7 +37,7 @@ These are mostly as in mathematics. For example:
 10 < 9; // false
 ```
 
-As values Number type have a limited precision<sup data-fnref>[numprecision]</sup>, for very long numbers literals you might get incorrect result when comparing them. For example:
+As values Number type have a limited precision[_refs:numprecision_], for very long numbers literals you might get incorrect result when comparing them. For example:
 
 ```js
 3 < 3.00000000000000001; // false
@@ -67,7 +67,7 @@ As BigInts don't have NaN or infinities, and they have arbitrary precision, they
 
 ### Comparing Strings
 
-`<` operator uses a simple _lexicographic ordering_<sup data-fnref>[lex]</sup> for comparing string values which can become handy when we know how it works and we don't need any advanced comparison.
+`<` operator uses a simple _lexicographic ordering_[_lex_] for comparing string values which can become handy when we know how it works and we don't need any advanced comparison.
 
 Let `leftString` and `rightString` are strings and we want to know how JavaScript evaluates the value of the expression `leftString < rightString`. Here goes the algorithm:
 
@@ -91,7 +91,7 @@ Let `leftString` and `rightString` are strings and we want to know how JavaScrip
    // true
    ```
 
-3. At this point, as neither string starts with the other, there must be a smallest index where code units<sup data-fnref>[codeunit]</sup> of the two strings are different. Let `s` be that index. In the following example `s` is `4`:
+3. At this point, as neither string starts with the other, there must be a smallest index where code units[_refs:codeunit_] of the two strings are different. Let `s` be that index. In the following example `s` is `4`:
 
    ```js
    "Linux" < "Linus Torvalds";
@@ -105,7 +105,7 @@ Let `leftString` and `rightString` are strings and we want to know how JavaScrip
    ```
 
    <details>
-   <summary>See <code>getCodeUnits</code> implementation<sup data-fnref>[codeunit]</sup></summary>
+   <summary>See <code>getCodeUnits</code> implementation[_refs:codeunit_]</summary>
 
    ```js
    function getCodeUnits(s) {
@@ -119,13 +119,13 @@ Let `leftString` and `rightString` are strings and we want to know how JavaScrip
 
    </details>
 
-4. Let `m` be `leftString.charCodeAt(s)`.<sup data-fnref>[charCodeAt]</sup>
-5. Let `n` be `rightString.charCodeAt(s)`.<sup data-fnref>[charCodeAt]</sup>
+4. Let `m` be `leftString.charCodeAt(s)`.[_refs:charCodeAt_]
+5. Let `n` be `rightString.charCodeAt(s)`.[_refs:charCodeAt_]
 6. If `m < n` return `true`, otherwise return `false`.
 
    For the example at step 3, `m` is `120` and `n` is `115`, so `'Linux' < 'Linus Torvalds'` is `false`!
 
-Note that comparison with `<` is not like dictionaries in all cases, for example when lowercase, uppercase or accents are involved. But for simple comparisons like comparing two lowercase English letters or words, it works just fine because they fall under ASCII subset of Unicode.<sup data-fnref>[asciiunicode]</sup>
+Note that comparison with `<` is not like dictionaries in all cases, for example when lowercase, uppercase or accents are involved. But for simple comparisons like comparing two lowercase English letters or words, it works just fine because they fall under ASCII subset of Unicode.[_refs:asciiunicode_]
 
 Luckily JavaScript now allows proper language aware comparison through the awesome [Intl.Collator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator) object. It is beyond the scope of this article.
 
@@ -137,7 +137,7 @@ Let's now see how the other three operators work.
 
 1. If both operands are of Number type and either one is `NaN`
    1. Return `false`.
-2. Return `rightValue < leftValue`.<sup data-fnref>[evalorder]</sup>
+2. Return `rightValue < leftValue`.[_evalorder_]
 
 ## Less than or equal operator: `<=`
 
@@ -145,7 +145,7 @@ Let's now see how the other three operators work.
 
 1. If both operands are of Number type and either one is `NaN`
    1. Return `false`.
-2. If `rightValue < leftValue` is `true`<sup data-fnref>[evalorder]</sup>
+2. If `rightValue < leftValue` is `true`[_evalorder_]
    1. Return `false`.
 3. Else
    1. Return `true`.
@@ -161,15 +161,18 @@ Let's now see how the other three operators work.
 3. Else
    1. Return `true`.
 
-## References and notes {#footnotes}
+## Notes {#notes}
 
-- [compops] [Comparison operators - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#comparison_operators)
 - [othercompops] The other comparison operators `==`, `===`, `!=` and `!==`.
-- [relops] [Relational Operators - ECMAScript Language Specification](https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-relational-operators)
 - [otherrelops] There are two relational operators that are not comparison operators: `in` and `instanceof`.
-- [numprecision] [How numbers are encoded in JavaScript](https://2ality.com/2012/04/number-encoding.html)
 - [lex] The heavy phrase "Lexicographic ordering" means an ordering similar to the alphabetic ordering of the dictionaries.
-- [codeunit] [How JavaScript strings are made?](@/blog/how-strings-are-made/index.md)
-- [charCodeAt] [`String.prototype.charCodeAt()` - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt)
 - [evalorder] JavaScript always evaluates expressions from left to write while reading its source code. Here though the `rightValue` appears to the left, it would not make it evalutate before the `leftValue` because `leftValue` appeared to the left in initial expresssion that this algorithm is about.
+
+## References {#refs}
+
+- [charCodeAt] [`String.prototype.charCodeAt()` - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt)
+- [codeunit] [How JavaScript strings are made?](@/blog/how-strings-are-made/index.md)
+- [compops] [Comparison operators - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#comparison_operators)
+- [relops] [Relational Operators - ECMAScript Language Specification](https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-relational-operators)
+- [numprecision] [How numbers are encoded in JavaScript](https://2ality.com/2012/04/number-encoding.html)
 - [asciiunicode] [What's the difference between ASCII and Unicode?](https://stackoverflow.com/questions/19212306/whats-the-difference-between-ascii-and-unicode)
