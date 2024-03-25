@@ -35,13 +35,13 @@
 {% endmacro render_post %}
 
 {% macro render_posts(posts) %}
-  <ol class="posts" reversed>
+  <ul class="posts">
     {% for post in posts %}
       <li>
         {{ self::render_post(post=post) }}
       </li>
     {% endfor %}
-  </ol>
+  </ul>
 {% endmacro render_posts %}
 
 {% macro render_gallery_photos(file) %}
