@@ -20,9 +20,9 @@
     <header>
       <h1 itemprop="headline">{{ page.title | markdown(inline=true) | safe }}</h1>
       {% if page.updated %}
-        <p>Last updated on {{ macros::render_date(date=page.updated, itemprop="dateModified") }}</p>
+        <p>Last updated on {{ macros::render_date(date=0, updated=page.updated, itemprop="dateModified") }}</p>
       {% endif %}
-      <p>Published on {{ macros::render_date(date=page.date, itemprop="datePublished") }} · Tagged with {{ macros::render_tag_links_of_post(post=page) }}</p>
+      <p>Published on {{ macros::render_date(date=page.date, updated=0, itemprop="datePublished") }} · Tagged with {{ macros::render_tag_links_of_post(post=page) }}</p>
     </header>
 
     {{ page.content | replace(from="[<em>", to="<sup data-padatika>") | replace(from="</em>]", to="</sup>") | safe }}

@@ -19,14 +19,17 @@
   {% endfor %}
 {% endmacro render_all_tags %}
 
-{% macro render_date(date, itemprop=false) %}
+{% macro render_date(date, updated, itemprop=false) %}
+  {% if updated %}
+    {% set date = updated %}
+  {% endif %}
   <time {% if itemprop %}itemprop="{{ itemprop }}"{% endif %} datetime="{{ date }}">{{ date | date(format='%e %B %Y') }}</time>
 {% endmacro render_date %}
 
 {% macro render_post(post) %}
   <a href="{{ post.permalink | safe }}" class="post-link">{{ post.title | markdown(inline=true) | safe }}</a>
   <span class="post-meta">
-    {{ self::render_date(date=post.date) }}
+    {{ self::render_date(date=post.date, updated=post.updated) }}
     {{ self::render_tag_links_of_post(post=post) }}
   </span>
 {% endmacro render_post %}
