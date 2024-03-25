@@ -6,8 +6,8 @@
 
 {% block main %}
   <h1>Blog posts tagged "{{term.name}}"</h1>
-  {{ macros::render_posts(posts=term.pages) }}
   <p>
     <b>All Tags</b>: {{ macros::render_all_tags() }}
   </p>
+  {{ macros::render_posts(posts=term.pages) }}
 {% endblock main %}
