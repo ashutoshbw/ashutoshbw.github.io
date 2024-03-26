@@ -228,4 +228,4 @@ For further info see `locate`'s man page by entering `man plocate`.
 
 ## References {#refs}
 
-- [glob] [What are wildcards and globbing?](@/blog/wildcards-and-globbing/index.md)
+- [glob] [What are wildcards and globbing?](@/garden/wildcards-and-globbing/index.md)

@@ -176,7 +176,7 @@ Let's now see how the other three operators work.
 ## References {#refs}
 
 - [charCodeAt] [`String.prototype.charCodeAt()` - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt)
-- [codeunit] [How JavaScript strings are made?](@/blog/how-strings-are-made/index.md)
+- [codeunit] [How JavaScript strings are made?](@/garden/how-strings-are-made/index.md)
 - [compops] [Comparison operators - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#comparison_operators)
 - [relops] [Relational Operators - ECMAScript Language Specification](https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-relational-operators)
 - [numprecision] [How numbers are encoded in JavaScript](https://2ality.com/2012/04/number-encoding.html)

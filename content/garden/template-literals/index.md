@@ -243,7 +243,7 @@ console.log(highlight`This is ${"cool"}.`);
 
 If you are new to the `...` dots syntax above or the `reduce` method, I've written in-depth articles on them. I hope you will find them will helpful:
 
-- [Rest parameter of JavaScript](@/blog/rest-parameter/index.md)
+- [Rest parameter of JavaScript](@/garden/rest-parameter/index.md)
 - [How the JavaScript reduce and reduceRight Methods Work](https://www.freecodecamp.org/news/how-reduce-reduceright-works-javascript/)
 
 </details>
