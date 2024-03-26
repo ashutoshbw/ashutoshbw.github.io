@@ -4,6 +4,11 @@ date = 2023-04-10
 updated = 2024-03-01
 [taxonomies]
 tags = ["javascript"]
+[extra]
+status = "finished"
+importance = 4
+certainty = "certain"
+description = "A theoretical rabbit hole journey into 4 most common comparison operators of JavaScript."
 +++
 
 | Operator | Name                  |
@@ -105,7 +110,7 @@ Let `leftString` and `rightString` are strings and we want to know how JavaScrip
    ```
 
    <details>
-   <summary>See <code>getCodeUnits</code> implementation[_refs:codeunit_]</summary>
+   <summary>See <code>getCodeUnits</code> implementation<sup data-padatika>refs:codeunit</sup></summary>
 
    ```js
    function getCodeUnits(s) {

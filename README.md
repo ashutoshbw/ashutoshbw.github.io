@@ -1,5 +1,7 @@
 # Some notes on this site
 
+The following are some notes to myself about how to work this site and create new content.
+
 ## How to create a new post?
 
 - For each blog post create a dedicated folder for it in `content/blog`. The folder name should follow the following rules:
@@ -15,7 +17,27 @@ Backlink page information is fetched using `get_page`, which relies on the markd
 
 </details>
 
-## Post frontmatters
+## Post frontmatter
+
+### Optional extra meta tags
+
+These should come in the `extra` section of post frontmatter. I have stolen the idea of `status`, `importance` and `certainty` from [https://gwern.net](https://gwern.net/).
+
+- status: Possible values:
+  - draft
+  - in progress
+  - finished
+- importance: a 0 to 10 value from least important to very important.
+- certainty: Possible values:
+  - certain
+  - highly likely
+  - likely
+  - possible
+  - unlikely
+  - highly unlikely
+  - remote
+  - impossible
+- description: A description of the post, roughly between 150 to 160 characters. This is bascially for SEO.
 
 ## Shortcodes
 
