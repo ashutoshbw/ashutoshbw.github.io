@@ -19,28 +19,30 @@
   <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1 itemprop="headline">{{ page.title | markdown(inline=true) | safe }}</h1>
-      <p>
-        Tags → <i>{{ macros::render_tag_links_of_note(note=page) }}</i>
-      </p>
-      <p>
-        {% if page.updated %}
-        <span>Last updated → <i>{{ macros::render_date(date=0, updated=page.updated, itemprop="dateModified") }}</i></span> ·
-        {% endif %}
-        <span>Published → <i>{{ macros::render_date(date=page.date, updated=0, itemprop="datePublished") }}</i></span>
-      </p>
-      <p>
-        {% if page.extra.status %}
-          <span>Status → <em>{{ page.extra.status }}</em></span>
-        {% endif %}
-        {% if page.extra.importance %}
-          {% if page.extra.status %} · {% endif %}
-          <span>importance → <em>{{ page.extra.importance }}</em></span>
-        {% endif %}
-        {% if page.extra.certainty %}
-          {% if page.extra.importance %} · {% endif %}
-          <span>certainty → <em>{{ page.extra.certainty }}</em></span>
-        {% endif %}
-      </p>
+      <div class="note-meta">
+        <p>
+          Tags → <i>{{ macros::render_tag_links_of_note(note=page) }}</i>
+        </p>
+        <p>
+          {% if page.updated %}
+          <span>Last updated → <i>{{ macros::render_date(date=0, updated=page.updated, itemprop="dateModified") }}</i></span> ·
+          {% endif %}
+          <span>Published → <i>{{ macros::render_date(date=page.date, updated=0, itemprop="datePublished") }}</i></span>
+        </p>
+        <p>
+          {% if page.extra.status %}
+            <span>Status → <em>{{ page.extra.status }}</em></span>
+          {% endif %}
+          {% if page.extra.importance %}
+            {% if page.extra.status %} · {% endif %}
+            <span>importance → <em>{{ page.extra.importance }}</em></span>
+          {% endif %}
+          {% if page.extra.certainty %}
+            {% if page.extra.importance %} · {% endif %}
+            <span>certainty → <em>{{ page.extra.certainty }}</em></span>
+          {% endif %}
+        </p>
+      </div>
     </header>
 
     {{ page.content | replace(from="[<em>", to="<sup data-padatika>") | replace(from="</em>]", to="</sup>") | safe }}
