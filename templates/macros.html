@@ -3,9 +3,7 @@
   {% if tags %}
     <span>
       {% for tag in tags %}
-        <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">
-          {{ tag }}
-        </a>
+        <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}
       {% endfor %}
     </span>
   {% endif %}
@@ -15,7 +13,7 @@
   {% set tagsObject = get_taxonomy(kind="tags", required=false) %}
   {% set tags = tagsObject.items %}
   {% for tag in tags | sort(attribute="pages") | reverse %}
-    <a href="{{ tag.permalink | safe }}">{{ tag.name }} <sup>{{tag.pages | length}}</sup></a>
+    <a href="{{ tag.permalink | safe }}">{{ tag.name }} <sup>{{tag.pages | length}}</sup></a>{% if not loop.last %}, {% endif %}
   {% endfor %}
 {% endmacro render_all_tags %}
 
