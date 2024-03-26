@@ -2,13 +2,13 @@
 
 The following are some notes to myself about how to work this site and create new content.
 
-## How to create a new post?
+## How to create a new note?
 
-- For each blog post create a dedicated folder for it in `content/blog`. The folder name should follow the following rules:
+- For each note create a dedicated folder for it in `content/garden`. The folder name should follow the following rules:
   - Only lowercase English letters and dash(`-`) are allowed.
   - Do not start with a dash.
   - Do not use multiple adjacent dashes.
-- Do not use the `slug` frontmatter property of a post to change its slug.
+- Do not use the `slug` frontmatter property of a note to change its slug.
 
 <details>
 <summary><b>Why these rules</b>: To make backlinks work as expected.</summary>
@@ -21,7 +21,7 @@ Backlink page information is fetched using `get_page`, which relies on the markd
 
 ### Optional extra meta tags
 
-These should come in the `extra` section of post frontmatter. I have stolen the idea of `status`, `importance` and `certainty` from [https://gwern.net](https://gwern.net/).
+These should come in the `extra` section of note frontmatter. I have stolen the idea of `status`, `importance` and `certainty` from [https://gwern.net](https://gwern.net/).
 
 - status: Possible values:
   - draft
@@ -37,7 +37,7 @@ These should come in the `extra` section of post frontmatter. I have stolen the 
   - highly unlikely
   - remote
   - impossible
-- description: A description of the post, roughly between 150 to 160 characters. This is bascially for SEO.
+- description: A description of the note, roughly between 150 to 160 characters. This is bascially for SEO.
 
 ## Shortcodes
 
@@ -45,7 +45,7 @@ These should come in the `extra` section of post frontmatter. I have stolen the 
 
 You can use it to easily scale an image and embed it with some handy features, especially when you have a large image but need a smaller version for faster rendering. Let's explore its usage:
 
-The only required parameter is `name` where you provide the image name located in your post's folder. So if you have a image in `content/blog/my-pet/cat.png`, you can embed it like below:
+The only required parameter is `name` where you provide the image name located in your note's folder. So if you have a image in `content/garden/my-pet/cat.png`, you can embed it like below:
 
 ```md
 {{ img(name="cat.png") }}
@@ -72,5 +72,3 @@ You have 4 optional parmeters for this shortcode. They are described below:
   {{ img(name="cat.png", target="_self") }}
   ```
   You can't use any other value for `target`. If you try, it's equivalent to using the `_self` value with this exception: if you use any falsy value like `0` or `""` it will treated as `_blank`.
-
-## Macros

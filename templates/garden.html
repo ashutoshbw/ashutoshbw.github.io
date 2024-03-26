@@ -3,7 +3,7 @@
 {% block title %}{{ section.title }} · {{ super() }}{% endblock title%}
 
 {% block stylesheet %}
-  <link rel="stylesheet" href="{{ get_url(path='styles/blog.css', cachebust=true) }}">
+  <link rel="stylesheet" href="{{ get_url(path='styles/garden.css', cachebust=true) }}">
 {% endblock stylesheet %}
 
 {% block main %}
@@ -11,5 +11,5 @@
   <p>
     <b>All Tags</b>: {{ macros::render_all_tags() }}
   </p>
-  {{ macros::render_posts(posts=section.pages) }}
+  {{ macros::render_notes(notes=section.pages) }}
 {% endblock main %}

@@ -16,7 +16,7 @@ Template literal allows you to easily express a model for producing strings that
 
 Tagged template literal allows you to _tag_ a template literal to the end of a function name. What happens then is that the function gets called with the template literal's static and dynamic parts giving you enormous power to produce any values you need by returning it from the function.
 
-In this post I will go over all the theoretical stuffs about them that you need to know. Let's start exploring.
+In this note I will go over all the theoretical stuffs about them that you need to know. Let's start exploring.
 
 ## Template literal
 

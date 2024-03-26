@@ -1,5 +1,5 @@
-{% macro render_tag_links_of_post(post) %}
-  {% set tags = post.taxonomies.tags %}
+{% macro render_tag_links_of_note(note) %}
+  {% set tags = note.taxonomies.tags %}
   {% if tags %}
     <span>
       {% for tag in tags %}
@@ -7,7 +7,7 @@
       {% endfor %}
     </span>
   {% endif %}
-{% endmacro render_tag_links_of_post %}
+{% endmacro render_tag_links_of_note %}
 
 {% macro render_all_tags() %}
   {% set tagsObject = get_taxonomy(kind="tags", required=false) %}
@@ -24,23 +24,23 @@
   <time {% if itemprop %}itemprop="{{ itemprop }}"{% endif %} datetime="{{ date }}">{{ date | date(format='%e %B %Y') }}</time>
 {% endmacro render_date %}
 
-{% macro render_post(post) %}
-  <a href="{{ post.permalink | safe }}" class="post-link">{{ post.title | markdown(inline=true) | safe }}</a>
-  <span class="post-meta">
-    {{ self::render_date(date=post.date, updated=post.updated) }}
-    {{ self::render_tag_links_of_post(post=post) }}
+{% macro render_note(note) %}
+  <a href="{{ note.permalink | safe }}" class="note-link">{{ note.title | markdown(inline=true) | safe }}</a>
+  <span class="note-meta">
+    {{ self::render_date(date=note.date, updated=note.updated) }}
+    {{ self::render_tag_links_of_note(note=note) }}
   </span>
-{% endmacro render_post %}
+{% endmacro render_note %}
 
-{% macro render_posts(posts) %}
-  <ul class="posts">
-    {% for post in posts %}
+{% macro render_notes(notes) %}
+  <ul class="notes">
+    {% for note in notes %}
       <li>
-        {{ self::render_post(post=post) }}
+        {{ self::render_note(note=note) }}
       </li>
     {% endfor %}
   </ul>
-{% endmacro render_posts %}
+{% endmacro render_notes %}
 
 {% macro render_gallery_photos(file) %}
   {% set data = load_data(path="@/gallery/" ~ file) %}

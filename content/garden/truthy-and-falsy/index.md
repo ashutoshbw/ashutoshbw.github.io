@@ -4,7 +4,7 @@ date = 2022-06-21
 [taxonomies]
 tags = ["javacript"]
 [extra]
-description= "A blog post on truthy and falsy values in JavaScript"
+description= "A note on truthy and falsy values in JavaScript"
 +++
 
 Truthy values are considered as `true` and falsy values are considered as `false` in Boolean contexts for example in conditionals and logical operators.
