@@ -7,7 +7,7 @@ tags = ["javascript"]
 [extra]
 status = "finished"
 importance = 4
-certainty = "certain"
+certainty = "highly likely"
 description = "A theoretical rabbit hole journey into 4 most common comparison operators of JavaScript."
 +++
 
