@@ -1,5 +1,5 @@
 :root {
-  --unitless-font-size: 16;
+  --unitless-font-size: 18;
   font-size: calc(var(--unitless-font-size) * 1px);
 }
 
@@ -9,6 +9,11 @@
   flex-direction: column;
   min-height: calc(100vh - var(--site-margin) * 2);
   margin: var(--site-margin);
+
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 450;
+  font-style: normal;
 }
 
 .site-header,
