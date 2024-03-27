@@ -5,9 +5,13 @@
 {% endblock stylesheet %}
 
 {% block main %}
-  <h1>Notes related to "{{term.name}}"</h1>
+  <h1>Welcome to my Digital Garden 🍃</h1>
   <p>
-    <b>All Tags</b>: {{ macros::render_all_tags() }}
+    <i>Following are a collection of my notes that I've written mostly for myself. I don't aim them to be perfect.</i>
   </p>
+  <p>
+    Filter by tag: {{ macros::render_all_tags() }}
+  </p>
+  <h2>Notes related to "{{term.name}}"</h2>
   {{ macros::render_notes(notes=term.pages) }}
 {% endblock main %}
