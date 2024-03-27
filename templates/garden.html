@@ -14,6 +14,6 @@
   <p>
     Filter by tag: {{ macros::render_all_tags() }}
   </p>
-  <h2>All notes</h2>
+  <h2>All notes ({{ section.pages | length }})</h2>
   {{ macros::render_notes(notes=section.pages) }}
 {% endblock main %}

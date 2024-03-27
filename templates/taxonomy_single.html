@@ -12,6 +12,6 @@
   <p>
     Filter by tag: {{ macros::render_all_tags() }}
   </p>
-  <h2>Notes related to "{{term.name}}"</h2>
+  <h2>Notes related to "{{term.name}}" ({{ term.pages | length }})</h2>
   {{ macros::render_notes(notes=term.pages) }}
 {% endblock main %}
