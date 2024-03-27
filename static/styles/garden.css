@@ -6,20 +6,15 @@
 .notes li {
   list-style-type: none;
   padding: 0.5rem;
-  border-left: 2px solid #bbb;
-  transition: 0.3s;
-}
-
-.notes li:hover {
-  border-left: 10px solid #888;
+  border-left: 4px double #888;
 }
 
 .note-meta {
-  font-size: 0.9rem;
-  display: block;
-  opacity: 0.3;
-}
-
-.notes li:hover .note-meta {
-  opacity: 1;
+  /* same as in note.css */
+  --color: #666;
+  font-size: 0.8em;
+  color: var(--color);
+  & a {
+    color: var(--color);
+  }
 }

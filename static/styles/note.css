@@ -1,5 +1,5 @@
 .note {
-  .note-meta {
+  & header .note-meta {
     font-size: 0.9rem;
     padding: 0.5rem;
     border-block: 1px solid gray;
@@ -89,5 +89,19 @@
 
   & .fn-targeted-backlink {
     background: orange;
+  }
+}
+
+#backlinks + ul {
+  font-size: var(--footnote-font-size);
+}
+
+#backlinks + ul .note-meta {
+  /* same as in garden.css */
+  --color: #666;
+  font-size: 0.8em;
+  color: var(--color);
+  & a {
+    color: var(--color);
   }
 }

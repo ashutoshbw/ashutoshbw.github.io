@@ -26,8 +26,9 @@
 
 {% macro render_note(note) %}
   <a href="{{ note.permalink | safe }}" class="note-link">{{ note.title | markdown(inline=true) | safe }}</a>
+    ·
   <span class="note-meta">
-    {{ self::render_date(date=note.date, updated=note.updated) }}
+    {{ self::render_date(date=note.date, updated=note.updated) }} ·
     {{ self::render_tag_links_of_note(note=note) }}
   </span>
 {% endmacro render_note %}

@@ -1,5 +1,6 @@
 :root {
   --unitless-font-size: 22;
+  --footnote-font-size: 0.9em;
   font-size: calc(var(--unitless-font-size) * 1px);
   background: #eee;
   color: #212121;
@@ -115,5 +116,5 @@ a:hover {
 
 #refs + ol,
 #notes + ol {
-  font-size: 0.9em;
+  font-size: var(--footnote-font-size);
 }
