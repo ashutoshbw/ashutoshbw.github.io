@@ -27,7 +27,7 @@
 
 .site-footer {
   margin-top: auto;
-  background: #ccc;
+  border-top: 4px double #888;
 }
 
 .site-footer p {
