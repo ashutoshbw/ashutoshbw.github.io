@@ -1,6 +1,8 @@
 :root {
   --unitless-font-size: 22;
   font-size: calc(var(--unitless-font-size) * 1px);
+  background: #eee;
+  color: #212121;
 }
 
 .site-wrapper {
@@ -24,6 +26,11 @@
 
 .site-footer {
   margin-top: auto;
+  background: #ccc;
+}
+
+.site-footer p {
+  margin-top: 0.1rem;
 }
 
 p,
@@ -78,11 +85,35 @@ ul li {
   max-width: 80ch;
   width: 100%;
   padding-inline: min(1.5vw, 2.5ch);
-  padding-block: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
   margin-inline: auto;
 }
 
 code,
 pre {
   font-size: 0.8em;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* padatika styles below */
+
+.backlink-wrapper sup {
+  margin-left: 2px;
+}
+
+.padatika-targeted-backlink {
+  background: orange;
+}
+
+#refs + ol,
+#notes + ol {
+  font-size: 0.9em;
 }

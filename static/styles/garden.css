@@ -1,22 +1,17 @@
 .notes {
-  font-size: 1.3rem;
   margin-block: 2.5rem;
   margin-left: 0;
 }
 
 .notes li {
   list-style-type: none;
-  background: #eee;
-  padding: 1rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border-left: 2px solid #bbb;
+  transition: 0.3s;
 }
 
-.notes a {
-  text-decoration: none;
-}
-
-.notes a:hover {
-  text-decoration: underline;
+.notes li:hover {
+  border-left: 10px solid #888;
 }
 
 .note-meta {

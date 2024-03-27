@@ -2,7 +2,7 @@
 title = "Truthy and falsy values in JavaScript"
 date = 2022-06-21
 [taxonomies]
-tags = ["javacript"]
+tags = ["javascript"]
 [extra]
 description= "A note on truthy and falsy values in JavaScript"
 +++
