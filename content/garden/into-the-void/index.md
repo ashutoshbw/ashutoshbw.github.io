@@ -1,12 +1,13 @@
 +++
 title = "Into the `void` of TypeScript"
 date = 2024-03-29
+updated = 2024-03-31
 [taxonomies]
 tags = ["typescript"]
 [extra]
-status = "draft"
+status = "finished"
 importance = 4
-certainty = "highly likely"
+certainty = "certain"
 description = "A study on the void type of TypeScript."
 +++
 
@@ -26,7 +27,7 @@ function sayHello() {
 
 Above the inferred return type of `sayHello` is `void`.
 
-## Explicit `void` return type
+## `void` return type in literal function defnition
 
 Of a literal function definition[_notes:fd_] with a `void` return type, TypeScript will give you error if you return anything other than `undefined`.[_notes:undefined_] If TypeScript would allow returning other values, it wouldn't create a type system violation. This error reporting is helpful for catching bugs that might arise from refactoring[_refs:void-undefined_]:
 
@@ -47,7 +48,78 @@ function fn(arr: number[]): void {
 }
 ```
 
+## `void` return type in contextual function type
+
+Contextual typing occurs when the type of an expression is implied by its location.[_refs:contextual-typing_]
+
+A _contextual function type_ provides context to the function that is placed in the context.
+
+A contextual function type with `void` return type when implemented, can return _any_ value, but it will be ignored.
+
+This behavior exists so that the following code is valid even though `Array.prototype.push` returns a number and the `Array.prototype.forEach` method expects a function with a return type of `void`.[_refs:assignability-of-func_]
+
+```ts
+const src = [1, 2, 3];
+const dst = [0];
+
+src.forEach((el) => dst.push(el));
+```
+
+A question that might be on your mind is:
+
+> When an implementation of a contextual function type with a `void` return type is assigned to a variable, what type does this variable have?
+
+Whatever that function returns, the variable would be of type `void`. This is good because the return value of the function was not intended to be used.
+
+```ts
+type voidFunc = () => void;
+
+const f: voidFunc = () => {
+  return true;
+};
+
+const v = f();
+```
+
+Above the type of `v` is `void`.
+
 ## `void` vs `undefined`
+
+A contextual function type with `undefined` return type when implemented, must return `undefined`. For the case of `void`, the return value doesn't matter.
+
+```ts
+type undefinedFunc = () => undefined;
+
+const f: undefinedFunc = () => {
+  return true;
+};
+```
+
+TypeScript will yell at this code.
+
+## `void` vs `any`
+
+```ts
+type anyFuncType = () => any;
+type voidFuncType = () => void;
+
+const anyFunc: anyFuncType = () => {
+  return "f1";
+};
+
+const voidFunc: voidFuncType = () => {
+  return "f2";
+};
+
+const anyValue = anyFunc();
+
+const voidValue = voidFunc();
+
+anyValue.trim(); // No error
+voidValue.trim(); // Error
+```
+
+With `void` return type we can ensure that the consumers of `voidFunc` will get error when accessing properties of its return value. And with `any` there is no error, and no help from TypeScript!
 
 ## Notes {#notes}
 
@@ -59,3 +131,5 @@ function fn(arr: number[]): void {
 
 - [void] [`no-invalid-void-type` typescript-eslint rule](https://typescript-eslint.io/rules/no-invalid-void-type/)
 - [void-undefined] [Why does TypeScript have both `void` and `undefined`?](https://stackoverflow.com/questions/58885485/why-does-typescript-have-both-void-and-undefined)
+- [contextual-typing] [Contextual Typing, TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/type-inference.html#contextual-typing)
+- [assignability-of-func] [Assignability of Functions, More on Functions, TyeScript Handbook](https://www.typescriptlang.org/docs/handbook/2/functions.html#assignability-of-functions)
