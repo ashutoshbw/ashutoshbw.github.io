@@ -72,9 +72,9 @@ A question that might be on your mind is:
 Whatever that function returns, the variable would be of type `void`. This is good because the return value of the function was not intended to be used.
 
 ```ts
-type voidFunc = () => void;
+type voidFuncType = () => void;
 
-const f: voidFunc = () => {
+const f: voidFuncType = () => {
   return true;
 };
 
@@ -88,9 +88,9 @@ Above the type of `v` is `void`.
 A contextual function type with `undefined` return type when implemented, must return `undefined`. For the case of `void`, the return value doesn't matter.
 
 ```ts
-type undefinedFunc = () => undefined;
+type undefinedFuncType = () => undefined;
 
-const f: undefinedFunc = () => {
+const f: undefinedFuncType = () => {
   return true;
 };
 ```
@@ -119,7 +119,7 @@ anyValue.trim(); // No error
 voidValue.trim(); // Error
 ```
 
-With `void` return type we can ensure that the consumers of `voidFunc` will get error when accessing properties of its return value. And with `any` there is no error, and no help from TypeScript!
+With `void` return type we can ensure that the consumers of `voidFunc` will get an error when accessing properties of its return value. And with `any` there is no error, and no help from TypeScript!
 
 ## Notes {#notes}
 
