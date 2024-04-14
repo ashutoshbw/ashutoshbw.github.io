@@ -45,7 +45,7 @@
       </div>
     </header>
 
-    {{ page.content | replace(from="[<em>", to="<sup data-padatika>") | replace(from="</em>]", to="</sup>") | safe }}
+    {{ page.content | replace(from="[<em>", to="<sup data-fnref>") | replace(from="</em>]", to="</sup>") | safe }}
 
     {% set len = page.backlinks | length %}
     {% if len != 0 %}
