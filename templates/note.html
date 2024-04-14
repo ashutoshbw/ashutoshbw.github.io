@@ -6,9 +6,9 @@
 
 {% block script %}
   <script type="module">
-    import initPadatika from "https://esm.sh/padatika";
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
 
-    initPadatika({notes: "", refs: "R"});
+    padatika({notes: "N", refs: "R"});
   </script>
   {% if page.extra.katex %}
     {% include "katex.html" %}
