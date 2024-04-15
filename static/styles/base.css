@@ -106,11 +106,16 @@ a:hover {
 
 /* padatika styles below */
 
-.backlink-wrapper sup {
-  margin-left: 2px;
+.backlinks-wrapper {
+  margin-left: 4px;
 }
 
-.padatika-targeted-backlink {
+.backlinks-wrapper sup {
+  margin-left: 3px;
+  font-style: italic;
+}
+
+.targeted-backlink {
   background: orange;
 }
 

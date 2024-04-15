@@ -8,7 +8,12 @@
   <script type="module">
     import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
 
-    padatika({notes: "N", refs: "R"});
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
   </script>
   {% if page.extra.katex %}
     {% include "katex.html" %}

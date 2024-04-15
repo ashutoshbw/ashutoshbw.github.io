@@ -85,10 +85,6 @@
   & * :target {
     background: yellow;
   }
-
-  & .fn-targeted-backlink {
-    background: orange;
-  }
 }
 
 #backlinks + ul {
