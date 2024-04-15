@@ -114,13 +114,13 @@ JavaScript calls the tag function by passing it parts of the template literal ne
 
 JavaScript provides arguments to the tag function like below:
 
-- **1st argument**: This is an array holding the cooked interpretation[_cooked_] of _template strings_. However if a template string holds incorrect syntax of the following kind of escape sequences then the corresponding array element of that template string will hold `undefined`.
+- **1st argument**: This is an array holding the cooked interpretation[_notes:cooked_] of _template strings_. However if a template string holds incorrect syntax of the following kind of escape sequences then the corresponding array element of that template string will hold `undefined`.
 
   - Unicode codepoint escapes (eg. `\u{1F642}`)
   - Unicode unit escapes (eg. `\u03A3`)
   - Hexadecimal escapes (eg. `\x41`)
 
-  This array has a `raw` named property which holds raw interpretation[_raw_] of the template strings.
+  This array has a `raw` named property which holds raw interpretation[_notes:raw_] of the template strings.
 
   <aside class="admonition">
   <header>

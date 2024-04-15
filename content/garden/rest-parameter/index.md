@@ -10,9 +10,9 @@ Have you ever dreamed of creating your own JavaScript function that can accept _
 
 ## Rest parameter
 
-If we put 3 dots(`...`)[_dots_] before the last parameter of a function, that last parameter is called _rest parameter_.
+If we put 3 dots(`...`)[_notes:dots_] before the last parameter of a function, that last parameter is called _rest parameter_.
 
-If we do so, we can access any number of arguments given to that function from the position of the rest paramter to the right, wrapped in an array[_arr_]. For example:
+If we do so, we can access any number of arguments given to that function from the position of the rest paramter to the right, wrapped in an array[_notes:arr_]. For example:
 
 ```js
 function foo(a, b, ...c) {

@@ -8,11 +8,11 @@ tags = ["linux"]
 
 The two features of Linux shells — wildcards and globbing — can sometimes save us a lot of time by matching filenames quickly so that you can perfrom some kind of operation on them like displaying, copying, moving, removing etc.
 
-A _wildcard_[_wildcard_] is a character or a set of characters that acts as a placeholder for other characters. A _wildcard character_(aka _metacharacter_) is a wildcard containing a single character. Wildcards looks like this: `*`, `?`, `[a-z0-4]`. We will learn the meaning of these symbols in a minute.
+A _wildcard_[_notes:wildcard_] is a character or a set of characters that acts as a placeholder for other characters. A _wildcard character_(aka _metacharacter_) is a wildcard containing a single character. Wildcards looks like this: `*`, `?`, `[a-z0-4]`. We will learn the meaning of these symbols in a minute.
 
 _Wildcard pattern_(aka _glob pattern_, _glob_ or just _pattern_) is a string that contains wildcard in it. Shell can use them to match filenames. They looks somewhat like this: `*ing.pdf`, `photo-??.jpg`, `photo-[0-9][0-9].jpg` etc.
 
-_Globbing_[_glob_] is the operation of macthing items from a list of strings using wildcard pattern and returning the list of matched items.
+_Globbing_[_notes:glob_] is the operation of macthing items from a list of strings using wildcard pattern and returning the list of matched items.
 
 Globbing is frequently used for matching filenames in Linux. In this context it is also sometimes referred to as _filename expansion_, _filename substitution_, _filename generation_(in zsh specially) or _pathname expansion_.
 

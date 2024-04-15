@@ -22,7 +22,7 @@ You have propbably used these operators countless times to compare numbers in yo
 
 But did you know that JavaScript can compare not only numbers but also all kinds of values? While this may seem strange, it has some useful use cases, especially when comparing ASCII[_refs:asciiunicode_] strings of same case. While exploring these comparisons, I found the process of comparing numbers, strings and how the operators `>`, `<=`, `>=` derived from <, to be quite interesting. In this article, I will share with you everything that If found useful or interesting while exploring these operators. Let's start.
 
-They are part of a set of operators known as _comparison operators_.[_refs:compops_][_othercompops_] These operators are also part of a set of operators officially known as _relational operators_.[_refs:relops_][_otherrelops_]
+They are part of a set of operators known as _comparison operators_.[_refs:compops_][_notes:othercompops_] These operators are also part of a set of operators officially known as _relational operators_.[_refs:relops_][_notes:otherrelops_]
 
 To make life simple and easy, here I will ignore all the less useful comparisons and only go into the depth of the most useful ones:
 
@@ -72,7 +72,7 @@ As BigInts don't have NaN or infinities, and they have arbitrary precision, they
 
 ### Comparing Strings
 
-`<` operator uses a simple _lexicographic ordering_[_lex_] for comparing string values which can become handy when we know how it works and we don't need any advanced comparison.
+`<` operator uses a simple _lexicographic ordering_[_notes:lex_] for comparing string values which can become handy when we know how it works and we don't need any advanced comparison.
 
 Let `leftString` and `rightString` are strings and we want to know how JavaScript evaluates the value of the expression `leftString < rightString`. Here goes the algorithm:
 
@@ -110,7 +110,7 @@ Let `leftString` and `rightString` are strings and we want to know how JavaScrip
    ```
 
    <details>
-   <summary>See <code>getCodeUnits</code> implementation<sup data-padatika>refs:codeunit</sup></summary>
+   <summary>See <code>getCodeUnits</code> implementation<sup data-fnref>refs:codeunit</sup></summary>
 
    ```js
    function getCodeUnits(s) {
@@ -142,7 +142,7 @@ Let's now see how the other three operators work.
 
 1. If both operands are of Number type and either one is `NaN`
    1. Return `false`.
-2. Return `rightValue < leftValue`.[_evalorder_]
+2. Return `rightValue < leftValue`.[_notes:evalorder_]
 
 ## Less than or equal operator: `<=`
 
@@ -150,7 +150,7 @@ Let's now see how the other three operators work.
 
 1. If both operands are of Number type and either one is `NaN`
    1. Return `false`.
-2. If `rightValue < leftValue` is `true`[_evalorder_]
+2. If `rightValue < leftValue` is `true`[_notes:evalorder_]
    1. Return `false`.
 3. Else
    1. Return `true`.
