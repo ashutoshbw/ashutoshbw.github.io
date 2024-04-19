@@ -1,8 +1,17 @@
 [
   {
+    "name": "Padatika",
+    "description": "A friendly and easy to use footnote system for the web.",
+    "toolsUsed": ["TypeScript", "DOM"],
+    "links": {
+      "github": "https://github.com/ashutoshbw/padatika",
+      "npm": "https://www.npmjs.com/package/padatika"
+    }
+  },
+  {
     "name": "Headless Calendar",
     "description": "A tiny modern tool to help you make calendar UI easily.",
-    "toolsUsed": ["TypeScript", "Vitest", "pnpm", "Github actions"],
+    "toolsUsed": ["TypeScript"],
     "links": {
       "github": "https://github.com/ashutoshbw/headless-calendar",
       "npm": "https://www.npmjs.com/package/headless-calendar"
