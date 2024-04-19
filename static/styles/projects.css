@@ -1,0 +1,11 @@
+.project {
+  border: 5px double #ec6d18;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-block: 1rem;
+}
+
+.project h2 {
+  text-align: center;
+  margin-block: 0.5rem;
+}
