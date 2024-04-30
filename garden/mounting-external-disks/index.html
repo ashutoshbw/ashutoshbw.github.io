@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">How to mount/unmount external disks?</h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/linux/">linux</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2024-03-05"> 5 March 2024</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>in progress</em></span>
+          
+          
+             · 
+            <span>importance → <em>2</em></span>
+          
+          
+             · 
+            <span>certainty → <em>highly likely</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>Add the following in your <code>.xinitrc</code> if not present:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>udiskie &amp;
+</span></code></pre>
+<p>Remember to unmount your disk before unplugging:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>udiskie-umount &lt;device&gt;
+</span></code></pre>
+<aside class="admonition">
+<header>
+<b>Note</b>
+<p>The command name is <code>udiskie-umount</code>(not <code>udiskie-unmount</code>).</p>
+</aside>
+<p>We can also use the option <code>-a</code> to unmount everything we've plugged manually:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>udiskie-umount -a
+</span></code></pre>
+<aside class="admonition">
+<header>
+<b>Note</b>
+<p><code>udiskie-info -a</code> can be used view all handlable devices.</p>
+</aside>
+<h2 id="further-study-links">Further study links</h2>
+<ul>
+<li>Why you need to unmount before unplugging?: <a href="https://superuser.com/questions/180722/should-i-unmount-a-usb-drive-before-unplugging-it">https://superuser.com/questions/180722/should-i-unmount-a-usb-drive-before-unplugging-it</a></li>
+<li>Udiskie usage: <a href="https://github.com/coldfix/udiskie/wiki/Usage">https://github.com/coldfix/udiskie/wiki/Usage</a></li>
+<li>A tutorial: <a href="https://linuxhint.com/mount-usb-drive-centos/">https://linuxhint.com/mount-usb-drive-centos/</a></li>
+<li>The <code>/mnt</code> dir: <a href="http://www.linfo.org/mnt.html">http://www.linfo.org/mnt.html</a></li>
+<li><code>/dev/sda</code>: <a href="https://www.tec4tric.com/linux/dev-sda-in-linux">https://www.tec4tric.com/linux/dev-sda-in-linux</a></li>
+<li>Unmounting: <a href="http://www.linfo.org/umount.html">http://www.linfo.org/umount.html</a></li>
+<li>Device names: <a href="https://tldp.org/HOWTO/Partition/devices.html">https://tldp.org/HOWTO/Partition/devices.html</a></li>
+<li>See <code>lsblk</code> man page</li>
+<li><code>lsblk -p</code> or <code>lsblk -o PATH,LABEL,SIZE</code> is helpful.</li>
+<li>Device files: <a href="https://opensource.com/article/16/11/managing-devices-linux">https://opensource.com/article/16/11/managing-devices-linux</a></li>
+</ul>
+
+
+    
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

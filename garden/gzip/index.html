@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Linux command: <code>gzip</code></h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/linux/">linux</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2022-04-03"> 3 April 2022</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>6</em></span>
+          
+          
+             · 
+            <span>certainty → <em>certain</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p><code>gzip</code> command is used to reduce the size of given files. This command is so common that you will most likely find it already installed on your Linux distro.</p>
+<p><code>gzip</code> only compresses regular files. Directories, symbolic links etc are not it's food. Files compressed with <code>gzip</code> are often called <em>gzipped</em> files.</p>
+<p><code>gzip</code> also comes with the <code>gunzip</code>, <code>zcat</code> and <code>zless</code> commands for uncompressing and viewing gzipped files.</p>
+<p>Let's start gzipping!</p>
+<h2 id="compressing-one-or-more-files">Compressing one or more files</h2>
+<p>To compress one or more files we can simply do like below:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">gzip</span><span> file1 file2 file3
+</span></code></pre>
+<p>It will compress each file and replace them with compressed versions of them which have a <code>gz</code> suffix:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>file1.gz file2.gz file3.gz
+</span></code></pre>
+<h2 id="compressing-standard-input">Compressing standard input</h2>
+<p><code>gzip</code> can also be used via standard input and output:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">ls -l</span><span> /bin | </span><span style="color:#bf616a;">gzip </span><span>&gt; foo.txt.gz
+</span></code></pre>
+<h2 id="uncompressing-gzipped-files">Uncompressing gzipped files</h2>
+<p>With the command <code>gunzip</code> we can uncompress them like below:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">gunzip</span><span> file1.gz file2.gz file3.gz
+</span></code></pre>
+<p>It will replace each compressed file with it's uncompressed version. So you will get the following files:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>file1 file2 file3
+</span></code></pre>
+<h2 id="compress-uncompress-files-recursively-in-a-directory">Compress/Uncompress files recursively in a directory</h2>
+<p>We can use the <code>-r</code> option to recursively compress each file in a directory:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">gzip -r</span><span> someDir
+</span></code></pre>
+<p>For a directory containing any gzipped files, we can use <code>gunzip</code> with <code>-r</code> to uncompress all of them recursively with a single command:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">gunzip -r</span><span> someDir
+</span></code></pre>
+<h2 id="output-to-standard-output">Output to standard output</h2>
+<p>The <code>-c</code> option can be used by both <code>gzip</code> and <code>gunzip</code> to write output to standard output and keep the original files:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">gzip -c</span><span> some-file &gt; some-file.gz
+</span><span style="color:#bf616a;">gunzip -c</span><span> some-file.gz &gt; some-file-copy
+</span></code></pre>
+<h2 id="viewing-the-gzipped-files">Viewing the gzipped files</h2>
+<p>When a text file is compressed, it's sometimes handy to view the text without uncompressing and writing it to disk.</p>
+<p>To view the contents of a compressed file, there are several ways.</p>
+<p>We can simply use the <code>-c</code> option and pipe the output to <code>less</code> to view it:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">gunzip -c</span><span> file1.gz | </span><span style="color:#bf616a;">less
+</span></code></pre>
+<p><code>zcat</code> can be used like <code>cat</code> on <code>gzip</code> compressed files. So we can be little more succinct:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">zcat</span><span> file1.gz | </span><span style="color:#bf616a;">less
+</span></code></pre>
+<p>The command <code>zless</code> allows us view gzipped files in the most clean way:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">zless</span><span> file1.gz
+</span></code></pre>
+<p>That's for this article. Hope you have learned something useful. For digging deeper see the man page <code>man gzip</code>. Happy gzipping!</p>
+
+
+    
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

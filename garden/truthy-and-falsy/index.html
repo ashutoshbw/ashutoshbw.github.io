@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Truthy and falsy values in JavaScript</h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/javascript/">javascript</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2022-06-21">21 June 2022</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>6</em></span>
+          
+          
+             · 
+            <span>certainty → <em>certain</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>Truthy values are considered as <code>true</code> and falsy values are considered as <code>false</code> in Boolean contexts for example in conditionals and logical operators.</p>
+<p>There are only the following falsy values in JavaScript:</p>
+<ul>
+<li>The Boolean false value: <code>false</code></li>
+<li>The zero value of both Number and BigInt type:
+<ul>
+<li>Number type: <code>0</code>, <code>-0</code>, <code>0.0</code>, <code>00</code>, <code>0x0</code> etc.</li>
+<li>BigInt type: <code>0n</code>, <code>0x0n</code>, <code>0b0n</code> etc.</li>
+</ul>
+</li>
+<li>Empty string value: <code>&quot;&quot;</code>, <code>''</code> and <code>``</code></li>
+<li><code>undefined</code>, <code>null</code> and <code>NaN</code>.</li>
+</ul>
+<p>All the rest of the values in JavaScript are truthy values.</p>
+
+
+    
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

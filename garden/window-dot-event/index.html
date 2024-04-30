@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Don't use <code>window.event</code></h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/javascript/">javascript</a>, 
+      
+        <a href="https://ashutoshbw.github.io/tags/dom/">dom</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2022-04-17">17 April 2022</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>2</em></span>
+          
+          
+             · 
+            <span>certainty → <em>certain</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>Suppose you have the following HTML and JavaScript:</p>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#bf616a;">button </span><span style="color:#8fa1b3;">id</span><span>=&quot;</span><span style="color:#a3be8c;">btn</span><span>&quot;&gt;Click me&lt;/</span><span style="color:#bf616a;">button</span><span>&gt;
+</span></code></pre>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">let </span><span style="color:#bf616a;">myBtn </span><span>= document.</span><span style="color:#96b5b4;">querySelector</span><span>(&quot;</span><span style="color:#a3be8c;">#btn</span><span>&quot;);
+</span><span>
+</span><span style="color:#bf616a;">myBtn</span><span>.</span><span style="color:#96b5b4;">addEventListener</span><span>(&quot;</span><span style="color:#a3be8c;">click</span><span>&quot;, () </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(event);
+</span><span>});
+</span></code></pre>
+<p>What do you think clicking on the button will happen?</p>
+<p>If you think it will not work, saying <code>event</code> is not defined or something like this, you will surprisedly get the right <code>Event</code> object for that event, unless your browser has stopped caring about it.</p>
+<p>What actually happens is that <code>event</code> is a read-only property of <code>window</code> and outside of event handlers, this <code>event</code> is always <code>undefined</code>. But when an event happens, only inside that corresponding event handler, it has respective <code>Event</code> object as it's value if your browser has support for it.</p>
+<aside class="admonition">
+<header>
+<b>Warning</b>
+</header>
+<p>It's not recommended by <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/event">MDN</a> and is a deprecated feature and it may be dropped if supported. So you should avoid accessing <code>Event</code> objects like this and instead use the first parameter of event handler for accessing it. For example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#bf616a;">myBtn</span><span>.</span><span style="color:#96b5b4;">addEventListener</span><span>(&quot;</span><span style="color:#a3be8c;">click</span><span>&quot;, (</span><span style="color:#bf616a;">event</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(event);
+</span><span>});
+</span></code></pre>
+</aside>
+
+
+    
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

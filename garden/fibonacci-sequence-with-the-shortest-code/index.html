@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
+</script>
+
+<style>
+.katex {
+  font-size: 1em;
+}
+</style>
+
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Shortest way to find Fibonacci sequence in JavaScript?</h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/javascript/">javascript</a>, 
+      
+        <a href="https://ashutoshbw.github.io/tags/problem-solving/">problem-solving</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Last updated → <i>
+  
+    
+  
+  <time itemprop="dateModified" datetime="2024-02-26">26 February 2024</time>
+</i></span> ·
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2022-02-16">16 February 2022</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>6</em></span>
+          
+          
+             · 
+            <span>certainty → <em>certain</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>Let's first take a look at how the Fibonacci sequence looks like, in case you haven't seen it before:</p>
+<p>$$
+0, 1, 1, 2, 3, 5, 8, 13, \ldots
+$$</p>
+<p>The first two terms are $0$ and $1$. Any other term is the sum of previous two terms. Very simple right!</p>
+<p>There are many different ways to generate this sequence. Today I will share with you the one that I figured out myself. My goal was to find shortest possible way to do it. I'm not sure if it is the one!</p>
+<p>Here it goes:</p>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">fibSeq </span><span>= (</span><span style="color:#bf616a;">n</span><span>) </span><span style="color:#b48ead;">=&gt;
+</span><span>  </span><span style="color:#bf616a;">n </span><span>&lt; </span><span style="color:#d08770;">2 </span><span>? [[</span><span style="color:#d08770;">0</span><span>], [</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>]][</span><span style="color:#bf616a;">n</span><span>] : ((</span><span style="color:#bf616a;">s</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>[...</span><span style="color:#bf616a;">s</span><span>, </span><span style="color:#bf616a;">s</span><span>.</span><span style="color:#96b5b4;">pop</span><span>() + </span><span style="color:#bf616a;">s</span><span>.</span><span style="color:#96b5b4;">pop</span><span>()])(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#bf616a;">n </span><span>- </span><span style="color:#d08770;">1</span><span>));
+</span><span>
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#d08770;">10</span><span>));
+</span></code></pre>
+<p>The output is:</p>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>[</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">8</span><span>, </span><span style="color:#d08770;">13</span><span>, </span><span style="color:#d08770;">21</span><span>, </span><span style="color:#d08770;">34</span><span>, </span><span style="color:#d08770;">55</span><span>];
+</span></code></pre>
+<p>Looking at that cryptic line, some of you might be thinking of me as some sort of genius, but I'm not. It took me an embarrassingly long time to craft this line. And even after solving it, I needed some more time to actually understand how it works.</p>
+<p>I'm not here to preach about clever coding. Applying code-fu in real-world projects may not be appreciated by others, including your future self. Save it for the fun moments. Enough with the advice—let's dive into the breakdown of how it actually works!</p>
+<p>The above code is actually two functions mashed up together. Let's first seperate them:</p>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">addNextTerm </span><span>= (</span><span style="color:#bf616a;">seq</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>[...</span><span style="color:#bf616a;">seq</span><span>, </span><span style="color:#bf616a;">seq</span><span>.</span><span style="color:#96b5b4;">pop</span><span>() + </span><span style="color:#bf616a;">seq</span><span>.</span><span style="color:#96b5b4;">pop</span><span>()];
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">fibSeq </span><span>= (</span><span style="color:#bf616a;">n</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>(</span><span style="color:#bf616a;">n </span><span>&lt; </span><span style="color:#d08770;">2 </span><span>? [[</span><span style="color:#d08770;">0</span><span>], [</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>]][</span><span style="color:#bf616a;">n</span><span>] : </span><span style="color:#8fa1b3;">addNextTerm</span><span>(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#bf616a;">n </span><span>- </span><span style="color:#d08770;">1</span><span>)));
+</span><span>
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#d08770;">10</span><span>));
+</span></code></pre>
+<p>Let's make it more clear by using <code>if</code>/<code>else</code> instead of the ternary operator and not making clever use of <code>pop()</code> method of arrays.</p>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">addNextTerm </span><span>= (</span><span style="color:#bf616a;">seq</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>[
+</span><span>  ...</span><span style="color:#bf616a;">seq</span><span>,
+</span><span>  </span><span style="color:#bf616a;">seq</span><span>[</span><span style="color:#bf616a;">seq</span><span>.length - </span><span style="color:#d08770;">2</span><span>] + </span><span style="color:#bf616a;">seq</span><span>[</span><span style="color:#bf616a;">seq</span><span>.length - </span><span style="color:#d08770;">1</span><span>],
+</span><span>];
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">fibSeq </span><span>= (</span><span style="color:#bf616a;">n</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">n </span><span>== </span><span style="color:#d08770;">0</span><span>) {
+</span><span>    </span><span style="color:#b48ead;">return </span><span>[</span><span style="color:#d08770;">0</span><span>];
+</span><span>  } </span><span style="color:#b48ead;">else if </span><span>(</span><span style="color:#bf616a;">n </span><span>== </span><span style="color:#d08770;">1</span><span>) {
+</span><span>    </span><span style="color:#b48ead;">return </span><span>[</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>];
+</span><span>  } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#8fa1b3;">addNextTerm</span><span>(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#bf616a;">n </span><span>- </span><span style="color:#d08770;">1</span><span>));
+</span><span>  }
+</span><span>};
+</span><span>
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#d08770;">10</span><span>));
+</span></code></pre>
+<p>In this version of <code>fibSeq</code>, the <code>addNextTerm</code> gives us the same result except the fact that it doesn't mutates its input which <code>pop()</code> did in the previous version of our code. Also note that mutating the input worked fine, since what we needed was the return value.</p>
+<p>Now there is no magic except recursion. If I struggle with writing recursive code, I remind myself this thinking model:</p>
+<blockquote>
+<p>Figure out the recursive pattern. Then handle the cases that this pattern can't handle.</p>
+</blockquote>
+<p>This way never disappointed me.</p>
+<p>The hardest part is figuring out the recursive pattern.</p>
+<p>Here, for getting the Fibonacci sequence of first $n$ terms where $n \gt 1$, is the same as getting the Fibonnaci sequence of first $n - 1$ terms and then add an extra term in it. Notice how the idea “getting Fibonacci sequence of first $n$ terms where $n \gt 1$” involves itself. So this a <em>recursive pattern</em>. In the above code this pattern is in the <code>else</code> block.</p>
+<p>In the above code the <code>if</code> and <code>else if</code> blocks handle cases where the recursive pattern doesn't make sense.</p>
+<p>Flowing with the control flow that happens inside a recursive algorithm is like going down the rabbit hole and emerging with the result. Sometimes, practicing this allows you to gain a better understanding of how the computer interprets your recursive code. <a href="https://ashutoshbw.github.io/garden/fibonacci-sequence-with-the-shortest-code/#fig-1">Figure 1</a> illustrates this control flow for a <code>fibSeq(3)</code> call.</p>
+<figure id="fig-1">
+
+
+
+
+  
+  
+
+
+
+
+
+
+  
+  
+
+
+
+  <a href="https://ashutoshbw.github.io/garden/fibonacci-sequence-with-the-shortest-code/fibonacci-flow.png" target="_blank">
+
+  <img src="https://ashutoshbw.github.io/processed_images/fibonacci-flow.be5c58d0e5fb9b2e.png" 
+    alt="A diagram show the recursive control flow of fibSeq(3)"
+    width="400"
+    height="390"
+  />
+
+  </a>
+
+
+<figcaption><b>Figure 1</b>: Recursive control flow of <code>fibSeq(3)</code></figcaption>
+</figure>
+<p>I hope you found this article interesting. Thanks for reading!</p>
+<h2 id="bonus-generating-large-numbers">Bonus: Generating LARGE numbers</h2>
+<p>The <em>Number</em> type can't accurately calculate very large integers. Why not leverage <em>BigInt</em> for some more fun?</p>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">fibSeq </span><span>= (</span><span style="color:#bf616a;">n</span><span>) </span><span style="color:#b48ead;">=&gt;
+</span><span>  </span><span style="color:#bf616a;">n </span><span>&lt; </span><span style="color:#d08770;">2</span><span style="color:#b48ead;">n
+</span><span>    ? [[</span><span style="color:#d08770;">0</span><span style="color:#b48ead;">n</span><span>], [</span><span style="color:#d08770;">0</span><span style="color:#b48ead;">n</span><span>, </span><span style="color:#d08770;">1</span><span style="color:#b48ead;">n</span><span>]][</span><span style="color:#bf616a;">n</span><span>]
+</span><span>    : ((</span><span style="color:#bf616a;">s</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>[...</span><span style="color:#bf616a;">s</span><span>, </span><span style="color:#bf616a;">s</span><span>.</span><span style="color:#96b5b4;">pop</span><span>() + </span><span style="color:#bf616a;">s</span><span>.</span><span style="color:#96b5b4;">pop</span><span>()])(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#bf616a;">n </span><span>- </span><span style="color:#d08770;">1</span><span style="color:#b48ead;">n</span><span>));
+</span><span>
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#8fa1b3;">fibSeq</span><span>(</span><span style="color:#d08770;">1000</span><span style="color:#b48ead;">n</span><span>).</span><span style="color:#8fa1b3;">map</span><span>((</span><span style="color:#bf616a;">t</span><span>, </span><span style="color:#bf616a;">i</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>`</span><span style="color:#a3be8c;">${</span><span style="color:#bf616a;">i</span><span style="color:#a3be8c;">} 👉 ${</span><span style="color:#bf616a;">t</span><span style="color:#a3be8c;">}</span><span>`)</span><span style="color:#a3be8c;">.</span><span style="color:#8fa1b3;">join</span><span>`</span><span style="color:#96b5b4;">\n</span><span>`);
+</span></code></pre>
+
+
+    
+    
+      
+        
+        
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

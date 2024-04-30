@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">How strings are made in JavaScript?</h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/javascript/">javascript</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2024-03-01"> 1 March 2024</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>6</em></span>
+          
+          
+             · 
+            <span>certainty → <em>certain</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>For the dumb computers to make sense of JavaScript strings, they must be encoded in some way. JavaScript does it using <em>UTF-16</em>.</p>
+<p>What is UTF-16? It stands for <em>16-bit Unicode Transformation Format</em>. But what's that mean? It means a string in JavaScript is a sequence of 16 bit code units. You might be asking what's a code unit?</p>
+<p>Well a <em>code unit</em> is a number to encode a code point. What is a code point? A <em>codepoint</em> is also a number composed of a single 16 bit code unit or two 16 bit code units. Each character is encoded as one or more codepoints in unicode.</p>
+<p>A string gets an index at each code unit for holding that part of the string.</p>
+<p>The concept of <em>character</em> is hard to define. For simplicity we can define it like below:</p>
+<ul>
+<li>Any symbol that doesn't seems broken.</li>
+<li>The invisible things that allows you to do space, tabs and newlines.</li>
+</ul>
+<p>We can write a function to get the decimal values of the code units of a string:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">getCodeUnits</span><span>(</span><span style="color:#bf616a;">s</span><span>) {
+</span><span>  </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">result </span><span>= [];
+</span><span>  </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">i </span><span>= </span><span style="color:#d08770;">0</span><span>; </span><span style="color:#bf616a;">i </span><span>&lt; </span><span style="color:#bf616a;">s</span><span>.length; </span><span style="color:#bf616a;">i</span><span>++) {
+</span><span>    </span><span style="color:#bf616a;">result</span><span>.</span><span style="color:#96b5b4;">push</span><span>(</span><span style="color:#bf616a;">s</span><span>.</span><span style="color:#96b5b4;">charCodeAt</span><span>(</span><span style="color:#bf616a;">i</span><span>));
+</span><span>  }
+</span><span>  </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">result</span><span>;
+</span><span>}
+</span><span>
+</span><span style="color:#8fa1b3;">getCodeUnits</span><span>(&quot;</span><span style="color:#a3be8c;">Hi 😄</span><span>&quot;);
+</span><span style="color:#65737e;">// [72, 105, 32, 55357, 56836]
+</span><span>
+</span><span style="color:#8fa1b3;">getCodeUnits</span><span>(&quot;</span><span style="color:#a3be8c;">I ❤️‍🔥 JS</span><span>&quot;);
+</span><span style="color:#65737e;">// [73, 32, 10084, 65039, 8205, 55357, 56613, 32, 74, 83]
+</span></code></pre>
+<p>Note that the 😄 emoji needs 2 code units and the ❤️‍🔥 needs 5 code units.</p>
+
+
+    
+    
+      
+        <footer>
+          <h2 id="backlinks">Backlinks</h2>
+          <ul class="notes">
+            
+              
+                
+                <li>
+  <a href="https://ashutoshbw.github.io/garden/four-comparison-operators/" class="note-link">Deep dive into <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> and <code>&gt;=</code> operators of JavaScript</a>
+    ·
+  <span class="note-meta">
+    
+  
+    
+  
+  <time  datetime="2024-03-01"> 1 March 2024</time>
+ ·
+    
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/javascript/">javascript</a>
+      
+    </span>
+  
+
+  </span>
+</li>
+              
+            
+          </ul>
+        </footer>
+      
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

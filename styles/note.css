@@ -1,0 +1,102 @@
+.note {
+  & header .note-meta {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border-block: 1px solid gray;
+    text-align: center;
+  }
+
+  & > header {
+    margin-bottom: 2rem;
+    & h1 {
+      margin-block: 1rem;
+      font-size: 2em;
+    }
+
+    & p {
+      margin-block: 0.2rem;
+    }
+  }
+
+  & pre {
+    padding: 0.5rem;
+    overflow: auto;
+  }
+
+  & figure {
+    --unitless-inline-margin: 3; /* this is intended to be in rem unit */
+    --unitless-max-viewport-width: 600;
+
+    /* the line below basically says:
+    * Incrementally reduce inline margin when viewport width is less than
+    * --unitless-max-viewport-width px.
+    */
+    margin-inline: min(
+      (100 / var(--unitless-max-viewport-width)) * var(--unitless-font-size) *
+        var(--unitless-inline-margin) * 1vw,
+      calc(var(--unitless-inline-margin) * 1rem)
+    );
+
+    & img {
+      max-width: 100%; /* prevents the image to break out of the container */
+      height: auto; /* helps to maintain the aspect ratio */
+    }
+  }
+
+  & .admonition {
+    padding-inline: 1ch;
+    padding-block: 1px; /* to prevent margin collase */
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+    background: lightgrey;
+    border-left: 0.3rem solid grey;
+    & > p:first-child,
+    & > header:first-child {
+      margin-top: 0.5rem;
+    }
+  }
+
+  & details {
+    border: 1px solid #aaa;
+    padding: 1ch 1ch 0;
+
+    & summary {
+      margin: -1ch -1ch 0;
+      padding: 1ch;
+    }
+  }
+
+  & details[open] {
+    padding: 1ch;
+    & summary {
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 1ch;
+    }
+  }
+
+  & blockquote {
+    margin-left: 0.5rem;
+    border-left: 3px solid #999;
+    padding-left: 0.3rem;
+    font-style: italic;
+  }
+
+  /* Temp css for testing for footnotes */
+  & * :target {
+    background: yellow;
+  }
+}
+
+#backlinks + ul {
+  font-size: var(--footnote-font-size);
+}
+
+#backlinks + ul .note-meta {
+  /* same as in garden.css */
+  --color: #666;
+  font-size: 0.8em;
+  color: var(--color);
+  & a {
+    color: var(--color);
+  }
+}

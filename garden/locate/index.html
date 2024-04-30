@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Searching files with <code>locate</code></h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/linux/">linux</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Last updated → <i>
+  
+    
+  
+  <time itemprop="dateModified" datetime="2024-03-01"> 1 March 2024</time>
+</i></span> ·
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2022-03-27">27 March 2022</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>in progress</em></span>
+          
+          
+             · 
+            <span>importance → <em>3</em></span>
+          
+          
+             · 
+            <span>certainty → <em>highly likely</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>If you are feeling lazy and need to search for some file or directory in your <em>whole system</em>, then <code>locate</code> might be your best friend. It can find things super fast from thousands of items with the help of a database created earlier and usually updated automatically once a day.</p>
+<p><code>locate</code> almost works like the librarian in a library. When you ask the librarian for a book, he/she can find it for you in the entire library very efficiently because the books are sorted by some order.</p>
+<p><code>locate</code> does not locate the file/directories on your system directly but on a database of absolute pathnames which are gathered beforehand. This database has an index, which makes finding things very fast.</p>
+<p>Using <code>locate</code> is very simple. Let's get started by first installing it.</p>
+<h2 id="installing">Installing</h2>
+<p>In most modern Linux distributions the <code>locate</code> command is available via the <code>plocate</code> and <code>mlocate</code> packages. Both packages gives us two commands: <code>locate</code> and <code>updatedb</code>.</p>
+<p>I recommend installing the <code>plocate</code> package because it's faster than <code>mlocate</code> and almost a drop-in-replacement for <code>mlocate</code>. While all variants of <code>locate</code>s are more or less the same, in this article I will discuss about <code>plocate</code> particularly.</p>
+<p><code>plocate</code> is available in the official repositores of the following distros and can be installed there like below:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#65737e;"># Arch
+</span><span style="color:#bf616a;">sudo</span><span> pacman</span><span style="color:#bf616a;"> -S</span><span> plocate
+</span><span>
+</span><span style="color:#65737e;"># Debian / Ubuntu
+</span><span style="color:#bf616a;">sudo</span><span> apt install plocate
+</span><span>
+</span><span style="color:#65737e;"># Fedora
+</span><span style="color:#bf616a;">sudo</span><span> dnf install plocate
+</span></code></pre>
+<h2 id="creating-the-database-with-updatedb">Creating the database with <code>updatedb</code></h2>
+<p>Before using it you will need to create it's database by running <code>updatedb</code> like below, if you don't want to wait for the system to do it for you:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo updatedb
+</span></code></pre>
+<p>It will take some time. Usually <code>updatedb</code> is run once a day automatically by your system to keep the database updated.</p>
+<p>Since the database is not guaranteed to hold the most recent info about your syestem, you will may notice that very recent files/directories do not show up when using <code>locate</code>. To overcome this, you can run the <code>updatedb</code> command manually like above.</p>
+<h2 id="how-to-use-the-locate-command">How to use the <code>locate</code> command</h2>
+<p>The general syntax of <code>locate</code> command is:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>locate [OPTION]... PATTERN...
+</span></code></pre>
+<p>Based on the given patterns and options, <code>locate</code> performs a quick database search of absolute pathnames of files and directories that are accessible to the user in the entire system.</p>
+<p>It can be used with or without options. First let's see it's usage without any options.</p>
+<h3 id="without-options">Without options</h3>
+<p>To find out all the pathnames containing the substring <code>bin</code> we can enter <code>bin</code> as pattern:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate</span><span> bin
+</span></code></pre>
+<p>It will display a long list of absolute pathnames containing the pattern <code>bin</code> in them:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>/bin
+</span><span>/sbin
+</span><span>/etc/bindresvport.blacklist
+</span><span>/etc/binfmt.d
+</span><span>/etc/libinput
+</span><span>/etc/ca-certificates/extracted/edk2-cacerts.bin
+</span><span>/etc/profile.d/perlbin.csh
+</span><span>/etc/profile.d/perlbin.sh
+</span><span>.
+</span><span>.
+</span><span>.
+</span></code></pre>
+<p>Now if we want only the pathnames that contains both <code>bin</code> and <code>zip</code> we can enter both as patterns:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate</span><span> bin zip
+</span></code></pre>
+<p>This time the output will be significantly less somewhat like below:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>/usr/bin/bunzip2
+</span><span>/usr/bin/bzip2
+</span><span>/usr/bin/bzip2recover
+</span><span>/usr/bin/funzip
+</span><span>/usr/bin/gunzip
+</span><span>/usr/bin/gzip
+</span><span>/usr/bin/unzip
+</span><span>/usr/bin/unzipsfx
+</span><span>/usr/bin/zipgrep
+</span><span>/usr/bin/zipinfo
+</span></code></pre>
+<p>We can also use glob patterns(aka wildcard patterns).<sup data-fnref>refs:glob</sup> In this case it's important to quote the pattern to prevent the shell from expanding them. For example:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate </span><span>&#39;</span><span style="color:#a3be8c;">*.md</span><span>&#39;
+</span></code></pre>
+<p>It lists only the pathnames that ends with <code>.md</code>. These are the first few items from my system:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>/home/ashutosh/.cache/tldr/pages/common/bg.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/cat.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/exec.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/fg.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/git.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/neofetch.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/tldr.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/ts-node.md
+</span><span>/home/ashutosh/.cache/tldr/pages/common/vim.md
+</span><span>/home/ashutosh/.cache/tldr/pages/linux/pacman.md
+</span></code></pre>
+<aside class="admonition">
+<header>
+<b>Tip</b>
+</header>
+<p>If the output of <code>locate</code> is long you can pipe it to <code>less</code> for better viewing:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate </span><span>&#39;</span><span style="color:#a3be8c;">*.md</span><span>&#39; | </span><span style="color:#bf616a;">less
+</span></code></pre>
+</aside>
+<p>Other wildcards that can be used like this are <code>?</code> for matching any single character and <code>[]</code> for character classes.</p>
+<h3 id="with-options">With options</h3>
+<p>Here we will see the most commonly used options:</p>
+<h4 id="c-or-count"><code>-c</code> or <code>--count</code></h4>
+<p>Adding <code>-c</code> or <code>--count</code> option displays the number of matched items. For example:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate -c </span><span>&#39;</span><span style="color:#a3be8c;">*.js</span><span>&#39;
+</span></code></pre>
+<h4 id="l-or-limit"><code>-l</code> or <code>--limit</code></h4>
+<p>With the <code>-l</code> or <code>--limit</code> option you can set the upper limit for searching items. For example:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate -l</span><span> 10 &#39;</span><span style="color:#a3be8c;">*.css</span><span>&#39;
+</span></code></pre>
+<p>This will only display at most 10 pathnames.</p>
+<h4 id="i-or-ignore-case"><code>-i</code> or <code>--ignore-case</code></h4>
+<p>By default <code>locate</code> performs case-sensitive search. To do a case-insensitive search add the <code>-i</code> or <code>--ignore-case</code> flag:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate -i</span><span> An-Old-Post.md
+</span></code></pre>
+<h4 id="e-or-existing"><code>-e</code> or <code>--existing</code></h4>
+<p>After the most recent database update, if some file/directory deleted, it will still show up, if searched for. To not include such items add the <code>-e</code> or <code>--existing</code> flag.</p>
+<p>Note that newly added files after the most recent database update will not show up. To show them, the database must be updated.</p>
+<h4 id="options-for-regular-expressions">Options for regular expressions</h4>
+<p>If you want to search using a POSIX basic regular expression, <code>-r</code> or <code>--regexp</code> are the options. For example to count for all JavaScript and JSON files, the command will be:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate --regexp -c </span><span>&#39;</span><span style="color:#a3be8c;">\.\(js\|json\)$</span><span>&#39;
+</span></code></pre>
+<p>If you want to search using a POSIX extended regular expression, then use the option <code>--regex</code>. So the above command can be written much more cleanly like below with <code>--regex</code>:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">locate --regex -c </span><span>&#39;</span><span style="color:#a3be8c;">\.(js|json)$</span><span>&#39;
+</span></code></pre>
+<p>Note that these options will treat <em>all</em> given patterns to be the corresponding type of regular expressions.</p>
+<h2 id="summary">Summary</h2>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#65737e;"># for updating the database
+</span><span style="color:#bf616a;">sudo</span><span> updatedb
+</span><span>
+</span><span style="color:#65737e;"># finding by matching a pattern string as substring in the pathnames
+</span><span style="color:#bf616a;">locate</span><span> cat.jpg
+</span><span>
+</span><span style="color:#65737e;"># all pathnames will be displayed that satisfy both patterns
+</span><span style="color:#bf616a;">locate</span><span> bin python
+</span><span>
+</span><span style="color:#65737e;"># finding using wildcard patterns
+</span><span style="color:#bf616a;">locate </span><span>&#39;</span><span style="color:#a3be8c;">*.jpg</span><span>&#39;
+</span><span>
+</span><span style="color:#65737e;"># count all jpg files
+</span><span style="color:#bf616a;">locate -c </span><span>&#39;</span><span style="color:#a3be8c;">*.jpg</span><span>&#39;
+</span><span>
+</span><span style="color:#65737e;"># display only first 10 jpg files
+</span><span style="color:#bf616a;">locate -l</span><span> 10 &#39;</span><span style="color:#a3be8c;">*.jpg</span><span>&#39;
+</span><span>
+</span><span style="color:#65737e;"># Case-insensitive search
+</span><span style="color:#bf616a;">locate -i </span><span>&#39;</span><span style="color:#a3be8c;">cat.jpg</span><span>&#39;
+</span><span>
+</span><span style="color:#65737e;"># For not including deleted files after most recent database update
+</span><span style="color:#bf616a;">locate -e </span><span>&#39;</span><span style="color:#a3be8c;">cat.jpg</span><span>&#39;
+</span><span>
+</span><span style="color:#65737e;"># POSIX basic regular expression
+</span><span style="color:#bf616a;">locate -r </span><span>&#39;</span><span style="color:#a3be8c;">\.\(js\|json\)$</span><span>&#39;
+</span><span>
+</span><span style="color:#65737e;"># POSIX extended regular expression
+</span><span style="color:#bf616a;">locate --regex </span><span>&#39;</span><span style="color:#a3be8c;">\.(js|json)$</span><span>&#39;
+</span></code></pre>
+<p>For further info see <code>locate</code>'s man page by entering <code>man plocate</code>.</p>
+<h2 id="refs">References</h2>
+<ul>
+<li>[glob] <a href="https://ashutoshbw.github.io/garden/wildcards-and-globbing/">What are wildcards and globbing?</a></li>
+</ul>
+
+
+    
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

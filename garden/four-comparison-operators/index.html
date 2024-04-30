@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Deep dive into <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> and <code>&gt;=</code> operators of JavaScript</h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/javascript/">javascript</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Last updated → <i>
+  
+    
+  
+  <time itemprop="dateModified" datetime="2024-03-01"> 1 March 2024</time>
+</i></span> ·
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2023-04-10">10 April 2023</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>4</em></span>
+          
+          
+             · 
+            <span>certainty → <em>highly likely</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <table><thead><tr><th>Operator</th><th>Name</th></tr></thead><tbody>
+<tr><td><code>&lt;</code></td><td>Less than</td></tr>
+<tr><td><code>&gt;</code></td><td>Greater than</td></tr>
+<tr><td><code>&lt;=</code></td><td>Less than or equal</td></tr>
+<tr><td><code>&gt;=</code></td><td>Greater than or equal</td></tr>
+</tbody></table>
+<p>You have propbably used these operators countless times to compare numbers in your programming journey with JavaScript without any problems.</p>
+<p>But did you know that JavaScript can compare not only numbers but also all kinds of values? While this may seem strange, it has some useful use cases, especially when comparing ASCII<sup data-fnref>refs:asciiunicode</sup> strings of same case. While exploring these comparisons, I found the process of comparing numbers, strings and how the operators <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> derived from &lt;, to be quite interesting. In this article, I will share with you everything that If found useful or interesting while exploring these operators. Let's start.</p>
+<p>They are part of a set of operators known as <em>comparison operators</em>.<sup data-fnref>refs:compops</sup><sup data-fnref>notes:othercompops</sup> These operators are also part of a set of operators officially known as <em>relational operators</em>.<sup data-fnref>refs:relops</sup><sup data-fnref>notes:otherrelops</sup></p>
+<p>To make life simple and easy, here I will ignore all the less useful comparisons and only go into the depth of the most useful ones:</p>
+<ul>
+<li>I will only write about the comparisons of Number, BigInt and String types.</li>
+<li>I will ignore the cases where the types of the operands differ(I think it's better to explicitly convert values to the same type before comparing them to make things clear).</li>
+</ul>
+<h2 id="the-less-than-operator">The less than operator(<code>&lt;</code>)</h2>
+<p>This is a crucial operator because the other three operators(<code>&gt;</code>, <code>&lt;=</code> and <code>&gt;=</code>) are based on it. So I will go into its depth as much as I find worthwhile and then will see how easy it to learn about the inner workings of the other three operators.</p>
+<h3 id="comparing-numbers">Comparing Numbers</h3>
+<p>These are mostly as in mathematics. For example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#d08770;">4 </span><span>&lt; </span><span style="color:#d08770;">6</span><span>; </span><span style="color:#65737e;">// true
+</span><span style="color:#d08770;">10 </span><span>&lt; </span><span style="color:#d08770;">9</span><span>; </span><span style="color:#65737e;">// false
+</span></code></pre>
+<p>As values Number type have a limited precision<sup data-fnref>refs:numprecision</sup>, for very long numbers literals you might get incorrect result when comparing them. For example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#d08770;">3 </span><span>&lt; </span><span style="color:#d08770;">3.00000000000000001</span><span>; </span><span style="color:#65737e;">// false
+</span><span>
+</span><span style="color:#d08770;">88888888888888888 </span><span>&lt; </span><span style="color:#d08770;">88888888888888889</span><span>; </span><span style="color:#65737e;">// false
+</span></code></pre>
+<p>This is because these numbers loose some precision when they are turned into values from literals.</p>
+<p>For comparing <code>leftNumber &lt; rightNumber</code> where <code>leftNumber</code> and <code>rightNumber</code> are values(not literals!) of Number type, the following algorithm is used:</p>
+<ol>
+<li>If either value is <code>NaN</code> return <code>false</code>.</li>
+<li>If <code>leftNumber</code> is the same number as <code>rightNumber</code>, return <code>false</code>.</li>
+<li>If <code>leftNumber</code> is <code>Infinity</code>, return <code>false</code>.</li>
+<li>If <code>rightNumber</code> is <code>Infinity</code>, return <code>true</code>.</li>
+<li>If <code>leftNumber</code> is <code>-Infinity</code>, return <code>true</code>.</li>
+<li>If <code>rightNumber</code> is <code>-Infinity</code>, return <code>false</code>.</li>
+<li>If <code>leftNumber</code> is less than <code>rightNumber</code> as in mathematics, return <code>true</code>. Otherwise return <code>false</code>.</li>
+</ol>
+<h3 id="comparing-bigints">Comparing BigInts</h3>
+<p>As BigInts don't have NaN or infinities, and they have arbitrary precision, they work just as fine as in mathematics.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#d08770;">88888888888888888</span><span style="color:#b48ead;">n </span><span>&lt; </span><span style="color:#d08770;">88888888888888889</span><span style="color:#b48ead;">n</span><span>; </span><span style="color:#65737e;">// true
+</span></code></pre>
+<h3 id="comparing-strings">Comparing Strings</h3>
+<p><code>&lt;</code> operator uses a simple <em>lexicographic ordering</em><sup data-fnref>notes:lex</sup> for comparing string values which can become handy when we know how it works and we don't need any advanced comparison.</p>
+<p>Let <code>leftString</code> and <code>rightString</code> are strings and we want to know how JavaScript evaluates the value of the expression <code>leftString &lt; rightString</code>. Here goes the algorithm:</p>
+<ol>
+<li>
+<p>If <code>leftString</code> starts with <code>rightString</code>, return <code>false</code>. For example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>&quot;</span><span style="color:#a3be8c;">hello world</span><span>&quot; &lt; &quot;</span><span style="color:#a3be8c;">hello</span><span>&quot;;
+</span><span style="color:#65737e;">// false
+</span><span>
+</span><span>&quot;</span><span style="color:#a3be8c;">hello world</span><span>&quot; &lt; &quot;&quot;;
+</span><span style="color:#65737e;">// false, because every string starts with an empty string
+</span></code></pre>
+</li>
+<li>
+<p>If <code>rightString</code> starts with <code>leftString</code>, return <code>true</code>. For example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>&quot;</span><span style="color:#a3be8c;">hello</span><span>&quot; &lt; &quot;</span><span style="color:#a3be8c;">hello world</span><span>&quot;;
+</span><span style="color:#65737e;">// true
+</span><span>
+</span><span>&quot;&quot; &lt; &quot;</span><span style="color:#a3be8c;">hello world</span><span>&quot;;
+</span><span style="color:#65737e;">// true
+</span></code></pre>
+</li>
+<li>
+<p>At this point, as neither string starts with the other, there must be a smallest index where code units<sup data-fnref>refs:codeunit</sup> of the two strings are different. Let <code>s</code> be that index. In the following example <code>s</code> is <code>4</code>:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>&quot;</span><span style="color:#a3be8c;">Linux</span><span>&quot; &lt; &quot;</span><span style="color:#a3be8c;">Linus Torvalds</span><span>&quot;;
+</span><span>
+</span><span style="color:#8fa1b3;">getCodeUnits</span><span>(&quot;</span><span style="color:#a3be8c;">Linux</span><span>&quot;);
+</span><span style="color:#65737e;">// [76, 105, 110, 117, 120]
+</span><span>
+</span><span style="color:#8fa1b3;">getCodeUnits</span><span>(&quot;</span><span style="color:#a3be8c;">Linus Torvalds</span><span>&quot;);
+</span><span style="color:#65737e;">// [76, 105, 110, 117, 115, 32,
+</span><span style="color:#65737e;">// 84, 111, 114, 118, 97, 108, 100, 115]
+</span></code></pre>
+<details>
+<summary>See <code>getCodeUnits</code> implementation<sup data-fnref>refs:codeunit</sup></summary>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">getCodeUnits</span><span>(</span><span style="color:#bf616a;">s</span><span>) {
+</span><span>  </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">result </span><span>= [];
+</span><span>  </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">i </span><span>= </span><span style="color:#d08770;">0</span><span>; </span><span style="color:#bf616a;">i </span><span>&lt; </span><span style="color:#bf616a;">s</span><span>.length; </span><span style="color:#bf616a;">i</span><span>++) {
+</span><span>    </span><span style="color:#bf616a;">result</span><span>.</span><span style="color:#96b5b4;">push</span><span>(</span><span style="color:#bf616a;">s</span><span>.</span><span style="color:#96b5b4;">charCodeAt</span><span>(</span><span style="color:#bf616a;">i</span><span>));
+</span><span>  }
+</span><span>  </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">result</span><span>;
+</span><span>}
+</span></code></pre>
+</details>
+</li>
+<li>
+<p>Let <code>m</code> be <code>leftString.charCodeAt(s)</code>.<sup data-fnref>refs:charCodeAt</sup></p>
+</li>
+<li>
+<p>Let <code>n</code> be <code>rightString.charCodeAt(s)</code>.<sup data-fnref>refs:charCodeAt</sup></p>
+</li>
+<li>
+<p>If <code>m &lt; n</code> return <code>true</code>, otherwise return <code>false</code>.</p>
+<p>For the example at step 3, <code>m</code> is <code>120</code> and <code>n</code> is <code>115</code>, so <code>'Linux' &lt; 'Linus Torvalds'</code> is <code>false</code>!</p>
+</li>
+</ol>
+<p>Note that comparison with <code>&lt;</code> is not like dictionaries in all cases, for example when lowercase, uppercase or accents are involved. But for simple comparisons like comparing two lowercase English letters or words, it works just fine because they fall under ASCII subset of Unicode.<sup data-fnref>refs:asciiunicode</sup></p>
+<p>Luckily JavaScript now allows proper language aware comparison through the awesome <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator">Intl.Collator</a> object. It is beyond the scope of this article.</p>
+<p>Let's now see how the other three operators work.</p>
+<h2 id="greater-than-operator">Greater than operator: <code>&gt;</code></h2>
+<p><code>leftValue &gt; rightValue</code> can be described as below:</p>
+<ol>
+<li>If both operands are of Number type and either one is <code>NaN</code>
+<ol>
+<li>Return <code>false</code>.</li>
+</ol>
+</li>
+<li>Return <code>rightValue &lt; leftValue</code>.<sup data-fnref>notes:evalorder</sup></li>
+</ol>
+<h2 id="less-than-or-equal-operator">Less than or equal operator: <code>&lt;=</code></h2>
+<p><code>leftValue &lt;= rightValue</code> can be described as below:</p>
+<ol>
+<li>If both operands are of Number type and either one is <code>NaN</code>
+<ol>
+<li>Return <code>false</code>.</li>
+</ol>
+</li>
+<li>If <code>rightValue &lt; leftValue</code> is <code>true</code><sup data-fnref>notes:evalorder</sup>
+<ol>
+<li>Return <code>false</code>.</li>
+</ol>
+</li>
+<li>Else
+<ol>
+<li>Return <code>true</code>.</li>
+</ol>
+</li>
+</ol>
+<h2 id="greater-than-or-equal-operator">Greater than or equal operator: <code>&gt;=</code></h2>
+<p><code>leftValue &gt;= rightValue</code> can be described as below:</p>
+<ol>
+<li>If both operands are of Number type and either one is <code>NaN</code>
+<ol>
+<li>Return <code>false</code>.</li>
+</ol>
+</li>
+<li>If <code>leftValue &lt; rightValue</code> is <code>true</code>
+<ol>
+<li>Return <code>false</code>.</li>
+</ol>
+</li>
+<li>Else
+<ol>
+<li>Return <code>true</code>.</li>
+</ol>
+</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>[othercompops] The other comparison operators <code>==</code>, <code>===</code>, <code>!=</code> and <code>!==</code>.</li>
+<li>[otherrelops] There are two relational operators that are not comparison operators: <code>in</code> and <code>instanceof</code>.</li>
+<li>[lex] The heavy phrase &quot;Lexicographic ordering&quot; means an ordering similar to the alphabetic ordering of the dictionaries.</li>
+<li>[evalorder] JavaScript always evaluates expressions from left to write while reading its source code. Here though the <code>rightValue</code> appears to the left, it would not make it evalutate before the <code>leftValue</code> because <code>leftValue</code> appeared to the left in initial expresssion that this algorithm is about.</li>
+</ul>
+<h2 id="refs">References</h2>
+<ul>
+<li>[charCodeAt] <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt"><code>String.prototype.charCodeAt()</code> - MDN</a></li>
+<li>[codeunit] <a href="https://ashutoshbw.github.io/garden/how-strings-are-made/">How JavaScript strings are made?</a></li>
+<li>[compops] <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#comparison_operators">Comparison operators - MDN</a></li>
+<li>[relops] <a href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-relational-operators">Relational Operators - ECMAScript Language Specification</a></li>
+<li>[numprecision] <a href="https://2ality.com/2012/04/number-encoding.html">How numbers are encoded in JavaScript</a></li>
+<li>[asciiunicode] <a href="https://stackoverflow.com/questions/19212306/whats-the-difference-between-ascii-and-unicode">What's the difference between ASCII and Unicode?</a></li>
+</ul>
+
+
+    
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

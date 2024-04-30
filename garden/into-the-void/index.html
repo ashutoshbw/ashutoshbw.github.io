@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Into the <code>void</code> of TypeScript</h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/typescript/">typescript</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Last updated → <i>
+  
+    
+  
+  <time itemprop="dateModified" datetime="2024-03-31">31 March 2024</time>
+</i></span> ·
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2024-03-29">29 March 2024</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>4</em></span>
+          
+          
+             · 
+            <span>certainty → <em>certain</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>The TypeScript type <code>void</code> refers to function return value that is meant to be ignored.<sup data-fnref>refs:void</sup></p>
+<p>Just like any other type you can annotate variables with <code>void</code>. But its not useful there. It's only useful in the context of functions.</p>
+<h2 id="inferred-void-type">Inferred <code>void</code> type</h2>
+<p>When a function doesn't explicitly return a value<sup data-fnref>notes:explicitReturn</sup>, it usually means that its return value does not serve a purpose and can be ignored. So TypeScript infers it to be of type <code>void</code>.</p>
+<pre data-lang="ts" style="background-color:#2b303b;color:#c0c5ce;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">sayHello</span><span>() {
+</span><span>  </span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(&quot;</span><span style="color:#a3be8c;">hello</span><span>&quot;);
+</span><span>}
+</span></code></pre>
+<p>Above the inferred return type of <code>sayHello</code> is <code>void</code>.</p>
+<h2 id="void-return-type-in-literal-function-defnition"><code>void</code> return type in literal function defnition</h2>
+<p>Of a literal function definition<sup data-fnref>notes:fd</sup> with a <code>void</code> return type, TypeScript will give you error if you return anything other than <code>undefined</code>.<sup data-fnref>notes:undefined</sup> If TypeScript would allow returning other values, it wouldn't create a type system violation. This error reporting is helpful for catching bugs that might arise from refactoring<sup data-fnref>refs:void-undefined</sup>:</p>
+<pre data-lang="ts" style="background-color:#2b303b;color:#c0c5ce;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#65737e;">// Old version
+</span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">fn</span><span>(</span><span style="color:#bf616a;">arr</span><span>: number[]): void {
+</span><span>  </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">arr1 </span><span>= </span><span style="color:#bf616a;">arr</span><span>.</span><span style="color:#8fa1b3;">map</span><span>((</span><span style="color:#bf616a;">x</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">3</span><span>;
+</span><span>  });
+</span><span>}
+</span><span>
+</span><span style="color:#65737e;">// New version
+</span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">fn</span><span>(</span><span style="color:#bf616a;">arr</span><span>: number[]): void {
+</span><span>  </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">x </span><span>of </span><span style="color:#bf616a;">arr</span><span>) {
+</span><span>    </span><span style="color:#65737e;">// Oops, meant to do something else
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">3</span><span>;
+</span><span>  }
+</span><span>}
+</span></code></pre>
+<h2 id="void-return-type-in-contextual-function-type"><code>void</code> return type in contextual function type</h2>
+<p>Contextual typing occurs when the type of an expression is implied by its location.<sup data-fnref>refs:contextual-typing</sup></p>
+<p>A <em>contextual function type</em> provides context to the function that is placed in the context.</p>
+<p>A contextual function type with <code>void</code> return type when implemented, can return <em>any</em> value, but it will be ignored.</p>
+<p>This behavior exists so that the following code is valid even though <code>Array.prototype.push</code> returns a number and the <code>Array.prototype.forEach</code> method expects a function with a return type of <code>void</code>.<sup data-fnref>refs:assignability-of-func</sup></p>
+<pre data-lang="ts" style="background-color:#2b303b;color:#c0c5ce;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#b48ead;">const </span><span style="color:#bf616a;">src </span><span>= [</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>];
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">dst </span><span>= [</span><span style="color:#d08770;">0</span><span>];
+</span><span>
+</span><span style="color:#bf616a;">src</span><span>.</span><span style="color:#96b5b4;">forEach</span><span>((</span><span style="color:#bf616a;">el</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">dst</span><span>.</span><span style="color:#96b5b4;">push</span><span>(</span><span style="color:#bf616a;">el</span><span>));
+</span></code></pre>
+<p>A question that might be on your mind is:</p>
+<blockquote>
+<p>When an implementation of a contextual function type with a <code>void</code> return type is assigned to a variable, what type does this variable have?</p>
+</blockquote>
+<p>Whatever that function returns, the variable would be of type <code>void</code>. This is good because the return value of the function was not intended to be used.</p>
+<pre data-lang="ts" style="background-color:#2b303b;color:#c0c5ce;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#b48ead;">type </span><span>voidFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>void;
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">f</span><span>: voidFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">true</span><span>;
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">v </span><span>= </span><span style="color:#8fa1b3;">f</span><span>();
+</span></code></pre>
+<p>Above the type of <code>v</code> is <code>void</code>.</p>
+<h2 id="void-vs-undefined"><code>void</code> vs <code>undefined</code></h2>
+<p>A contextual function type with <code>undefined</code> return type when implemented, must return <code>undefined</code>. For the case of <code>void</code>, the return value doesn't matter.</p>
+<pre data-lang="ts" style="background-color:#2b303b;color:#c0c5ce;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#b48ead;">type </span><span>undefinedFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>undefined;
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">f</span><span>: undefinedFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">true</span><span>;
+</span><span>};
+</span></code></pre>
+<p>TypeScript will yell at this code.</p>
+<h2 id="void-vs-any"><code>void</code> vs <code>any</code></h2>
+<pre data-lang="ts" style="background-color:#2b303b;color:#c0c5ce;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#b48ead;">type </span><span>anyFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>any;
+</span><span style="color:#b48ead;">type </span><span>voidFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>void;
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">anyFunc</span><span>: anyFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#b48ead;">return </span><span>&quot;</span><span style="color:#a3be8c;">f1</span><span>&quot;;
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">voidFunc</span><span>: voidFuncType = () </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#b48ead;">return </span><span>&quot;</span><span style="color:#a3be8c;">f2</span><span>&quot;;
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">anyValue </span><span>= </span><span style="color:#8fa1b3;">anyFunc</span><span>();
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">voidValue </span><span>= </span><span style="color:#8fa1b3;">voidFunc</span><span>();
+</span><span>
+</span><span style="color:#bf616a;">anyValue</span><span>.</span><span style="color:#8fa1b3;">trim</span><span>(); </span><span style="color:#65737e;">// No error
+</span><span style="color:#bf616a;">voidValue</span><span>.</span><span style="color:#8fa1b3;">trim</span><span>(); </span><span style="color:#65737e;">// Error
+</span></code></pre>
+<p>With <code>void</code> return type we can ensure that the consumers of <code>voidFunc</code> will get an error when accessing properties of its return value. And with <code>any</code> there is no error, and no help from TypeScript!</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>[explicitReturn] A function that explicitly returns something has a <code>return</code> statement with a return value.</li>
+<li>[fd] It doesn't matter if it is the definition a function statement or function expression.</li>
+<li>[undefined] <code>undefined</code> is always assignable to <code>void</code>.</li>
+</ul>
+<h2 id="refs">References</h2>
+<ul>
+<li>[void] <a href="https://typescript-eslint.io/rules/no-invalid-void-type/"><code>no-invalid-void-type</code> typescript-eslint rule</a></li>
+<li>[void-undefined] <a href="https://stackoverflow.com/questions/58885485/why-does-typescript-have-both-void-and-undefined">Why does TypeScript have both <code>void</code> and <code>undefined</code>?</a></li>
+<li>[contextual-typing] <a href="https://www.typescriptlang.org/docs/handbook/type-inference.html#contextual-typing">Contextual Typing, TypeScript Handbook</a></li>
+<li>[assignability-of-func] <a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#assignability-of-functions">Assignability of Functions, More on Functions, TyeScript Handbook</a></li>
+</ul>
+
+
+    
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>

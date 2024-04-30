@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashutosh Biswas</title>
+
+  <!-- fonts start -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <!-- fonts end -->
+
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/normalize.css?h=a0e4cb71895a82e641e8">
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/base.css?h=c47b2edf3c87f767a878">
+  
+  <script type="module">
+    import padatika from "https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js";
+
+    padatika({notes: "N", refs: "R"}, {
+      backlinkPos: "end",
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    });
+  </script>
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
+</script>
+
+<style>
+.katex {
+  font-size: 1em;
+}
+</style>
+
+  
+
+  
+  <link rel="stylesheet" href="https://ashutoshbw.github.io/styles/note.css?h=43298e006672fb2909d2">
+
+</head>
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <nav>
+      <a href="https://ashutoshbw.github.io">Home</a>
+      <a href="https://ashutoshbw.github.io/garden/">Garden</a>
+      <a href="https://ashutoshbw.github.io/projects/">Projects</a>
+      <a href="https://ashutoshbw.github.io/gallery/">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+  <article class="note" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Template literals and tagged template literals</h1>
+      <div class="note-meta">
+        <p>
+          Tags → <i>
+  
+  
+    <span>
+      
+        <a href="https://ashutoshbw.github.io/tags/javascript/">javascript</a>
+      
+    </span>
+  
+</i>
+        </p>
+        <p>
+          
+          <span>Last updated → <i>
+  
+    
+  
+  <time itemprop="dateModified" datetime="2024-02-28">28 February 2024</time>
+</i></span> ·
+          
+          <span>Published → <i>
+  
+  <time itemprop="datePublished" datetime="2022-03-13">13 March 2022</time>
+</i></span>
+        </p>
+        <p>
+          
+            <span>Status → <em>finished</em></span>
+          
+          
+             · 
+            <span>importance → <em>7</em></span>
+          
+          
+             · 
+            <span>certainty → <em>certain</em></span>
+          
+        </p>
+      </div>
+    </header>
+
+    <p>In JavaScript, <em>literal</em>s represent values that you provided literally in code, not through variables.</p>
+<p>The word &quot;<em>template</em>&quot; in English means &quot;<em>a thing that is used as a model for producing other similar examples</em>&quot;.<sup data-fnref>refs:templateDict</sup></p>
+<p>Template literal allows you to easily express a model for producing strings that look similar. This is possible because template literals can be made up of static texts with dynmaic parts in between.</p>
+<p>Tagged template literal allows you to <em>tag</em> a template literal to the end of a function name. What happens then is that the function gets called with the template literal's static and dynamic parts giving you enormous power to produce any values you need by returning it from the function.</p>
+<p>In this note I will go over all the theoretical stuffs about them that you need to know. Let's start exploring.</p>
+<h2 id="template-literal">Template literal</h2>
+<p>The <em>template literal</em> (also known as an <em>untagged template literal</em>) is somewhat like a string literal. It is written within backticks (<code>`</code>). Its value is <strong>always</strong> a string. It has two features:</p>
+<ul>
+<li>String interpolation</li>
+<li>Multiline strings</li>
+</ul>
+<p>Let's see them in detail.</p>
+<h3 id="string-interpolation">String interpolation</h3>
+<p>This is what makes template literals <em>template</em>.</p>
+<p>You can place any expression within <code>${}</code>. This is called a <em>placeholder</em>.</p>
+<p>The given expression within it is called a <em>substitution</em>. A placeholder must contain a substitution.</p>
+<p>Text pieces separated by placeholders are called <em>template strings</em>.</p>
+<p>JavaScript evaluates the substitutions and, in this process, converts them to strings if they are not and joins all of its individual parts in respective order to return a string value. This idea is called <em>string interpolation</em>. Below is an example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(`</span><span style="color:#a3be8c;">JavaScript is ${</span><span>new </span><span style="color:#a3be8c;">Date().</span><span style="color:#96b5b4;">getFullYear</span><span style="color:#a3be8c;">() </span><span>- </span><span style="color:#d08770;">1995</span><span style="color:#a3be8c;">} years old.</span><span>`);
+</span><span style="color:#65737e;">// JavaScript is 29 years old.
+</span></code></pre>
+<p><a href="https://ashutoshbw.github.io/garden/template-literals/#fig-1">Figure 1</a> shows the names of the parts of above template literal.</p>
+<figure id="fig-1">
+
+
+
+
+  
+  
+
+
+
+
+
+
+  
+  
+
+
+
+  <a href="https://ashutoshbw.github.io/garden/template-literals/template-literal.png" target="_blank">
+
+  <img src="https://ashutoshbw.github.io/processed_images/template-literal.875f9e8e3e4a0045.png" 
+    alt="Parts of a template literal."
+    width="554"
+    height="281"
+  />
+
+  </a>
+
+
+<figcaption><b>Figure 1</b>: Parts of a template literal.</figcaption>
+</figure>
+<p>Let's see another interesting example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(`</span><span style="color:#a3be8c;">Let&#39;s put an array: ${[</span><span style="color:#d08770;">1</span><span style="color:#a3be8c;">, </span><span>`</span><span style="color:#a3be8c;">${[</span><span style="color:#d08770;">2.1</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">2.2</span><span style="color:#a3be8c;">]}</span><span>`</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">3</span><span style="color:#a3be8c;">]}!</span><span>`);
+</span><span style="color:#65737e;">// Let&#39;s put an array: 1,2.1,2.2,3!
+</span></code></pre>
+<p>Note that, the feature that substitution can be <em>any</em> JavaScript expression allows you to compose <em>nested template literals</em>!</p>
+<aside class="admonition">
+<header>
+<b>Question</b>: How can I get a backtick or a placeholder literally in the string value?
+</header>
+<p>You will need to escape them with backslashes(<code>\</code>):</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">const </span><span style="color:#bf616a;">escapedStr </span><span>= `</span><span style="color:#96b5b4;">\`</span><span style="color:#a3be8c;">This is a </span><span style="color:#96b5b4;">\$</span><span style="color:#a3be8c;">{&#39;template&#39;} literal too</span><span style="color:#96b5b4;">\`</span><span>`;
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;">escapedStr</span><span>);
+</span><span style="color:#65737e;">// `This is a ${&#39;template&#39;} literal too`
+</span></code></pre>
+</aside>
+<h3 id="multiline-strings">Multiline strings</h3>
+<p>Now you can write a multiline string just by creating real newlines in code like below:</p>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">let </span><span style="color:#bf616a;">poem </span><span>= `
+</span><span style="color:#a3be8c;">from my bed
+</span><span style="color:#a3be8c;">I watch
+</span><span style="color:#a3be8c;">3 birds
+</span><span style="color:#a3be8c;">on a telephone
+</span><span style="color:#a3be8c;">wire.
+</span><span style="color:#a3be8c;">  -- Charles Bukowski 
+</span><span>`;
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;">poem</span><span>);
+</span><span style="color:#65737e;">// output
+</span><span style="color:#65737e;">/*
+</span><span style="color:#65737e;">from my bed
+</span><span style="color:#65737e;">I watch
+</span><span style="color:#65737e;">3 birds
+</span><span style="color:#65737e;">on a telephone
+</span><span style="color:#65737e;">wire.
+</span><span style="color:#65737e;">  -- Charles Bukowski 
+</span><span style="color:#65737e;">*/
+</span></code></pre>
+<h2 id="tagged-template-literal">Tagged template literal</h2>
+<p>Tagged template literal is also called <em>tagged template</em> for short.<sup data-fnref>refs:exploringjs</sup> It is made up of a template literal tagged onto a function name or more precisely a function expression like below:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#8fa1b3;">funcitonExpression</span><span>`</span><span style="color:#a3be8c;">template literal</span><span>`;
+</span></code></pre>
+<p>Here the function expression is called the <em>tag function</em>.</p>
+<p>JavaScript calls the tag function by passing it parts of the template literal next to it. The return value of this function is the value of the tagged template. This value can be anything.</p>
+<p>JavaScript provides arguments to the tag function like below:</p>
+<ul>
+<li>
+<p><strong>1st argument</strong>: This is an array holding the cooked interpretation<sup data-fnref>notes:cooked</sup> of <em>template strings</em>. However if a template string holds incorrect syntax of the following kind of escape sequences then the corresponding array element of that template string will hold <code>undefined</code>.</p>
+<ul>
+<li>Unicode codepoint escapes (eg. <code>\u{1F642}</code>)</li>
+<li>Unicode unit escapes (eg. <code>\u03A3</code>)</li>
+<li>Hexadecimal escapes (eg. <code>\x41</code>)</li>
+</ul>
+<p>This array has a <code>raw</code> named property which holds raw interpretation<sup data-fnref>notes:raw</sup> of the template strings.</p>
+<aside class="admonition">
+<header>
+  <b>Info</b>
+<p>If untagged template literal or string literal holds incorrect syntax of the above escape sequences, JavaScript will throw error.</p>
+</header>
+</aside>
+</li>
+<li>
+<p><strong>Remaining arguments</strong>: These are the evaluated values of the <em>substitutions</em>. Note that these are not converted to strings from other types of values.</p>
+</li>
+</ul>
+<p>That's all the theoretical stuff you need to know to be confident in using it. Do the exercises below to make sure you understand it really well.</p>
+<h2 id="exercises">Exercises</h2>
+<details>
+<summary>
+What will the output of the following codes?
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>&#39;</span><span style="color:#96b5b4;">\u</span><span style="color:#a3be8c;">nicode is awesome</span><span>&#39;
+</span><span>`</span><span style="color:#96b5b4;">\u</span><span style="color:#a3be8c;">nicode is awesome</span><span>`
+</span></code></pre>
+</summary>
+<p>JavaScript will throw error because invalid unicode escape sequences are not allowed in string and template literals.</p>
+</details>
+<details>
+<summary>
+What will be the output of the following line?
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>((...</span><span style="color:#bf616a;">args</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">args</span><span>[</span><span style="color:#d08770;">0</span><span>].</span><span style="color:#bf616a;">raw</span><span>[</span><span style="color:#d08770;">0</span><span>])`</span><span style="color:#96b5b4;">\u</span><span style="color:#a3be8c;">nicode is awesome</span><span>`;
+</span></code></pre>
+</summary>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>&quot;</span><span style="color:#96b5b4;">\\</span><span style="color:#a3be8c;">unicode is awesome</span><span>&quot;;
+</span></code></pre>
+</details>
+<details>
+<summary>
+How is it possible?
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>[&quot;</span><span style="color:#a3be8c;">one</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">two</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">three</span><span>&quot;]</span><span style="color:#a3be8c;">.</span><span style="color:#8fa1b3;">join</span><span>`</span><span style="color:#a3be8c;"> -&gt; </span><span>`</span><span style="color:#a3be8c;">.</span><span style="color:#8fa1b3;">concat</span><span>`</span><span style="color:#a3be8c;"> ---&gt; 💥</span><span>`;
+</span><span style="color:#65737e;">// &#39;one -&gt; two -&gt; three ---&gt; 💥&#39;
+</span></code></pre>
+</summary>
+<p><code>join</code> and <code>concat</code> are not built as tag functions but here they are treated as tag functions.</p>
+<p>They both get as their first argument, an array containing a single string. These functions then convert these arrays to strings to continue their job and we get the above output.</p>
+<p>Note that if you use placeholders in the template literal, the result will probably not be as expected:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>&quot;</span><span style="color:#a3be8c;">Hello </span><span>&quot;</span><span style="color:#a3be8c;">.</span><span style="color:#8fa1b3;">concat</span><span>`</span><span style="color:#a3be8c;">Jimmy, ${</span><span>&quot;</span><span style="color:#a3be8c;">Peter</span><span>&quot;</span><span style="color:#a3be8c;">} and ${</span><span>&quot;</span><span style="color:#a3be8c;">John</span><span>&quot;</span><span style="color:#a3be8c;">}! Welcome</span><span>`;
+</span><span style="color:#65737e;">// &#39;Hello Jimmy, , and ,! WelcomePeterJohn&#39;
+</span></code></pre>
+<p>Except doing code golf<sup data-fnref>refs:codegolf</sup> I don't recommened using <code>join</code> and <code>concat</code> like this.</p>
+</details>
+<details>
+<summary>
+If there are $n$ substitutions, what is the length of the array that we get as the first argument of <i>tag function</i>?
+</summary>
+<p>$$
+n + 1
+$$</p>
+<p>This is always true. For example:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#8fa1b3;">tagFunc</span><span>`</span><span style="color:#a3be8c;">${</span><span>&quot;</span><span style="color:#a3be8c;">one</span><span>&quot;</span><span style="color:#a3be8c;">} and two and ${</span><span>&quot;</span><span style="color:#a3be8c;">three</span><span>&quot;</span><span style="color:#a3be8c;">}</span><span>`;
+</span></code></pre>
+<p>In this case the array will be <code>['', ' and two and ', '']</code>. If we didn't get that empty strings, it would be impossible for the tagFunc to decide the order of the parts of the template literal. Say thanks to these useful empty strings!</p>
+</details>
+<details>
+<summary>
+Implement <code>highlight</code> that works like below:
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#8fa1b3;">highlight</span><span>`</span><span style="color:#a3be8c;">${</span><span style="color:#d08770;">1</span><span style="color:#a3be8c;">}</span><span>`;
+</span><span style="color:#65737e;">// &#39;👉1👈&#39;
+</span><span>
+</span><span style="color:#8fa1b3;">highlight</span><span>`</span><span style="color:#a3be8c;">This is ${</span><span>&quot;</span><span style="color:#a3be8c;">cool</span><span>&quot;</span><span style="color:#a3be8c;">}.</span><span>`;
+</span><span style="color:#65737e;">// &#39;This is 👉cool👈.&#39;
+</span></code></pre>
+</summary>
+<p>The <code>reduce</code> method makes it really easy to do:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">highlight </span><span>= (</span><span style="color:#bf616a;">strs</span><span>, ...</span><span style="color:#bf616a;">values</span><span>) </span><span style="color:#b48ead;">=&gt;
+</span><span>  </span><span style="color:#bf616a;">strs</span><span>.</span><span style="color:#8fa1b3;">reduce</span><span>((</span><span style="color:#bf616a;">result</span><span>, </span><span style="color:#bf616a;">str</span><span>, </span><span style="color:#bf616a;">i</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>`</span><span style="color:#a3be8c;">${</span><span style="color:#bf616a;">result</span><span style="color:#a3be8c;">}👉${</span><span style="color:#bf616a;">values</span><span style="color:#a3be8c;">[</span><span style="color:#bf616a;">i </span><span>- </span><span style="color:#d08770;">1</span><span style="color:#a3be8c;">]}👈${</span><span style="color:#bf616a;">str</span><span style="color:#a3be8c;">}</span><span>`);
+</span><span>
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#8fa1b3;">highlight</span><span>`</span><span style="color:#a3be8c;">${</span><span style="color:#d08770;">1</span><span style="color:#a3be8c;">}</span><span>`);
+</span><span style="color:#ebcb8b;">console</span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#8fa1b3;">highlight</span><span>`</span><span style="color:#a3be8c;">This is ${</span><span>&quot;</span><span style="color:#a3be8c;">cool</span><span>&quot;</span><span style="color:#a3be8c;">}.</span><span>`);
+</span><span>
+</span><span style="color:#65737e;">// &#39;👉1👈&#39;
+</span><span style="color:#65737e;">// &#39;This is 👉cool👈.&#39;
+</span></code></pre>
+<p>If you are new to the <code>...</code> dots syntax above or the <code>reduce</code> method, I've written in-depth articles on them. I hope you will find them will helpful:</p>
+<ul>
+<li><a href="https://ashutoshbw.github.io/garden/rest-parameter/">Rest parameter of JavaScript</a></li>
+<li><a href="https://www.freecodecamp.org/news/how-reduce-reduceright-works-javascript/">How the JavaScript reduce and reduceRight Methods Work</a></li>
+</ul>
+</details>
+<h2 id="conclusion">Conclusion</h2>
+<p>Congratulations! This article was dense with information. Now you know what template literal and tagged template literals are and how they works. Tagged template literals are not used as often as template literals but they have some interesting practical use cases worth knowing.</p>
+<p>For digging more or to study practical usages of tagged template literals, here are some good resources:</p>
+<ul>
+<li><a href="https://exploringjs.com/impatient-js/ch_template-literals.html">JavaScript for impatient programmers (ES2022 edition)</a></li>
+<li><a href="https://css-tricks.com/template-literals/">CSS Tricks</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">MDN</a></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>[cooked] <em>Cooked interpretation</em> means the backslashes have special meaning. For example <code>\n</code> will produce a single character which is a newline character.</li>
+<li>[raw] <em>Raw interpretation</em> means backslashes don't have special meaning. So <code>\n</code> will produce two characters: <code>\</code> and <code>n</code>.</li>
+</ul>
+<h2 id="refs">References</h2>
+<ul>
+<li>[templateDict] <a href="https://www.oxfordlearnersdictionaries.com/definition/english/template">Meaning of &quot;template&quot; from Oxford Learner's Dictionary</a></li>
+<li>[codegolf] <a href="https://en.wikipedia.org/wiki/Code_golf">Code golf</a></li>
+<li>[exploringjs] <a href="https://exploringjs.com/es6/ch_template-literals.html#sec_introduction-template-literals">Exploring ES6</a> by <a href="https://dr-axel.de/">Dr. Axel Rauschmayer</a></li>
+</ul>
+
+
+    
+    
+      
+        
+        
+    
+  </article>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Ashutosh Biswas, 2024</p>
+    <p><a href="https://github.com/ashutoshbw/ashutoshbw.github.io" target="_blank">View source code</a></p>
+    <p>Last built on 30 April 2024 at  5:10 PM UTC</p>
+  </footer>
+</div>
