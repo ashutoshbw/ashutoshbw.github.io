@@ -4,6 +4,9 @@ date = 2022-04-17
 [taxonomies]
 tags = ["javascript", "dom"]
 [extra]
+status = "finished"
+importance = 2
+certainty = "certain"
 description= "A warning on using event.window"
 +++
 

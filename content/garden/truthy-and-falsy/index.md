@@ -5,6 +5,9 @@ date = 2022-06-21
 tags = ["javascript"]
 [extra]
 description= "A note on truthy and falsy values in JavaScript"
+status = "finished"
+importance = 6
+certainty = "certain"
 +++
 
 Truthy values are considered as `true` and falsy values are considered as `false` in Boolean contexts for example in conditionals and logical operators.

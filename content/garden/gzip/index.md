@@ -3,6 +3,11 @@ title = "Linux command: `gzip`"
 date = 2022-04-03
 [taxonomies]
 tags = ["linux"]
+[extra]
+status = "finished"
+importance = 6
+certainty = "certain"
+description = "A note on the common usage of the gzip utility of Linux"
 +++
 
 `gzip` command is used to reduce the size of given files. This command is so common that you will most likely find it already installed on your Linux distro.

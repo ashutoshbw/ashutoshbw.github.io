@@ -4,6 +4,11 @@ date = 2022-03-20
 updated = 2024-03-01
 [taxonomies]
 tags = ["linux"]
+[extra]
+status = "finished"
+importance = 5
+certainty = "certain"
+description= "An introduction to wildcards and globbing in Linux."
 +++
 
 The two features of Linux shells — wildcards and globbing — can sometimes save us a lot of time by matching filenames quickly so that you can perfrom some kind of operation on them like displaying, copying, moving, removing etc.

@@ -6,6 +6,10 @@ updated = 2024-02-26
 tags = ["javascript", "problem-solving"]
 [extra]
 katex = true
+status = "finished"
+importance = 6
+certainty = "certain"
+description = "A note on my attempt to find the Fibonacci sequence in JavaScript in the shortest possible code."
 +++
 
 Let's first take a look at how the Fibonacci sequence looks like, in case you haven't seen it before:

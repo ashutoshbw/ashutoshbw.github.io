@@ -6,6 +6,10 @@ updated = 2024-02-28
 tags = ["javascript"]
 [extra]
 katex = true
+description= "An in-depth guide to template literals and tagged template literals of JavaScript."
+status = "finished"
+importance = 7
+certainty = "certain"
 +++
 
 In JavaScript, *literal*s represent values that you provided literally in code, not through variables.

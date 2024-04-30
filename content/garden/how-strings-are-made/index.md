@@ -3,6 +3,11 @@ title = "How strings are made in JavaScript?"
 date = 2024-03-01
 [taxonomies]
 tags = ["javascript"]
+[extra]
+status = "finished"
+importance = 6
+certainty = "certain"
+description = "A brief intro to the internals of strings in JavaScript"
 +++
 
 For the dumb computers to make sense of JavaScript strings, they must be encoded in some way. JavaScript does it using _UTF-16_.

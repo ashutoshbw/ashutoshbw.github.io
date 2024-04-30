@@ -3,6 +3,11 @@ title = "How to mount/unmount external disks?"
 date = 2024-03-05
 [taxonomies]
 tags = ["linux"]
+[extra]
+description= "A guide on how to mount/unmout external disks on Linux."
+status = "in progress"
+importance = 2
+certainty = "highly likely"
 +++
 
 Add the following in your `.xinitrc` if not present:

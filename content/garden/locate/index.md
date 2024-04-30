@@ -4,6 +4,11 @@ date = 2022-03-27
 updated = 2024-03-01
 [taxonomies]
 tags = ["linux"]
+[extra]
+description= "A guide on how to use the locate command of linux."
+status = "in progress"
+importance = 3
+certainty = "highly likely"
 +++
 
 If you are feeling lazy and need to search for some file or directory in your _whole system_, then `locate` might be your best friend. It can find things super fast from thousands of items with the help of a database created earlier and usually updated automatically once a day.

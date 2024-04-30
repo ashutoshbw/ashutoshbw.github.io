@@ -4,6 +4,12 @@ date = 2023-04-10
 updated = 2024-02-28
 [taxonomies]
 tags = ["javascript"]
+[extra]
+katex = true
+description= "Rest parameters of JavaScript explained."
+status = "finished"
+importance = 7
+certainty = "certain"
 +++
 
 Have you ever dreamed of creating your own JavaScript function that can accept _any_ number arguments? Today we will learn how to do that with modern JavaScript syntax. And as you might already have guessed: the name of that syntax is _rest parameter_.
